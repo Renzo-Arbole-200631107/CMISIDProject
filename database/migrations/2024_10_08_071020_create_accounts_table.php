@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->string('username');
-            $table->string('password');
+            $table->string('password')->default('cmisid');
             $table->string('last_name');
             $table->string('first_name');
             $table->string('middle_name');
-            $table->foreignId('role_id')->constrained('roles')->cascadeOnDelete();
             $table->integer('is_active')->default(1); //1 is active, 0 is not
+            $table->timestamps();
         });
     }
 

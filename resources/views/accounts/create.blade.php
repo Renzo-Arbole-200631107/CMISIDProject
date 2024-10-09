@@ -14,42 +14,44 @@
     </div>
 
     <div>
-        <form action="">
+        <form action="{{route('accounts.store')}}" method="POST">
+            @method('post')
+            @csrf
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Last name</label>
-                <input type="text" class="form-control" name="last_name" placeholder="Enter last name">
+                <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter last name">
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">First Name</label>
-                <input type="text" class="form-control" name="first_name" placeholder="Enter first name">
+                <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter first name">
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Middle Name</label>
-                <input type="text" class="form-control" name="middle_name" placeholder="Enter middle name">
+                <input type="text" class="form-control" name="middle_name" id="middle_name" placeholder="Enter middle name">
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Username</label>
-                <input type="text" class="form-control" name="username" placeholder="Enter username">
+                <input type="text" class="form-control" name="username" id="username" placeholder="Enter username">
             </div>
             <div class="mb-4">
                 <label class="form-label fw-bold">User role</label>
-                <select id="inputStatus" class="form-control">
-                    <option selected>Developer</option>
-                    <option>Project Manager</option>
+                <select name="role_description" id="role_description" class="form-control">
+                    <option selected value="Developer">Developer</option>
+                    <option value="Project manager">Project Manager</option>
                 </select>
             </div>
             <div class="mb-4">
                 <label class="form-label fw-bold">Is Active?</label>
-                <select id="inputStatus" class="form-control">
-                    <option selected>Yes</option>
-                    <option>No</option>
+                <select name="is_active" id="is_active" class="form-control">
+                    <option selected value="1">Yes</option>
+                    <option value="0">No</option>
                 </select>
             </div>
             
             <div class="text-right">
-                <button type="button" class="btn btn-dark">
+                <button type="submit" class="btn btn-dark">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="white" d="M12 4c4.411 0 8 3.589 8 8s-3.589 8-8 8s-8-3.589-8-8s3.589-8 8-8m0-2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2m5 9h-4V7h-2v4H7v2h4v4h2v-4h4z"/></svg>    
-                Add project</button>
+                Add user</button>
             </div>
         </form>
     </div>
