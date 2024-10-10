@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
+use App\Models\Logs;
 use Illuminate\Http\Request;
 
-class ProjectController extends Controller
+class LogsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-
+        //
     }
 
     /**
@@ -20,7 +20,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('projects.create');
+        //
     }
 
     /**
@@ -34,7 +34,7 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(Logs $logs)
     {
         //
     }
@@ -42,15 +42,15 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Project $project)
+    public function edit(Logs $logs)
     {
-        //return view('projects.edit');
+        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $project)
+    public function update(Request $request, Logs $logs)
     {
         //
     }
@@ -58,7 +58,7 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Project $project)
+    public function destroy(Logs $logs)
     {
         //
     }
