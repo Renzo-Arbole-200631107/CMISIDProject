@@ -12,4 +12,5 @@ class Role extends Model
         'account_id',
         'role_description'
     ];
+
 }
