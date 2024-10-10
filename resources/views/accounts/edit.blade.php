@@ -35,16 +35,16 @@
             </div>
             <div class="mb-4">
                 <label class="form-label fw-bold">User role</label>
-                <select name="role_description" id="role_description" class="form-control">
-                    <option selected value="Developer">Developer</option>
-                    <option value="Project manager">Project Manager</option>
+                <select name="is_admin" id="is_admin" class="form-control">
+                    <option value="0" {{old('is_admin', $account->is_admin) == 0 ? 'selected' : ''}}>Developer</option>
+                    <option value="1" {{old('is_admin', $account->is_admin) == 1 ? 'selected' : ''}}>Project Manager</option>
                 </select>
             </div>
             <div class="mb-4">
                 <label class="form-label fw-bold">Is Active?</label>
                 <select name="is_active" id="is_active" class="form-control">
-                    <option selected value="1">Yes</option>
-                    <option value="0">No</option>
+                    <option value="1" {{old('is_active', $account->is_active) == 1 ? 'selected' : ''}}>Yes</option>
+                    <option value="0" {{old('is_active', $account->is_active) == 0 ? 'selected' : ''}}>No</option>
                 </select>
             </div>
             
