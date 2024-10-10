@@ -10,14 +10,14 @@ class Account extends Model
     use HasFactory;
 
     protected $fillable=[
+        'account_id',
         'last_name',
         'first_name',
         'middle_name',
         'username',
-        'role_description',
+        'is_admin',
         'is_active'
     ];
-
     
 };
 

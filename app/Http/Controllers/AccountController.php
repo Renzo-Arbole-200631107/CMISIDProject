@@ -36,7 +36,7 @@ class AccountController extends Controller
             'middle_name' => 'nullable|string|max:255',
             'first_name' => 'required|string|max:255',
             'username' => 'required|string|max:255',
-            'role_description' => 'required|string',
+            'is_admin' => 'required|integer',
             'is_active' => 'required|integer'
         ]);
 
@@ -45,12 +45,8 @@ class AccountController extends Controller
             'first_name' => $data['first_name'],
             'middle_name' => $data['middle_name'],
             'username' => $data['username'],
+            'is_admin' => $data['is_admin'],
             'is_active' => $data['is_active'],
-        ]);
-
-        Role::create([
-            'role_description' => $data['role_description'],
-            'account_id' => $account->id,
         ]);
 
         return redirect(route('accounts.index'));

@@ -22,5 +22,4 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('projects', App\Http\Controllers\ProjectController::class);
 Route::resource('accounts', App\Http\Controllers\AccountController::class);
-Route::resource('roles', App\Http\Controllers\RoleController::class);
 Route::resource('offices', App\Http\Controllers\OfficeController::class);

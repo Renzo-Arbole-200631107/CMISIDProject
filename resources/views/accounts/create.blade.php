@@ -35,9 +35,9 @@
             </div>
             <div class="mb-4">
                 <label class="form-label fw-bold">User role</label>
-                <select name="role_description" id="role_description" class="form-control">
-                    <option selected value="Developer">Developer</option>
-                    <option value="Project manager">Project Manager</option>
+                <select name="is_admin" id="role_description" class="form-control">
+                    <option selected value="0">Developer</option>
+                    <option value="1">Project Manager</option>
                 </select>
             </div>
             <div class="mb-4">

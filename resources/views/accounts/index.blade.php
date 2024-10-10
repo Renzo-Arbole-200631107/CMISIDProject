@@ -14,18 +14,18 @@
             </tr>
 
             @foreach ($accounts as $account) 
-                
-                
-                
                 <tr>
                     <td>{{$account->last_name}}, {{$account->first_name}} {{$account->middle_name}}</td>
                     <td>{{$account->username}}</td>
-                    @if ($account->role->role_description)
-                        @if($role->role_description == 'Developer')
-                                <td class="bg-success">{{$account->role->role_description}}</td>
-                                @else
-                                <td class="bg-primary">{{$account->role->role_description}}</td>
-                        @endif
+                    @if ($account->is_admin === 0)
+                        <td class="text-success fw-bold">Developer</td>
+                        @elseif($account->is_admin === 1)
+                        <td class="text-primary fw-bold">Project Manager</td>
+                    @endif
+                    @if($account->is_active === 1)
+                        <td>Active</td>
+                        @else
+                        <td>Inactive</td>
                     @endif
                     <td><a href="{{route('accounts.edit', ['account' => $account])}}" class=" btn btn-dark">Edit</a></td>
                 </tr>  
