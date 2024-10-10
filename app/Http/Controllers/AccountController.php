@@ -13,7 +13,7 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $accounts = Account::with('role')->get();
+        $accounts = Account::all();
 
         return view('accounts.index', compact('accounts'));
     }
