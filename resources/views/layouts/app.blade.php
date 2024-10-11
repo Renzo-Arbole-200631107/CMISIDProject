@@ -57,13 +57,13 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-btn btn btn-primary" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-btn btn btn-primary" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
@@ -129,6 +129,24 @@
         margin-left: 15px;
         color: white;
         font-weight: bold;
+    }
+
+    .nav-btn {
+        font-size: 15px;
+        font-weight: bold;
+        background: #19358A;
+        border: solid 1px;
+        border-radius: 6px;
+        border
+        border-color: white;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-left: 16px;
+        padding-right: 16px;
+        margin: 5px;
+        text-align: center;
+        color: white;
+        text-decoration: none;
     }
 </style>
 
