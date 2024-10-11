@@ -4,7 +4,7 @@
     <a href="{{route('accounts.create')}}" class="btn btn-primary">
         Add
     </a>
-    <div class="bg-gray">
+    <div>
         <table class="table">
             <tr class="fw-bold">
                 <th>Complete name</th>

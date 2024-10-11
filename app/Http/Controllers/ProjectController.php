@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-
+        
+        return view('projects.index');
     }
 
     /**
@@ -20,7 +22,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('projects.create');
+        $accounts = Account::all();
+        return view('projects.create', compact('accounts'));
     }
 
     /**

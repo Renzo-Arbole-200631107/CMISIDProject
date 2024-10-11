@@ -29,8 +29,15 @@
                 <input type="text" class="form-control" name="project_name" placeholder="Enter office or department">
             </div>
             <div class="mb-4">
-                <label for="" class="form-label fw-bold">Developer Name</label>
-                <input type="text" class="form-control" name="project_name" placeholder="Enter developer name">
+            <label class="form-label fw-bold">Developer name</label>
+                <select id="developer_name" class="form-control">
+                    <option selected>Select developer</option>
+                    @foreach ($accounts as $account)
+                        <option value="{{$account->first_name}} {{$account->middle_name}} {{$account->last_name}}">
+                            {{$account->first_name}} {{$account->middle_name}} {{$account->last_name}}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Designation</label>
