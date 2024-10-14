@@ -84,7 +84,7 @@ class ProjectController extends Controller
      */
     public function show()
     {
-        //
+        return view('projects.details');
     }
 
     /**
