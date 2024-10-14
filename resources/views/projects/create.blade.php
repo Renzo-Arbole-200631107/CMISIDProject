@@ -4,7 +4,7 @@
 <div class="container">
     <div class="header">
         <div>
-            <h3 class="text-bold">Add project</h3>
+            <h3>ADD PROJECT</h3>
         </div>
         <div>
             <a href="{{route('projects.index')}}" class="btn btn-outline-dark">
@@ -114,6 +114,10 @@
         flex-direction: row;
         justify-content: space-between;
         padding: 24px;
+    }
+
+    .header h3{
+        font-weight: 700;
     }
     form{
         padding: 24px;
