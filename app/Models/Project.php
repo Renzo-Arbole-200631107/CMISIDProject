@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     use HasFactory;
+    
 
     protected $fillable=[
         'project_id',
         'project_name',
         'description',
         'project_owner',
-        'developer_name',
+        'account_id',
         'designation',
         'estimate_deployment',
         'deployment_date',
@@ -28,4 +29,9 @@ class Project extends Model
         'dpa_remarks',
         'remarks',
     ];
+
+    public function account(){
+        return $this->belongsTo(Account::class, 'account_id');
+        
+    }
 }
