@@ -12,9 +12,19 @@ class AccountController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $accounts = Account::all();
+        $query = $request->input('search');
+
+        if ($query) {
+            $accounts = Account::where('first_name', 'like', "%{$query}%")
+                ->orWhere('last_name', 'like', "%{$query}%")
+                ->orWhere('middle_name', 'like', "%{$query}%")
+                ->orWhere('first_name', 'like', "%{$query}%")
+                ->get();
+        } else {
+            $accounts = Account::all();
+        }
 
         return view('accounts.index', compact('accounts'));
     }
@@ -56,9 +66,7 @@ class AccountController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Account $account)
-    {
-    }
+    public function show(Account $account) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -84,8 +92,6 @@ class AccountController extends Controller
 
         $account->update($data);
         return redirect(route('accounts.index'));
-
-
     }
 
     /**
