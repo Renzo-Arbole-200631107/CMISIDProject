@@ -44,6 +44,9 @@
     </div>
 
     <style>
+        body{
+            background-color: #f2f2f2;
+        }
         .acc-header {
             display: flex;
             justify-content: space-between;

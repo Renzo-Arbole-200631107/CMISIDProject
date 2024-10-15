@@ -4,7 +4,7 @@
 <div class="container">
     <div class="header">
         <div>
-            <h3>PROJECT TITLE</h3>
+            <h3>Details</h3>
         </div>
         <div>
             <a href="{{route('projects.index')}}" class="btn btn-primary">
@@ -22,48 +22,51 @@
         <div class="details-pad">
 
             <div class="left-column">
-                <div class="info-container">
-                    Description:
-                </div>
-                <div class="info-container">
-                    Project Owner:
-                </div>
-                <div class="info-container">
-                    Developer Name:
-                </div>
-                <div class="info-container">
-                    Estimated Deployment:
-                </div>
-                <div class="info-container">
-                    Deployment Date:
-                </div>
-                <div class="info-container">
-                    Version:
-                </div>
-                <div class="info-container">
-                    Status:
-                </div>
+                <h5 class="fw-bold info-container">
+                    {{$project->project_name}}
+                </h5>
+                <h5 class="info-container">
+                    Description: {{$project->description}}
+                </h5>
+                <h5 class="info-container">
+                    Project Owner: {{$project->project_owner}}
+                </h5>
+                <h5 class="info-container">
+                    Developer Name: {{$project->account->last_name}}, {{$project->account->first_name}} {{$project->account->middle_name}}
+                </h5>
+                <h5 class="info-container">
+                    Estimated Deployment: {{$project->estimate_deployment}}
+                </h5>
+                <h5 class="info-container">
+                    Deployment Date: {{$project->deployment_date}}
+                </h5>
+                <h5 class="info-container">
+                    Version: {{$project->version}}
+                </h5>
+                <h5 class="info-container">
+                    Status: {{$project->status}}
+                </h5>
             </div>
 
             <div class="right-column">
-                <div class="info-container">
-                    Link:
-                </div>
-                <div class="info-container">
-                    Attachments:
-                </div>
-                <div class="info-container">
-                    Google Analytics Remarks:
-                </div>
-                <div class="info-container">
-                    SEO Comments:
-                </div>
-                <div class="info-container">
-                    DPA Compliance Remarks:
-                </div>
-                <div class="info-container">
-                    Remarks:
-                </div>
+                <h5 class="info-container">
+                    Link: {{$project->link}}
+                </h5>
+                <h5 class="info-container">
+                    Attachments: {{$project->attachment}}
+                </h5>
+                <h5 class="info-container">
+                    Google Analytics Remarks: {{$project->google_remarks}}
+                </h5>
+                <h5 class="info-container">
+                    SEO Comments: {{$project->seo_comments}}
+                </h5>
+                <h5 class="info-container">
+                    DPA Compliance Remarks: {{$project->dpa_remarks}}
+                </h5>
+                <h5 class="info-container">
+                    Remarks: {{$project->remarks}}
+                </h5>
             </div>
         </div>
     </div>
@@ -120,9 +123,8 @@
 
     .info-container {
         display: flex;
-        line-height: 3.5;
+        line-height: 2.5;
         flex-direction: column;
-        font-size: 18px;
         color: black;
     }
 </style>

@@ -20,7 +20,7 @@
 
                 @foreach ($projects as $project)
                 <tr>
-                    <td>{{ $project->project_name }}</td>
+                    <td class="fw-bold"><a href="{{url('/projects/'.$project->id)}}" class="title">{{ $project->project_name }}</a></td>
                     <td>{{ $project->project_owner }}</td>
                     <td>{{ $project->account->last_name }}, {{ $project->account->first_name }} {{ $project->account->middle_name }}</td>
                     <td>{{ $project->status }}</td>
@@ -101,6 +101,11 @@
 
         .btn-container {
             justify-content: center;
+        }
+
+        .title{
+            text-decoration: none;
+            color: #2f2f2f;
         }
 
     </style>

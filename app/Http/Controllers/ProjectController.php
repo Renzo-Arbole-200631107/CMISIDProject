@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ProjectController extends Controller
 {
@@ -84,9 +85,10 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show($id)
     {
-        return view('projects.details');
+        $project = Project::find($id);
+        return view('projects.details', compact('project'));
     }
 
     /**
@@ -94,7 +96,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //return view('projects.edit');
+        $accounts = Account::all();
+        return view('projects.edit', ['project' => $project, 'accounts'=>$accounts]);
     }
 
     /**
@@ -102,7 +105,39 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $data = $request->validate([
+            'project_name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+            'project_owner' => 'required|string|max:255',
+            'account_id' => 'required|exists:accounts,id',
+            'designation' => 'required|string|max:255',
+            'estimate_deployment' => 'required|date',
+            'deployment_date' => 'required|date',
+            'version' => 'required|string|max:255',
+            'status' => 'required|string|max:255',
+            'link' => 'required|string|max:255',
+            'attachment' => 'nullable|mimes:docx,doc',
+            'dev_remarks' => 'required|string|max:255',
+            'google_remarks' => 'required|string|max:255',
+            'seo_comments' => 'required|string|max:255',
+            'dpa_remarks' => 'required|string|max:255',
+            'remarks' => 'required|string|max:255',
+        ]);
+
+        /**if($request->hasFile('attachment')){
+            $destination = 'uploads/'.$project->attachment;
+            if(File::exists($destination)){
+                File::delete($destination);
+            }
+            $file = $request->file('attachment');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extension;
+            $path = 'uploads/';
+            $file->move($path, $filename);
+        }**/
+
+        $project->update($data);
+        return redirect(route('projects.index'));
     }
 
     /**
