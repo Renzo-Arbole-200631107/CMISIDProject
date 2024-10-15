@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Spatie\Activitylog\Models\Activity;
 
 class AccountController extends Controller
 {
@@ -57,7 +58,6 @@ class AccountController extends Controller
      */
     public function show(Account $account)
     {
-        //
     }
 
     /**

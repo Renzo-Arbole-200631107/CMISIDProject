@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container">
+    <div class="container mt-5">
         <div class="acc-header">
-            <h2>ACCOUNT MANAGEMENT</h2>
+            <h2>ACCOUNTS</h2>
             <a href="{{ route('accounts.create') }}" class="add-btn btn btn-dark">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="white" d="M12 4c4.411 0 8 3.589 8 8s-3.589 8-8 8s-8-3.589-8-8s3.589-8 8-8m0-2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2m5 9h-4V7h-2v4H7v2h4v4h2v-4h4z"/></svg>
                 Add account
@@ -20,7 +20,7 @@
 
                 @foreach ($accounts as $account)
                     <tr>
-                        <td>{{ $account->last_name }}, {{ $account->first_name }} {{ $account->middle_name }}</td>
+                        <td class="fw-bold">{{ $account->last_name }}, {{ $account->first_name }} {{ $account->middle_name }}</td>
                         <td>{{ $account->username }}</td>
                         @if ($account->is_admin === 0)
                             <td class="text-success fw-bold btn-container"><span class="badge-dev">Developer</span></td>

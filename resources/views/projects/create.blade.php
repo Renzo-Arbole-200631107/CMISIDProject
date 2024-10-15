@@ -31,8 +31,15 @@
                 <input type="text" class="form-control" name="project_owner" placeholder="Enter office or department">
             </div>
             <div class="mb-4">
-                <label for="" class="form-label fw-bold">Developer Name</label>
-                <input type="text" class="form-control" name="developer_name" placeholder="Enter developer name">
+            <label class="form-label fw-bold">Developer name</label>
+                <select name="account_id" class="form-control">
+                    <option>Select developer</option>
+                    @foreach ($accounts as $account)
+                        <option value={{$account->id}}>
+                            {{$account->first_name}} {{$account->middle_name}} {{$account->last_name}}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Designation</label>
@@ -53,11 +60,12 @@
             <div class="mb-4">
                 <label class="form-label fw-bold">Status</label>
                 <select id="inputStatus" class="form-control" name="status">
-                    <option selected>On-going development</option>
-                    <option>For deployment</option>
-                    <option>Deployed</option>
-                    <option>For update</option>
-                    <option>Cancelled</option>
+                    <option selected>Select status</option>
+                    <option value="On-going development">On-going development</option>
+                    <option value="For deployment">For deployment</option>
+                    <option value="Deployed">Deployed</option>
+                    <option value="For update">For update</option>
+                    <option value="Cancelled">Cancelled</option>
                 </select>
             </div>
             <div class="mb-4">
@@ -65,7 +73,7 @@
                 <input type="text" class="form-control" name="link" placeholder="Enter link">
             </div>
             <div class="mb-4">
-                <label for="formFileMultiple" class="form-label fw-bold">Attachment/s</label>
+                <label class="form-label fw-bold">Attachment/s</label>
                 <input class="form-control" name="attachment" type="file" id="formFileMultiple" multiple>
             </div>
             <div class="mb-4">
