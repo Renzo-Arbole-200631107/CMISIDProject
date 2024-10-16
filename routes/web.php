@@ -15,8 +15,8 @@ use Spatie\Activitylog\Models\Activity;
 */
 
 Route::get('/', function () {
-    //return Activity::all();
-    return view('welcome');
+    //return Activity::all()->last();
+    return view('auth/login');
 });
 
 Auth::routes();

@@ -60,7 +60,7 @@ class ProjectController extends Controller
             $file->move($path, $filename);
         }
 
-        Project::create([
+        $project = Project::create([
             'project_name' => $data['project_name'],
             'description' => $data['description'],
             'project_owner' => $data['project_owner'],
@@ -79,6 +79,12 @@ class ProjectController extends Controller
             'remarks' => $data['remarks'],
         ]);
 
+        activity()
+            ->performedOn($project)
+            ->log('Created a new project:'.$project->project_name);
+            //->causedBy()
+
+
         return redirect(route('projects.index'));
     }
 
@@ -88,7 +94,8 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = Project::find($id);
-        return view('projects.details', compact('project'));
+        $activities = $project->activities()->latest()->get();
+        return view('projects.details', compact('project', 'activities'));
     }
 
     /**
@@ -137,6 +144,10 @@ class ProjectController extends Controller
         }**/
 
         $project->update($data);
+
+        activity()
+            ->performedOn($project)
+            ->log('Updated the project.');
         return redirect(route('projects.index'));
     }
 
