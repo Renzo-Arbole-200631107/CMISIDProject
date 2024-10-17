@@ -79,9 +79,9 @@ class ProjectController extends Controller
             'remarks' => $data['remarks'],
         ]);
 
-        activity()
-            ->performedOn($project)
-            ->log('Created a new project:'.$project->project_name);
+        //activity()
+        //    ->performedOn($project)
+        //    ->log('Created a new project:'.$project->project_name);
             //->causedBy()
 
 
@@ -145,9 +145,9 @@ class ProjectController extends Controller
 
         $project->update($data);
 
-        activity()
-            ->performedOn($project)
-            ->log('Updated the project.');
+        //activity()
+        //    ->performedOn($project)
+        //    ->log('Updated the project.');
         return redirect(route('projects.index'));
     }
 

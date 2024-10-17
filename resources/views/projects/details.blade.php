@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5">
+<div class="container">
     <div class="header">
         <div>
             <h3>Details</h3>
@@ -69,8 +69,12 @@
                 </h5>
             </div>
         </div>
+    </div>
+    <div class="pad-shadow">
         <div class="details-pad">
-            <h2 class="info-container">Activity Log</h2>
+            <h4 class="info-container px-4">Activity Log</h4>
+        </div>
+        <div class="details-pad">
             <ul>
                 @foreach ($activities as $activity)
                     <li class="info-container">{{ $activity->description }} - {{ $activity->created_at}}</li>

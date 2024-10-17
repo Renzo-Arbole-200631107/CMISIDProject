@@ -32,15 +32,18 @@
                     <div class="mb-4">
                         <h2 class="fw-bold">Log in to your account.</h2>
                     </div>
-                    <div class="form-outline mb-4">
-                        <input type="text" class="form-control" placeholder="Username" required />
-                    </div>
-                    <div class="form-outline mb-4">
-                        <input type="text" class="form-control" placeholder="Password" required />
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-dark col fw-bold">Log In</button>
-                    </div>
+                    <form method="POST" action="{{route('login')}}">
+                        @csrf
+                        <div class="form-outline mb-4">
+                            <input type="text" class="form-control" placeholder="Username" name="username" required />
+                        </div>
+                        <div class="form-outline mb-4">
+                            <input type="password" class="form-control" placeholder="Password" name="password" required />
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-dark col fw-bold">Log In</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="group">
                     <p class="text-center">© 2024 City Management Information Systems and Innovation Department. All rights reserved.</p>

@@ -58,7 +58,6 @@ class Project extends Model
     public function getActivitylogOptions(): LogOptions{
         return LogOptions::defaults()
             ->useLogName('project')
-            ->logAll()
-            ->setDescriptionForEvent(fn(string $event) => "Project has been {$event}");
+            ->logAll();
     }
 }
