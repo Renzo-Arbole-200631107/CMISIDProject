@@ -12,11 +12,32 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::with('account')->get();
+        $query = Project::query();
+
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $query->whereBetween('deployment_date', [$request->start_date, $request->end_date]);
+        }
+
+        if ($request->input('search')) {
+            $search = strtolower($request->input('search'));
+            $query->whereRaw('LOWER(project_name) LIKE ?', ["%{$search}%"])
+                ->orWhereRaw('LOWER(project_owner) LIKE ?', ["%{$search}%"])
+                ->orWhereRaw('LOWER(account_id) LIKE ?', ["%{$search}%"])
+                ->orWhereRaw('LOWER(status) LIKE ?', ["%{$search}%"])
+                ->orWhereHas('account', function ($q) use ($search) {
+                    $q->whereRaw('LOWER(first_name) LIKE ?', ["%{$search}%"])
+                        ->orWhereRaw('LOWER(middle_name) LIKE ?', ["%{$search}%"])
+                        ->orWhereRaw('LOWER(last_name) LIKE ?', ["%{$search}%"]);
+                });
+        }
+
+        $projects = $query->with('account')->get();
+
         return view('projects.index', compact('projects'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -55,7 +76,7 @@ class ProjectController extends Controller
         if ($request->has('attachment')) {
             $file = $request->file('attachment');
             $extension = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extension;
+            $filename = time() . '.' . $extension;
             $path = 'uploads/';
             $file->move($path, $filename);
         }
@@ -71,7 +92,7 @@ class ProjectController extends Controller
             'version' => $data['version'],
             'status' => $data['status'],
             'link' => $data['link'],
-            'attachment' => $path.$filename,
+            'attachment' => $path . $filename,
             'dev_remarks' => $data['dev_remarks'],
             'google_remarks' => $data['google_remarks'],
             'seo_comments' => $data['seo_comments'],
