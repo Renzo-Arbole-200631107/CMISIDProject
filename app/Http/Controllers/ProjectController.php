@@ -79,9 +79,9 @@ class ProjectController extends Controller
             'remarks' => $data['remarks'],
         ]);
 
-        //activity()
-        //    ->performedOn($project)
-        //    ->log('Created a new project:'.$project->project_name);
+        activity()
+            ->performedOn($project)
+            ->log('Created a new project:'.$project->project_name);
             //->causedBy()
 
 
@@ -142,12 +142,29 @@ class ProjectController extends Controller
             $path = 'uploads/';
             $file->move($path, $filename);
         }**/
-
+        
+        $old = $project->getOriginal();
+        
         $project->update($data);
 
-        //activity()
-        //    ->performedOn($project)
-        //    ->log('Updated the project.');
+        $new = collect($project->getChanges())->except('updated_at');
+
+        if(!empty($new)){
+            $logs = 'Updated '.$project->project_name.': ';
+            foreach ($new as $changes => $newLogs) {
+                $logs .= $changes . ' changed from ' . $old[$changes] . ' to ' . $newLogs;
+            }
+
+            activity()
+            ->performedOn($project)
+            ->withProperties([
+                'new' => $new,
+                'old' => collect($old)->only($new->keys()->toArray()),
+            ])
+            ->log($logs);
+        }
+
+        
         return redirect(route('projects.index'));
     }
 

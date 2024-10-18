@@ -32,7 +32,7 @@
                     <div class="mb-4">
                         <h2 class="fw-bold">Log in to your account.</h2>
                     </div>
-                    <form method="POST" action="{{route('login')}}">
+                    <form method="POST" action="">
                         @csrf
                         <div class="form-outline mb-4">
                             <input type="text" class="form-control" placeholder="Username" name="username" required />

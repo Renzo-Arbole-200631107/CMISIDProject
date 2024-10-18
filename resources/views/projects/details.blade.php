@@ -75,11 +75,20 @@
             <h4 class="info-container px-4">Activity Log</h4>
         </div>
         <div class="details-pad">
-            <ul>
+            <table class="table">
+                <tr>
+                    <td>Updated at</td>
+                    <td>Changes</td>
+                </tr>
                 @foreach ($activities as $activity)
-                    <li class="info-container">{{ $activity->description }} - {{ $activity->created_at}}</li>
+                <tr>
+                    <td>{{ $activity->created_at }}</td>
+                    <td>{{ $activity->description }}</td>
+                </tr>
+                    
                 @endforeach
-            </ul>
+
+            </table>
         </div>
     </div>
 </div>
@@ -139,6 +148,15 @@
         flex-direction: column;
         color: black;
     }
+
+    .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0px 2px 10px 4px #dcdcdc;
+        }
 </style>
 
 @endsection
