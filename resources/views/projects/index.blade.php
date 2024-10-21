@@ -52,7 +52,7 @@
                 <tr>
                     <td class="fw-bold"><a href="{{url('/projects/'.$project->id)}}" class="title">{{ $project->project_name }}</a></td>
                     <td>{{ $project->project_owner }}</td>
-                    <td>{{ $project->account->last_name }}, {{ $project->account->first_name }} {{ $project->account->middle_name }}</td>
+                    <td>{{ $project->user->last_name }}, {{ $project->user->first_name }} {{ $project->user->middle_name }}</td>
                     <td>{{ $project->status }}</td>
                     <td>
                         <a href="{{ route('projects.edit', ['project' => $project]) }}" class="">

@@ -23,8 +23,9 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \Illuminate\Session\Middleware\StartSession::class,
+        'checkRole' => CheckRole::class, 
     ];
-
+    
     /**
      * The application's route middleware groups.
      *
@@ -68,3 +69,4 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
 }
+//dd("Kernel loaded");

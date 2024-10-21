@@ -14,21 +14,27 @@ class CheckRole
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
+    
     public function handle(Request $request, Closure $next): Response
     {
-        if(!Auth::check()){
+        $user = Auth::user();
+        
+        if(!$user){
             return redirect()->route('login');
-        };
-
-        $account = Auth::user();
-
-        if($account->is_admin !== 0){
-            abort(403, 'Unauthorized access.');
         }
 
-        if($account->is_admin !== 1){
-             abort(403, 'Unauthorized access.'); 
+        if($user->is_admin === 0){
+            if($request->isMethod('get')||$request->isMethod('put')){
+                return $next($request);
+            }
+            abort(403, 'Access denied.');
         }
-        return $next($request);
+
+        if($user->is_admin === 1){
+            return $next($request);
+        }
+        abort(403, 'Insufficient permissions.'); 
+        
     }
+        
 }

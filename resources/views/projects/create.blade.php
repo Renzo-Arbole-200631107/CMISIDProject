@@ -34,9 +34,9 @@
             <label class="form-label fw-bold">Developer name</label>
                 <select name="account_id" class="form-control">
                     <option>Select developer</option>
-                    @foreach ($accounts as $account)
-                        <option value={{$account->id}}>
-                            {{$account->first_name}} {{$account->middle_name}} {{$account->last_name}}
+                    @foreach ($users as $user)
+                        <option value={{$user->id}}>
+                            {{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}
                         </option>
                     @endforeach
                 </select>

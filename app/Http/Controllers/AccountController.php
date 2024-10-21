@@ -11,41 +11,6 @@ use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
-    public function login(){
-        return view('login');
-    }
-
-    public function loginPost(Request $request){
-        //dd($request);
-        $data = $request->validate([
-            'username' => 'required',
-            'password' => 'required'
-        ]);
-
-        if(Auth::guard('web')->attempt($data)){
-            //$request->session()->regenerate();
-            return redirect()->intended('projects');
-        }
-
-        return back()->withErrors([
-            'username' => 'Provided username/password do not match our records.',
-        ]);
-    }
-
-    public function logout(Request $request)
-    {
-        // Log out the user
-        Auth::guard('web')->logout();
-
-        // Invalidate the session
-        $request->session()->invalidate();
-
-        // Regenerate session token
-        $request->session()->regenerateToken();
-
-        // Redirect to login page
-        return redirect('/login');
-    }
     /**
      * Display a listing of the resource.
      */

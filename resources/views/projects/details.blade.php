@@ -32,7 +32,7 @@
                     Project Owner: {{$project->project_owner}}
                 </h5>
                 <h5 class="info-container">
-                    Developer Name: {{$project->account->last_name}}, {{$project->account->first_name}} {{$project->account->middle_name}}
+                    Developer Name: {{$project->user->last_name}}, {{$project->user->first_name}} {{$project->user->middle_name}}
                 </h5>
                 <h5 class="info-container">
                     Estimated Deployment: {{$project->estimate_deployment}}

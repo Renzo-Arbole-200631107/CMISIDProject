@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -44,8 +45,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $accounts = Account::all();
-        return view('projects.create', compact('accounts'));
+        $users = User::all();
+        return view('projects.create', compact('users'));
     }
 
     /**

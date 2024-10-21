@@ -47,7 +47,7 @@
                             <a class="nav-link" href="#">OFFICES</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('accounts.index')}}">ACCOUNT</a>
+                            <a class="nav-link" href="{{route('users.index')}}">ACCOUNT</a>
                         </li>
                     </ul>
 
