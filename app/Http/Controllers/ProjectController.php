@@ -22,21 +22,29 @@ class ProjectController extends Controller
 
         if ($request->input('search')) {
             $search = strtolower($request->input('search'));
-            $query->whereRaw('LOWER(project_name) LIKE ?', ["%{$search}%"])
-                ->orWhereRaw('LOWER(project_owner) LIKE ?', ["%{$search}%"])
-                ->orWhereRaw('LOWER(account_id) LIKE ?', ["%{$search}%"])
-                ->orWhereRaw('LOWER(status) LIKE ?', ["%{$search}%"])
-                ->orWhereHas('account', function ($q) use ($search) {
-                    $q->whereRaw('LOWER(first_name) LIKE ?', ["%{$search}%"])
-                        ->orWhereRaw('LOWER(middle_name) LIKE ?', ["%{$search}%"])
-                        ->orWhereRaw('LOWER(last_name) LIKE ?', ["%{$search}%"]);
-                });
+            $query->where(function ($q) use ($search) {
+                $q->whereRaw('LOWER(project_name) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(project_owner) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(account_id) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(status) LIKE ?', ["%{$search}%"])
+                    ->orWhereHas('account', function ($q) use ($search) {
+                        $q->whereRaw('LOWER(first_name) LIKE ?', ["%{$search}%"])
+                            ->orWhereRaw('LOWER(middle_name) LIKE ?', ["%{$search}%"])
+                            ->orWhereRaw('LOWER(last_name) LIKE ?', ["%{$search}%"]);
+                    });
+            });
+        }
+
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
         }
 
         $projects = $query->with('account')->get();
 
         return view('projects.index', compact('projects'));
     }
+
+
 
 
     /**
@@ -102,8 +110,8 @@ class ProjectController extends Controller
 
         activity()
             ->performedOn($project)
-            ->log('Created a new project:'.$project->project_name);
-            //->causedBy()
+            ->log('Created a new project:' . $project->project_name);
+        //->causedBy()
 
 
         return redirect(route('projects.index'));
@@ -125,7 +133,7 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $accounts = Account::all();
-        return view('projects.edit', ['project' => $project, 'accounts'=>$accounts]);
+        return view('projects.edit', ['project' => $project, 'accounts' => $accounts]);
     }
 
     /**

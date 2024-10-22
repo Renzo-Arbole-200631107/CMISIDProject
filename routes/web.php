@@ -25,4 +25,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('projects', App\Http\Controllers\ProjectController::class);
 Route::resource('accounts', App\Http\Controllers\AccountController::class);
 Route::resource('offices', App\Http\Controllers\OfficeController::class);
+Route::resource('dashboard', App\Http\Controllers\DashboardController::class);
 

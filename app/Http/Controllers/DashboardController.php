@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Office;
+use App\Models\Dashboard;
 use Illuminate\Http\Request;
 
-class OfficeController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class OfficeController extends Controller
     public function index()
     {
         {
-            return view('offices.index');
+            return view('dashboard');
         }
     }
 
@@ -36,7 +36,7 @@ class OfficeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Office $office)
+    public function show(Dashboard $dashboard)
     {
         //
     }
@@ -44,7 +44,7 @@ class OfficeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Office $office)
+    public function edit(Dashboard $dashboard)
     {
         //
     }
@@ -52,7 +52,7 @@ class OfficeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Office $office)
+    public function update(Request $request, Dashboard $dashboard)
     {
         //
     }
@@ -60,7 +60,7 @@ class OfficeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Office $office)
+    public function destroy(Dashboard $dashboard)
     {
         //
     }
