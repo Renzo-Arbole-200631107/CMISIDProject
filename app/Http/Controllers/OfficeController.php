@@ -12,7 +12,11 @@ class OfficeController extends Controller
      */
     public function index()
     {
-        //
+        // Fetch all offices from the database
+        $offices = Office::all();
+
+        // Pass the offices data to the view
+        return view('offices.index', compact('offices'));
     }
 
     /**
@@ -20,7 +24,8 @@ class OfficeController extends Controller
      */
     public function create()
     {
-        //
+        $offices = Office::all();
+        return view('offices.create', compact('offices'));
     }
 
     /**
@@ -28,7 +33,17 @@ class OfficeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'office_name' => 'required|string|max:255',
+            'is_active' => 'required|integer'
+        ]);
+
+        $office = Office::create([
+            'office_name' => $data['office_name'],
+            'is_active' => $data['is_active'],
+        ]);
+
+        return redirect(route('offices.index'));
     }
 
     /**
@@ -44,7 +59,7 @@ class OfficeController extends Controller
      */
     public function edit(Office $office)
     {
-        //
+        return view('offices.edit', ['office' => $office]);
     }
 
     /**
@@ -52,7 +67,13 @@ class OfficeController extends Controller
      */
     public function update(Request $request, Office $office)
     {
-        //
+        $data = $request->validate([
+            'office_name' => 'required|string|max:255',
+            'is_active' => 'required|integer'
+        ]);
+
+        $office->update($data);
+        return redirect(route('offices.index'));
     }
 
     /**

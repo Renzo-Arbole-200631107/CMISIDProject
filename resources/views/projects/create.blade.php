@@ -31,12 +31,23 @@
                 <input type="text" class="form-control" name="project_owner" placeholder="Enter office or department">
             </div>
             <div class="mb-4">
-                <label for="" class="form-label fw-bold">Developer Name</label>
-                <input type="text" class="form-control" name="developer_name" placeholder="Enter developer name">
+            <label class="form-label fw-bold">Developer name</label>
+                <select name="account_id" class="form-control">
+                    <option>Select developer</option>
+                    @foreach ($accounts as $account)
+                        <option value={{$account->id}}>
+                            {{$account->first_name}} {{$account->middle_name}} {{$account->last_name}}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Designation</label>
                 <input type="text" class="form-control" name="designation" placeholder="Enter designation">
+            </div>
+            <div class="mb-4">
+                <label for="" class="form-label fw-bold">Start SAD date</label>
+                <input type="date" class="form-control" name="start_sad">
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Estimated deployment</label>
@@ -53,11 +64,12 @@
             <div class="mb-4">
                 <label class="form-label fw-bold">Status</label>
                 <select id="inputStatus" class="form-control" name="status">
-                    <option selected>On-going development</option>
-                    <option>For deployment</option>
-                    <option>Deployed</option>
-                    <option>For update</option>
-                    <option>Cancelled</option>
+                    <option selected>Select status</option>
+                    <option value="On-going development">On-going development</option>
+                    <option value="For deployment">For deployment</option>
+                    <option value="Deployed">Deployed</option>
+                    <option value="For update">For update</option>
+                    <option value="Cancelled">Cancelled</option>
                 </select>
             </div>
             <div class="mb-4">
@@ -65,7 +77,7 @@
                 <input type="text" class="form-control" name="link" placeholder="Enter link">
             </div>
             <div class="mb-4">
-                <label for="formFileMultiple" class="form-label fw-bold">Attachment/s</label>
+                <label class="form-label fw-bold">Attachment/s</label>
                 <input class="form-control" name="attachment" type="file" id="formFileMultiple" multiple>
             </div>
             <div class="mb-4">
@@ -91,7 +103,7 @@
             <div class="text-right">
                 <button type="submit" class="btn btn-dark">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="white" d="M12 4c4.411 0 8 3.589 8 8s-3.589 8-8 8s-8-3.589-8-8s3.589-8 8-8m0-2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2m5 9h-4V7h-2v4H7v2h4v4h2v-4h4z"/></svg>
-                Add user</button>
+                Add project</button>
             </div>
         </form>
     </div>
@@ -110,7 +122,13 @@
 
     .header h3{
         font-weight: 700;
+        margin-top: 50px;
     }
+
+    .btn {
+        margin-top: 50px;
+    }
+
     form{
         padding: 24px;
     }

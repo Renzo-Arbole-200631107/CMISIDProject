@@ -2,27 +2,69 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::all();
+        $query = Project::query();
+
+        // Filter by date range if both start and end dates are provided
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $query->whereBetween('start_sad', [$request->start_date, $request->end_date]);
+        } elseif ($request->filled('start_date')) {
+            // If only start date is provided
+            $query->where('start_sad', '>=', $request->start_date);
+        } elseif ($request->filled('end_date')) {
+            // If only end date is provided
+            $query->where('start_sad', '<=', $request->end_date);
+        }
+
+        // Filter by status if a status is selected
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Handle search functionality
+        if ($request->input('search')) {
+            $search = strtolower($request->input('search'));
+            $query->where(function ($q) use ($search) {
+                $q->whereRaw('LOWER(project_name) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(project_owner) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(account_id) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(status) LIKE ?', ["%{$search}%"])
+                    ->orWhereHas('account', function ($q) use ($search) {
+                        $q->whereRaw('LOWER(first_name) LIKE ?', ["%{$search}%"])
+                            ->orWhereRaw('LOWER(middle_name) LIKE ?', ["%{$search}%"])
+                            ->orWhereRaw('LOWER(last_name) LIKE ?', ["%{$search}%"]);
+                    });
+            });
+        }
+
+        // Get the results with eager loading for the account relationship
+        $projects = $query->with('account')->get();
 
         return view('projects.index', compact('projects'));
     }
+
+
+
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('projects.create');
+        $accounts = Account::all();
+        return view('projects.create', compact('accounts'));
     }
 
     /**
@@ -30,20 +72,20 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+
         $data = $request->validate([
-            'account_id' => 'required|exists:accounts,id',
-            'office_id' => 'required|exists:offices,id',
             'project_name' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
             'project_owner' => 'required|string|max:255',
-            'developer_name' => 'required|string|max:255',
+            'account_id' => 'required|exists:accounts,id',
             'designation' => 'required|string|max:255',
+            'start_sad' => 'required|date',
             'estimate_deployment' => 'required|date',
             'deployment_date' => 'required|date',
             'version' => 'required|string|max:255',
             'status' => 'required|string|max:255',
             'link' => 'required|string|max:255',
-            'attachment' => 'required|string|max:255',
+            'attachment' => 'required|mimes:docx,doc',
             'dev_remarks' => 'required|string|max:255',
             'google_remarks' => 'required|string|max:255',
             'seo_comments' => 'required|string|max:255',
@@ -51,19 +93,27 @@ class ProjectController extends Controller
             'remarks' => 'required|string|max:255',
         ]);
 
-        $project = Project::create($data);
+        if ($request->has('attachment')) {
+            $file = $request->file('attachment');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $path = 'uploads/';
+            $file->move($path, $filename);
+        }
+
         $project = Project::create([
             'project_name' => $data['project_name'],
             'description' => $data['description'],
             'project_owner' => $data['project_owner'],
-            'developer_name' => $data['developer_name'],
+            'account_id' => $data['account_id'],
             'designation' => $data['designation'],
+            'start_sad' => $data['start_sad'],
             'estimate_deployment' => $data['estimate_deployment'],
             'deployment_date' => $data['deployment_date'],
             'version' => $data['version'],
             'status' => $data['status'],
             'link' => $data['link'],
-            'attachment' => $data['attachment'],
+            'attachment' => $path . $filename,
             'dev_remarks' => $data['dev_remarks'],
             'google_remarks' => $data['google_remarks'],
             'seo_comments' => $data['seo_comments'],
@@ -71,10 +121,11 @@ class ProjectController extends Controller
             'remarks' => $data['remarks'],
         ]);
 
-        if ($request->hasFile('attachment')) {
-            $filePath = $request->file('attachment')->store('attachments', 'public');
-            $data['attachment'] = $filePath;
-        }
+        activity()
+            ->performedOn($project)
+            ->log('Created a new project:' . $project->project_name);
+        //->causedBy()
+
 
         return redirect(route('projects.index'));
     }
@@ -82,9 +133,11 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show($id)
     {
-        return view('projects.details');
+        $project = Project::find($id);
+        $activities = $project->activities()->latest()->get();
+        return view('projects.details', compact('project', 'activities'));
     }
 
     /**
@@ -92,7 +145,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //return view('projects.edit');
+        $accounts = Account::all();
+        return view('projects.edit', ['project' => $project, 'accounts' => $accounts]);
     }
 
     /**
@@ -100,7 +154,44 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $data = $request->validate([
+            'project_name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+            'project_owner' => 'required|string|max:255',
+            'account_id' => 'required|exists:accounts,id',
+            'designation' => 'required|string|max:255',
+            'start_sad' => 'required|date',
+            'estimate_deployment' => 'required|date',
+            'deployment_date' => 'required|date',
+            'version' => 'required|string|max:255',
+            'status' => 'required|string|max:255',
+            'link' => 'required|string|max:255',
+            'attachment' => 'nullable|mimes:docx,doc',
+            'dev_remarks' => 'required|string|max:255',
+            'google_remarks' => 'required|string|max:255',
+            'seo_comments' => 'required|string|max:255',
+            'dpa_remarks' => 'required|string|max:255',
+            'remarks' => 'required|string|max:255',
+        ]);
+
+        /**if($request->hasFile('attachment')){
+            $destination = 'uploads/'.$project->attachment;
+            if(File::exists($destination)){
+                File::delete($destination);
+            }
+            $file = $request->file('attachment');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extension;
+            $path = 'uploads/';
+            $file->move($path, $filename);
+        }**/
+
+        $project->update($data);
+
+        activity()
+            ->performedOn($project)
+            ->log('Updated the project.');
+        return redirect(route('projects.index'));
     }
 
     /**
