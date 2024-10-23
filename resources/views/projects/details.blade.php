@@ -35,6 +35,9 @@
                     Developer Name: {{$project->user->last_name}}, {{$project->user->first_name}} {{$project->user->middle_name}}
                 </h5>
                 <h5 class="info-container">
+                    Start SAD Date: {{$project->start_sad}}
+                </h5>
+                <h5 class="info-container">
                     Estimated Deployment: {{$project->estimate_deployment}}
                 </h5>
                 <h5 class="info-container">

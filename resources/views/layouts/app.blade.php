@@ -41,7 +41,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav-links me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('projects.index')}}">PROJECTS</a>
+                            <a class="nav-link" href="{{ route('projects.index') }}">PROJECTS</a>
                         </li>
                         @if (auth()->user()->hasRole('project manager'))
                             <li class="nav-item">
@@ -90,11 +90,17 @@
         font-family: "Poppins", sans-serif;
     }
 
+
     .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
         display: flex;
         justify-content: space-between;
         align-items: center;
         background-color: #19358A;
+        margin: 0;
         padding: 10px 20px;
     }
 
@@ -125,8 +131,7 @@
         background: #19358A;
         border: solid 1px;
         border-radius: 6px;
-        border
-        border-color: white;
+        border border-color: white;
         padding-top: 4px;
         padding-bottom: 4px;
         padding-left: 16px;
