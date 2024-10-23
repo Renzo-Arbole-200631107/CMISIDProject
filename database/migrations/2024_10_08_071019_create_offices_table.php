@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('offices', function (Blueprint $table) {
             $table->id();
             $table->string('office_name');
+            $table->boolean('is_active')->default(1); // Add the 'is_active' column
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.

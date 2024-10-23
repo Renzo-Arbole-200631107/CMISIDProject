@@ -17,6 +17,7 @@ class Project extends Model
         'project_owner',
         'account_id',
         'designation',
+        'start_sad',
         'estimate_deployment',
         'deployment_date',
         'version',
@@ -32,7 +33,7 @@ class Project extends Model
 
     public function account(){
         return $this->belongsTo(Account::class, 'account_id');
-        
+
     }
 
     protected static $logFields = [
@@ -42,6 +43,7 @@ class Project extends Model
         'project_owner',
         'account_id',
         'designation',
+        'start_sad',
         'estimate_deployment',
         'deployment_date',
         'version',

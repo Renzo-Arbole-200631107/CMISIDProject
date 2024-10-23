@@ -46,6 +46,10 @@
                 <input type="text" class="form-control" name="designation" placeholder="Enter designation">
             </div>
             <div class="mb-4">
+                <label for="" class="form-label fw-bold">Start SAD date</label>
+                <input type="date" class="form-control" name="start_sad">
+            </div>
+            <div class="mb-4">
                 <label for="" class="form-label fw-bold">Estimated deployment</label>
                 <input type="date" class="form-control" name="estimate_deployment">
             </div>

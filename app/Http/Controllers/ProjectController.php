@@ -16,10 +16,23 @@ class ProjectController extends Controller
     {
         $query = Project::query();
 
-        if ($request->has('start_date') && $request->has('end_date')) {
-            $query->whereBetween('deployment_date', [$request->start_date, $request->end_date]);
+        // Filter by date range if both start and end dates are provided
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $query->whereBetween('start_sad', [$request->start_date, $request->end_date]);
+        } elseif ($request->filled('start_date')) {
+            // If only start date is provided
+            $query->where('start_sad', '>=', $request->start_date);
+        } elseif ($request->filled('end_date')) {
+            // If only end date is provided
+            $query->where('start_sad', '<=', $request->end_date);
         }
 
+        // Filter by status if a status is selected
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Handle search functionality
         if ($request->input('search')) {
             $search = strtolower($request->input('search'));
             $query->where(function ($q) use ($search) {
@@ -35,14 +48,12 @@ class ProjectController extends Controller
             });
         }
 
-        if ($request->has('status') && $request->status != '') {
-            $query->where('status', $request->status);
-        }
-
+        // Get the results with eager loading for the account relationship
         $projects = $query->with('account')->get();
 
         return view('projects.index', compact('projects'));
     }
+
 
 
 
@@ -68,6 +79,7 @@ class ProjectController extends Controller
             'project_owner' => 'required|string|max:255',
             'account_id' => 'required|exists:accounts,id',
             'designation' => 'required|string|max:255',
+            'start_sad' => 'required|date',
             'estimate_deployment' => 'required|date',
             'deployment_date' => 'required|date',
             'version' => 'required|string|max:255',
@@ -95,6 +107,7 @@ class ProjectController extends Controller
             'project_owner' => $data['project_owner'],
             'account_id' => $data['account_id'],
             'designation' => $data['designation'],
+            'start_sad' => $data['start_sad'],
             'estimate_deployment' => $data['estimate_deployment'],
             'deployment_date' => $data['deployment_date'],
             'version' => $data['version'],
@@ -147,6 +160,7 @@ class ProjectController extends Controller
             'project_owner' => 'required|string|max:255',
             'account_id' => 'required|exists:accounts,id',
             'designation' => 'required|string|max:255',
+            'start_sad' => 'required|date',
             'estimate_deployment' => 'required|date',
             'deployment_date' => 'required|date',
             'version' => 'required|string|max:255',
