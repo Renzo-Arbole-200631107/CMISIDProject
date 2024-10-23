@@ -8,6 +8,7 @@ use App\Models\User;
 class UserController extends Controller
 {
     public function index(Request $request){
+        
         $query = $request->input('search');
 
         if ($query) {
@@ -17,10 +18,40 @@ class UserController extends Controller
                 ->orWhere('first_name', 'like', "%{$query}%")
                 ->get();
         } else {
-            $users = User::all();
+            $users = User::with('roles')->get();
         }
 
         return view('users.index', compact('users'));
+    }
+
+    public function create(){
+        return view('users.create');
+    }
+
+    public function store(Request $request){
+
+        $data = $request->validate([
+            'last_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
+            'role' => 'required|string',
+            'is_active' => 'required|integer'
+        ]);
+
+        $user = User::create([
+            'last_name' => $data['last_name'],
+            'first_name' => $data['first_name'],
+            'middle_name' => $data['middle_name'],
+            'username' => $data['username'],
+            'is_active' => $data['is_active'],
+        ]);
+
+        $user->assignRole($data['role']);
+
+        //dd($user->roles);
+
+        return redirect(route('users.index'));
     }
 
     public function edit(User $user)
@@ -38,7 +69,6 @@ class UserController extends Controller
             'middle_name' => 'nullable|string|max:255',
             'first_name' => 'required|string|max:255',
             'username' => 'required|string|max:255',
-            'is_admin' => 'required|integer',
             'is_active' => 'required|integer'
         ]);
 

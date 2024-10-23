@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Request;
+use Spatie\Permission\Models\Role;
 
 class RegisterController extends Controller
 {
@@ -28,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/projects';
 
     /**
      * Create a new controller instance.
@@ -53,7 +55,7 @@ class RegisterController extends Controller
             'middle_name' => 'nullable|string|max:255',
             'first_name' => 'required|string|max:255',
             'username' => 'required|string|max:255',
-            'is_admin' => 'required|integer',
+            'role' => 'required|string',
             'is_active' => 'required|integer'
         ]);
     }
@@ -64,16 +66,22 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    
+     
+     protected function create(array $data)
     {
-        User::create([
+        
+        $user = User::create([
             'last_name' => $data['last_name'],
             'first_name' => $data['first_name'],
             'middle_name' => $data['middle_name'],
             'username' => $data['username'],
-            'is_admin' => $data['is_admin'],
             'is_active' => $data['is_active'],
         ]);
+
+        $user->assignRole($data['role']);
+
+        //dd($user->roles);
 
         return redirect()->route('login');
 

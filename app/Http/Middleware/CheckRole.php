@@ -15,26 +15,20 @@ class CheckRole
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, $role): Response
     {
-        $user = Auth::user();
         
-        if(!$user){
-            return redirect()->route('login');
+        // Check if the user is authenticated
+        if (!Auth::check()) {
+            return redirect()->route('login'); // Redirect to login
+        }
+        
+
+        // Check if the user has the required role
+        if (!Auth::user()->hasAnyRole(['project manager', 'developer'])) {
+            return redirect()->route('projects.index')->with('error', 'You do not have access to this resource.');
         }
 
-        if($user->is_admin === 0){
-            if($request->isMethod('get')||$request->isMethod('put')){
-                return $next($request);
-            }
-            abort(403, 'Access denied.');
-        }
-
-        if($user->is_admin === 1){
-            return $next($request);
-        }
-        abort(403, 'Insufficient permissions.'); 
-        
+        return $next($request);
     }
-        
 }
