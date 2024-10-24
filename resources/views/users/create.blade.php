@@ -14,7 +14,7 @@
     </div>
 
     <div>
-    <form action="{{route('register')}}" method="POST">
+    <form action="{{route('users.store')}}" method="POST">
                     @method('post')
                     @csrf
                     <div class="mb-4">

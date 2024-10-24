@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('attachments', function (Blueprint $table) {
             $table->id();
-            $table->string('username');
-            $table->string('password')->default(Hash::make('cmisid'));
-            $table->string('last_name');
-            $table->string('first_name');
-            $table->string('middle_name');
-            $table->integer('is_active')->default(1); //1 is active, 0 is not
+            $table->foreignId('project_id')->constrained()->onDelete('cascade');
+            $table->string('file_name');
+            $table->string('file_path');
+            $table->timestamp('uploaded_at')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('attachments');
     }
 };

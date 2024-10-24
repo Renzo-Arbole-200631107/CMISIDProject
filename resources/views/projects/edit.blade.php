@@ -32,11 +32,11 @@
             </div>
             <div class="mb-4">
             <label class="form-label fw-bold">Developer name</label>
-                <select name="account_id" class="form-control">
+                <select name="user_id" class="form-control">
                     <option>Select developer</option>
-                    @foreach ($accounts as $account)
-                        <option value={{$account->id}} {{old('account_id', $account->id) == $account->id ? 'selected' : ''}}>
-                            {{$account->first_name}} {{$account->middle_name}} {{$account->last_name}}
+                    @foreach ($users as $user)
+                        <option value={{$user->id}} {{old('account_id', $user->id) == $user->id ? 'selected' : ''}}>
+                            {{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}
                         </option>
                     @endforeach
                 </select>
@@ -44,6 +44,10 @@
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Designation</label>
                 <input type="text" class="form-control" name="designation" value={{$project->designation}}>
+            </div>
+            <div class="mb-4">
+                <label for="" class="form-label fw-bold">Start SAD date</label>
+                <input type="date" class="form-control" name="start_sad" value={{$project->start_sad}}>
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Estimated deployment</label>
@@ -74,7 +78,7 @@
 
             <div class="mb-4">
                 <label class="form-label fw-bold">Attachment/s</label>
-                <input class="form-control" name="attachment[]" type="file" id="formFileMultiple" multiple>
+                <input class="form-control" name="attachment[]" type="file" multiple>
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Developer remarks</label>
@@ -118,7 +122,7 @@
 
     .header h3{
         font-weight: 700;
-        margin-top: 50px;
+        margin-top: 60px;
     }
 
     .btn {
