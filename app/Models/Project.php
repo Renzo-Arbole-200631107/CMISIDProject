@@ -15,7 +15,7 @@ class Project extends Model
         'project_name',
         'description',
         'project_owner',
-        'account_id',
+        'user_id',
         'designation',
         'start_sad',
         'estimate_deployment',
@@ -31,9 +31,12 @@ class Project extends Model
         'remarks',
     ];
 
-    public function account(){
-        return $this->belongsTo(Account::class, 'account_id');
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 
+    public function attachments(){
+        return $this->hasMany(Attachment::class);
     }
 
     protected static $logFields = [
@@ -41,7 +44,7 @@ class Project extends Model
         'project_name',
         'description',
         'project_owner',
-        'account_id',
+        'user_id',
         'designation',
         'start_sad',
         'estimate_deployment',

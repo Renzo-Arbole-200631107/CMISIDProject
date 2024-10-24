@@ -17,7 +17,7 @@ class LoginController extends Controller
         if($user->hasRole('project manager')){
             return 'projects/';
         } elseif($user->hasRole('developer')){
-            return 'accounts/';
+            return 'users/';
         } else{
             return '/';
         }

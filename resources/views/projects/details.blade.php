@@ -56,7 +56,7 @@
                     Link: {{$project->link}}
                 </h5>
                 <h5 class="info-container">
-                    Attachments: {{$project->attachment}}
+                    Attachments: 
                 </h5>
                 <h5 class="info-container">
                     Google Analytics Remarks: {{$project->google_remarks}}

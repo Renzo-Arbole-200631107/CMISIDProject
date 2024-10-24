@@ -43,11 +43,10 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('projects.index') }}">PROJECTS</a>
                         </li>
-                        @if (auth()->user()->hasRole('project manager'))
-                            <li class="nav-item">
+                        
+                        <li class="nav-item">
                                 <a class="nav-link" href="#">OFFICES</a>
                             </li>
-                        @endif
                         
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('users.index')}}">ACCOUNT</a>

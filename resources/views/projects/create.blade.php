@@ -13,7 +13,15 @@
                 Back</a>
         </div>
     </div>
-
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     <div>
         <form action="{{route('projects.store')}}" method="POST" enctype="multipart/form-data">
             @method('post')
@@ -32,7 +40,7 @@
             </div>
             <div class="mb-4">
             <label class="form-label fw-bold">Developer name</label>
-                <select name="account_id" class="form-control">
+                <select name="user_id" class="form-control">
                     <option>Select developer</option>
                     @foreach ($users as $user)
                         <option value={{$user->id}}>
@@ -78,7 +86,7 @@
             </div>
             <div class="mb-4">
                 <label class="form-label fw-bold">Attachment/s</label>
-                <input class="form-control" name="attachment" type="file" id="formFileMultiple" multiple>
+                <input class="form-control" name="attachment[]" type="file" multiple>
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Developer remarks</label>

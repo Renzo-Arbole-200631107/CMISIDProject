@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('project_name');
             $table->string('description', 500);
             $table->string('project_owner'); //office_name
-            $table->foreignId('account_id')->constrained('accounts')->cascadeOnDelete(); //developer name
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete(); //developer name
             $table->string('designation');
             $table->date('start_sad');
             $table->date('estimate_deployment');
