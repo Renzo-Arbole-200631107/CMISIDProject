@@ -122,7 +122,7 @@
 
     .header h3{
         font-weight: 700;
-        margin-top: 50px;
+        margin-top: 60px;
     }
 
     .btn {

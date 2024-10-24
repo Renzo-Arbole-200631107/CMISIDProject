@@ -106,10 +106,12 @@
         flex-direction: row;
         justify-content: space-between;
         padding: 24px;
+        margin-top: 60px;
     }
 
     .header h3{
         font-weight: 700;
+        
     }
 
     .details-pad {
