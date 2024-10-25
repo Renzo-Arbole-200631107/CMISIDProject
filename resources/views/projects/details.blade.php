@@ -105,7 +105,7 @@
                     Link: {{$project->link}}
                 </h5>
                 <h5 class="info-container">
-                    Attachments: 
+                    Attachments:
                 </h5>
             </div>
         </div>
@@ -125,7 +125,7 @@
                     <td class="log-list">{{ $activity->created_at }}</td>
                     <td class="log-list fst-italic">{{ $activity->description }}</td>
                 </tr>
-                    
+
                 @endforeach
 
             </table>
@@ -175,7 +175,7 @@
 
     .header h3{
         font-weight: 700;
-        
+
     }
 
     .details-pad {

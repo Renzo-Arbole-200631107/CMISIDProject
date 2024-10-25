@@ -10,6 +10,7 @@ use App\Models\Attachment;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
+use Spatie\Activitylog\Models\Activity;
 
 class ProjectController extends Controller
 {
@@ -79,6 +80,7 @@ class ProjectController extends Controller
             'user_id' => 'required|exists:users,id',
             'designation' => 'required|string|max:255',
             'start_sad' => 'required|date',
+            'start_dev' => 'required|date',
             'estimate_deployment' => 'required|date',
             'deployment_date' => 'required|date',
             'version' => 'required|string|max:255',
@@ -102,6 +104,7 @@ class ProjectController extends Controller
             'user_id' => $data['user_id'],
             'designation' => $data['designation'],
             'start_sad' => $data['start_sad'],
+            'start_dev' => $data['start_dev'],
             'estimate_deployment' => $data['estimate_deployment'],
             'deployment_date' => $data['deployment_date'],
             'version' => $data['version'],
@@ -123,7 +126,7 @@ class ProjectController extends Controller
                     $extension = $file->getClientOriginalExtension();
                     $filename = pathinfo($origname, PATHINFO_FILENAME) . '_' . time() . '.' . $extension;
                     $path = 'uploads/';
-    
+
                     // Move the file to the specified directory
                     $file->move(public_path($path), $filename); // Use public_path to store files in the public directory
                 }
@@ -178,6 +181,7 @@ class ProjectController extends Controller
             'user_id' => 'required|exists:users,id',
             'designation' => 'required|string|max:255',
             'start_sad' => 'required|date',
+            'start_dev' => 'required|date',
             'estimate_deployment' => 'required|date',
             'deployment_date' => 'required|date',
             'version' => 'required|string|max:255',
@@ -191,7 +195,7 @@ class ProjectController extends Controller
             'dpa_remarks' => 'required|string|max:255',
             'remarks' => 'required|string|max:255',
         ]);
-       
+
         $old = $project->getOriginal();
         $project->update($data);
         $new = collect($project->getChanges())->except('updated_at');
@@ -229,7 +233,7 @@ class ProjectController extends Controller
                     $extension = $file->getClientOriginalExtension();
                     $filename = pathinfo($origname, PATHINFO_FILENAME) . '_' . time() . '.' . $extension;
                     $path = 'uploads/';
-    
+
                     // Move the file to the specified directory
                     $file->move(public_path($path), $filename); // Use public_path to store files in the public directory
 
@@ -245,7 +249,7 @@ class ProjectController extends Controller
                 ]);
             }
         }
-        
+
         return redirect(route('projects.index'));
     }
 
