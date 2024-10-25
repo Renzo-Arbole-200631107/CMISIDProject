@@ -41,13 +41,17 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav-links me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('dashboard.index') }}">HOME</a>
+                        </li>
+
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('projects.index') }}">PROJECTS</a>
                         </li>
-                        
+
                         <li class="nav-item">
                                 <a class="nav-link" href="#">OFFICES</a>
                             </li>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('users.index')}}">ACCOUNT</a>
                         </li>

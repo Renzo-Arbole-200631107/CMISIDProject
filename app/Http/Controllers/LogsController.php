@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Logs;
+use App\Models\Project;
 use Illuminate\Http\Request;
+use Spatie\Activitylog\Models\Activity;
 
 class LogsController extends Controller
 {
@@ -12,7 +14,7 @@ class LogsController extends Controller
      */
     public function index()
     {
-        //
+        return view('logs');
     }
 
     /**
@@ -34,10 +36,14 @@ class LogsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Logs $logs)
+    public function show(Project $project)
     {
-        //
+        // Retrieve only the logs for the specific project
+        $logs = Activity::all();
+
+        return view('logs', compact('logs', 'project'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

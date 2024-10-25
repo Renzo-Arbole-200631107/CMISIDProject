@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete(); //developer name
             $table->string('designation');
             $table->date('start_sad');
+            $table->date('start_dev');
             $table->date('estimate_deployment');
             $table->date('deployment_date');
             $table->string('version');

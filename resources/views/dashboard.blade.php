@@ -11,22 +11,27 @@
     <div class="details-pad">
         <div class="red-box">
             <h5>Cancelled</h5>
+            <p>{{ $statusCounts['Cancelled'] }}</p>
         </div>
         <div class="orange-box">
             <h5>On-going Deployment</h5>
+            <p>{{ $statusCounts['Ongoing'] }}</p>
         </div>
         <div class="yellow-box">
             <h5>For Deployment</h5>
+            <p>{{ $statusCounts['ForDeployment'] }}</p>
         </div>
         <div class="blue-box">
             <h5>For Update</h5>
+            <p>{{ $statusCounts['ForUpdate'] }}</p>
         </div>
         <div class="green-box">
             <h5>Deployed</h5>
+            <p>{{ $statusCounts['Deployed'] }}</p>
         </div>
     </div>
     <div class="additional-boxes">
-        <a href="{{ route('accounts.index') }}" class="status-box new-box">
+        <a href="{{ route('users.index') }}" class="status-box new-box">
             <span class="icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
                     <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
@@ -114,6 +119,13 @@
             box-sizing: border-box;
         }
 
+
+        .details-pad p {
+            font-size: 50px;
+            text-align: center;
+            font-weight: 600;
+            color: #545454;
+        }
         .red-box {
             background: #FF8A8A;
         }
@@ -195,6 +207,5 @@
         .new-box:hover .icon svg {
             fill: white;
         }
-
     </style>
 @endsection

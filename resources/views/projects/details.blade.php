@@ -4,7 +4,7 @@
 <div class="container">
     <div class="header">
         <div>
-            <h3>Details</h3>
+            <h3>DETAILS</h3>
         </div>
         <div>
             <a href="{{route('projects.index')}}" class="btn btn-primary">
@@ -38,6 +38,9 @@
                     Start SAD Date: {{$project->start_sad}}
                 </h5>
                 <h5 class="info-container">
+                    Start Development Date: {{$project->start_dev}}
+                </h5>
+                <h5 class="info-container">
                     Estimated Deployment: {{$project->estimate_deployment}}
                 </h5>
                 <h5 class="info-container">
@@ -56,7 +59,7 @@
                     Link: {{$project->link}}
                 </h5>
                 <h5 class="info-container">
-                    Attachments: 
+                    Attachments:
                 </h5>
                 <h5 class="info-container">
                     Google Analytics Remarks: {{$project->google_remarks}}
@@ -88,7 +91,7 @@
                     <td>{{ $activity->created_at }}</td>
                     <td>{{ $activity->description }}</td>
                 </tr>
-                    
+
                 @endforeach
 
             </table>
@@ -111,7 +114,7 @@
 
     .header h3{
         font-weight: 700;
-        
+
     }
 
     .details-pad {
