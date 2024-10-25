@@ -10,18 +10,12 @@
                     <td>Updated at</td>
                     <td>Changes</td>
                 </tr>
-                @if($logs->isEmpty())
-    <tr>
-        <td colspan="2">No logs found for this project.</td>
-    </tr>
-@else
-                @foreach ($logs as $log)
+                @foreach ($activities as $activity)
                     <tr>
-                        <td>{{ $log->created_at }}</td>
-                        <td>{{ $log->description }}</td>
+                        <td>{{ $activity->created_at }}</td>
+                        <td>{{ $activity->description }}</td>
                     </tr>
                 @endforeach
-                @endif
             </table>
         </div>
     </div>

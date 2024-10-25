@@ -36,12 +36,11 @@ class LogsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Project $project)
+    public function show($id)
     {
-        // Retrieve only the logs for the specific project
-        $logs = Activity::all();
-
-        return view('logs', compact('logs', 'project'));
+        $project = Project::find($id);
+        $activities = $project->activities()->latest()->get();
+        return view('logs', compact('project', 'activities'));
     }
 
 
