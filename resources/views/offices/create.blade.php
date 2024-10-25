@@ -6,7 +6,7 @@
                 <h3 class="text-bold">ADD OFFICE</h3>
             </div>
             <div>
-                <a href="{{ route('accounts.index') }}" class="btn btn-outline-dark">
+                <a href="{{ route('offices.index') }}" class="btn btn-outline-dark">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1.3em" height="1.3em" viewBox="0 0 24 24">
                         <g fill="none" fill-rule="evenodd">
                             <path

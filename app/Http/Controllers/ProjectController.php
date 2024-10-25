@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\Office;
 use App\Models\User;
 use App\Models\Project;
 use App\Models\Attachment;
@@ -40,10 +41,10 @@ class ProjectController extends Controller
             $search = strtolower($request->input('search'));
             $query->where(function ($q) use ($search) {
                 $q->whereRaw('LOWER(project_name) LIKE ?', ["%{$search}%"])
-                    ->orWhereRaw('LOWER(project_owner) LIKE ?', ["%{$search}%"])
-                    ->orWhereRaw('LOWER(account_id) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(office_id) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(user_id) LIKE ?', ["%{$search}%"])
                     ->orWhereRaw('LOWER(status) LIKE ?', ["%{$search}%"])
-                    ->orWhereHas('account', function ($q) use ($search) {
+                    ->orWhereHas('user', function ($q) use ($search) {
                         $q->whereRaw('LOWER(first_name) LIKE ?', ["%{$search}%"])
                             ->orWhereRaw('LOWER(middle_name) LIKE ?', ["%{$search}%"])
                             ->orWhereRaw('LOWER(last_name) LIKE ?', ["%{$search}%"]);
@@ -52,7 +53,7 @@ class ProjectController extends Controller
         }
 
         // Get the results with eager loading for the account relationship
-        $projects = $query->with('user')->get();
+        $projects = $query->with(['user', 'office'])->get();
 
         return view('projects.index', compact('projects'));
     }
@@ -61,8 +62,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $offices = Office::all();
         $users = User::all();
-        return view('projects.create', compact('users'));
+        return view('projects.create', compact('users', 'offices'));
     }
 
     /**
@@ -70,12 +72,10 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
-
         $data = $request->validate([
             'project_name' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
-            'project_owner' => 'required|string|max:255',
+            'office_id' => 'required|exists:offices,id',
             'user_id' => 'required|exists:users,id',
             'designation' => 'required|string|max:255',
             'start_sad' => 'required|date',
@@ -98,7 +98,7 @@ class ProjectController extends Controller
         $project = Project::create([
             'project_name' => $data['project_name'],
             'description' => $data['description'],
-            'project_owner' => $data['project_owner'],
+            'office_id' => $data['office_id'],
             'user_id' => $data['user_id'],
             'designation' => $data['designation'],
             'start_sad' => $data['start_sad'],
@@ -173,7 +173,7 @@ class ProjectController extends Controller
         $data = $request->validate([
             'project_name' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
-            'project_owner' => 'required|string|max:255',
+            'office_id' => 'required|exists:users,id',
             'user_id' => 'required|exists:users,id',
             'designation' => 'required|string|max:255',
             'start_sad' => 'required|date',
