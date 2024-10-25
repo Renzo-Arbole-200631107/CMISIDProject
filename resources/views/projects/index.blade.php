@@ -4,13 +4,15 @@
         <div class="acc-header">
             <h2>PROJECTS</h2>
             <div class="right-part">
-                <a href="{{ route('projects.create') }}" class="add-btn btn btn-dark">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                        <path fill="white"
-                            d="M12 4c4.411 0 8 3.589 8 8s-3.589 8-8 8s-8-3.589-8-8s3.589-8 8-8m0-2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2m5 9h-4V7h-2v4H7v2h4v4h2v-4h4z" />
-                    </svg>
-                    Add project
-                </a>
+                @if (auth()->user()->hasRole('project manager'))
+                    <a href="{{ route('projects.create') }}" class="add-btn btn btn-dark">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                            <path fill="white"
+                                d="M12 4c4.411 0 8 3.589 8 8s-3.589 8-8 8s-8-3.589-8-8s3.589-8 8-8m0-2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2m5 9h-4V7h-2v4H7v2h4v4h2v-4h4z" />
+                        </svg>
+                        Add project
+                    </a>
+                @endif
             </div>
         </div>
         <div class="below-header">
@@ -63,8 +65,8 @@
                         <td class="fw-bold"><a href="{{ url('/projects/' . $project->id) }}"
                                 class="title">{{ $project->project_name }}</a></td>
                         <td>{{ $project->project_owner }}</td>
-                        <td>{{ $project->account->last_name }}, {{ $project->account->first_name }}
-                            {{ $project->account->middle_name }}</td>
+                        <td>{{ $project->user->last_name }}, {{ $project->user->first_name }}
+                            {{ $project->user->middle_name }}</td>
                         <td>{{ $project->status }}</td>
                         <td>
                             <a href="{{ route('projects.edit', ['project' => $project]) }}" class="">
@@ -75,7 +77,7 @@
                                         d="M5 21h14c1.103 0 2-.897 2-2v-8.668l-2 2V19H8.158c-.026 0-.053.01-.079.01c-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2" />
                                 </svg>
                             </a>
-                            <a href="{{ url('/projects/' . $project->id) }}" class="title">
+                            <a href="{{ url('logs/' . $project->id) }}" class="title">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="4em" height="2em" viewBox="0 0 24 24"><g fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0"/><path d="M12 7v5l3 3"/></g></svg>
                             </a>
                         </td>

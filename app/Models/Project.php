@@ -15,9 +15,10 @@ class Project extends Model
         'project_name',
         'description',
         'project_owner',
-        'account_id',
+        'user_id',
         'designation',
         'start_sad',
+        'start_dev',
         'estimate_deployment',
         'deployment_date',
         'version',
@@ -31,9 +32,12 @@ class Project extends Model
         'remarks',
     ];
 
-    public function account(){
-        return $this->belongsTo(Account::class, 'account_id');
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 
+    public function attachments(){
+        return $this->hasMany(Attachment::class);
     }
 
     protected static $logFields = [
@@ -41,9 +45,10 @@ class Project extends Model
         'project_name',
         'description',
         'project_owner',
-        'account_id',
+        'user_id',
         'designation',
         'start_sad',
+        'start_dev',
         'estimate_deployment',
         'deployment_date',
         'version',
@@ -60,7 +65,6 @@ class Project extends Model
     public function getActivitylogOptions(): LogOptions{
         return LogOptions::defaults()
             ->useLogName('project')
-            ->logAll()
-            ->setDescriptionForEvent(fn(string $event) => "Project has been {$event}");
+            ->dontSubmitEmptyLogs();
     }
 }

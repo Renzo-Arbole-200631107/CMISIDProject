@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'CMISID Project Management System') }}</title>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
@@ -27,7 +27,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-left" href="{{ url('/') }}">
+                <a class="navbar-left">
                     <img src="{{ asset('img/logo.png') }}" alt="CMISID Logo" width="50" height="50">
                     <img src="{{ asset('img/risewhite.png') }}" alt="CMISID Logo" width="70" height="40">
                 </a>
@@ -41,13 +41,19 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav-links me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('dashboard.index') }}">HOME</a>
+                        </li>
+
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('projects.index') }}">PROJECTS</a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('offices.index') }}">OFFICES</a>
-                        </li>
+                                <a class="nav-link" href="#">OFFICES</a>
+                            </li>
+
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('accounts.index') }}">ACCOUNT</a>
+                            <a class="nav-link" href="{{route('users.index')}}">ACCOUNT</a>
                         </li>
                     </ul>
 
@@ -60,32 +66,16 @@
                                     <a class="nav-btn btn btn-primary" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-btn btn btn-primary"
-                                        href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
                         @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
+                            <a class="nav-btn btn btn-primary" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
                         @endguest
                     </ul>
                 </div>

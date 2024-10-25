@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use App\Models\Dashboard;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,17 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        {
-            return view('dashboard');
-        }
+        // Retrieve the count of projects by status
+        $statusCounts = [
+            'Cancelled' => Project::where('status', 'Cancelled')->count(),
+            'Ongoing' => Project::where('status', 'On-going development')->count(),
+            'ForDeployment' => Project::where('status', 'For Deployment')->count(),
+            'ForUpdate' => Project::where('status', 'For Update')->count(),
+            'Deployed' => Project::where('status', 'Deployed')->count(),
+        ];
+
+        // Pass the status counts to the dashboard view
+        return view('dashboard', compact('statusCounts'));
     }
 
     /**

@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5">
+<div class="container">
     <div class="header">
         <div>
-            <h3>Details</h3>
+            <h3>DETAILS</h3>
         </div>
         <div>
             <a href="{{route('projects.index')}}" class="btn btn-primary">
@@ -32,10 +32,13 @@
                     Project Owner: {{$project->project_owner}}
                 </h5>
                 <h5 class="info-container">
-                    Developer Name: {{$project->account->last_name}}, {{$project->account->first_name}} {{$project->account->middle_name}}
+                    Developer Name: {{$project->user->last_name}}, {{$project->user->first_name}} {{$project->user->middle_name}}
                 </h5>
                 <h5 class="info-container">
                     Start SAD Date: {{$project->start_sad}}
+                </h5>
+                <h5 class="info-container">
+                    Start Development Date: {{$project->start_dev}}
                 </h5>
                 <h5 class="info-container">
                     Estimated Deployment: {{$project->estimate_deployment}}
@@ -56,7 +59,7 @@
                     Link: {{$project->link}}
                 </h5>
                 <h5 class="info-container">
-                    Attachments: {{$project->attachment}}
+                    Attachments:
                 </h5>
                 <h5 class="info-container">
                     Google Analytics Remarks: {{$project->google_remarks}}
@@ -72,13 +75,26 @@
                 </h5>
             </div>
         </div>
+    </div>
+    <div class="pad-shadow">
         <div class="details-pad">
-            <h2 class="info-container">Activity Log</h2>
-            <ul>
+            <h4 class="info-container px-4">Activity Log</h4>
+        </div>
+        <div class="details-pad">
+            <table class="table">
+                <tr>
+                    <td>Updated at</td>
+                    <td>Changes</td>
+                </tr>
                 @foreach ($activities as $activity)
-                    <li class="info-container">{{ $activity->description }} - {{ $activity->created_at}}</li>
+                <tr>
+                    <td>{{ $activity->created_at }}</td>
+                    <td>{{ $activity->description }}</td>
+                </tr>
+
                 @endforeach
-            </ul>
+
+            </table>
         </div>
     </div>
 </div>
@@ -93,10 +109,12 @@
         flex-direction: row;
         justify-content: space-between;
         padding: 24px;
+        margin-top: 60px;
     }
 
     .header h3{
         font-weight: 700;
+
     }
 
     .details-pad {
@@ -138,6 +156,15 @@
         flex-direction: column;
         color: black;
     }
+
+    .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0px 2px 10px 4px #dcdcdc;
+        }
 </style>
 
 @endsection
