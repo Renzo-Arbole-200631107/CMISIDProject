@@ -35,9 +35,9 @@
             </div>
             <div class="mb-4">
                 <label class="form-label fw-bold">User role</label>
-                <select name="is_admin" id="is_admin" class="form-control">
-                    <option value="0" {{old('is_admin', $user->is_admin) == 0 ? 'selected' : ''}}>Developer</option>
-                    <option value="1" {{old('is_admin', $user->is_admin) == 1 ? 'selected' : ''}}>Project Manager</option>
+                <select name="role" class="form-control">
+                    <option value="developer" {{old('role', $user->getRoleNames()->first()) == 'developer' ? 'selected' : ''}}>Developer</option>
+                    <option value="project manager" {{old('role', $user->getRoleNames()->first()) == 'project manager' ? 'selected' : ''}}>Project Manager</option>
                 </select>
             </div>
             <div class="mb-4">

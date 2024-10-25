@@ -160,8 +160,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $offices = Office::all();
         $users = User::all();
-        return view('projects.edit', ['project' => $project, 'users' => $users]);
+        return view('projects.edit', ['project' => $project, 'users' => $users, 'offices' => $offices]);
     }
 
     /**
@@ -194,24 +195,24 @@ class ProjectController extends Controller
         $old = $project->getOriginal();
         $project->update($data);
         $new = collect($project->getChanges())->except('updated_at');
-
+        
         if(!empty($new)){
-            $logs = 'Updated '.$project->project_name.': ';
-            foreach ($new as $changes => $newLogs) {
-                // Assuming $changes is an array
-                if (is_array($changes)) {
-                    $changesStr = implode(', ', $changes); // Convert array to a string
-                } else {
-                    $changesStr = $changes; // Keep it as is if it's already a string
-                }
+            $logs = auth()->user()->username . ' updated project: ';
+            foreach ($new as $field => $newValue) {
+                // Check if the old value exists for this field
+                if (isset($old[$field])) {
+                    $oldValue = $old[$field];
 
-                if (isset($old[$changesStr]) && isset($newLogs[$changesStr])) {
-                    $logs .= $changesStr . ' changed from ' . $old[$changesStr] . ' to ' . $newLogs[$changesStr] . '; ';
+                    // Append changes to the logs
+                    $logs .= "$field changed from $oldValue to $newValue; ";
                 }
             }
 
+           
+
             activity()
             ->performedOn($project)
+            ->causedBy(auth()->user())
             ->withProperties([
                 'new' => $new,
                 'old' => collect($old)->only($new->keys()->toArray()),
