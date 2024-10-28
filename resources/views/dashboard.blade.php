@@ -3,7 +3,7 @@
     <div class="banner">
         <div class="overlay">
             <div class="text">
-                <h1>WELCOME [USER]</h1>
+                <h1>WELCOME, {{auth()->user()->username}}</h1>
                 <p>City Management Information Systems and Innovation Department</p>
             </div>
         </div>
@@ -41,8 +41,14 @@
                     </g>
                 </svg>
             </span>
+            @if(auth()->user()->hasRole('developer'))
+            VIEW ACCOUNT
+            <p>View, edit, and manage your account</p>
+            @endif
+            @if (auth()->user()->hasRole('project manager'))
             VIEW ACCOUNTS
             <p>Create, update, and manage employee accounts</p>
+            @endif
         </a>
         <a href="{{ route('projects.index') }}" class="status-box new-box">
             <span class="icon">

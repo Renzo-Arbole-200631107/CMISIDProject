@@ -35,6 +35,14 @@
                     <div class="mb-4">
                         <h2 class="fw-bold">Log in to your account.</h2>
                     </div>
+                    @if($errors->any())
+                    
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{$error}}</li>
+                            @endforeach
+                        </ul>
+                        @endif
                     <form method="POST" action="{{route('login')}}">
                         @csrf
                         <div class="form-outline mb-4">

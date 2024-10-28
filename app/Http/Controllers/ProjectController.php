@@ -145,7 +145,7 @@ class ProjectController extends Controller
             ->log('Created a new project:' . $project->project_name);
         //->causedBy()
 
-        return redirect(route('projects.index'));
+        return redirect(route('projects.index'))->with('status','Successfully added project!');
     }
 
     /**
@@ -250,7 +250,7 @@ class ProjectController extends Controller
             }
         }
 
-        return redirect(route('projects.index'));
+        return redirect(route('projects.index'))->with('status','Successfully updated project!');
     }
 
     /**
