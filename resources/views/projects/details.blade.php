@@ -4,11 +4,28 @@
 <div class="container">
     <div class="header">
         <div>
-            <h3>{{$project->project_name}}</h3>
-            <h5>{{$project->office->office_name}}</h5>
+            <div>
+                <div class="project-name">
+                    <h3>{{$project->project_name}}</h3>
+                        @if ($project->status == 'Deployed')
+                            <h6 class="text-success fw-bold btn-container"><span class="badge-dep">Deployed</span></h6>
+                        @elseif($project->status == 'For update')
+                            <h6 class="text-primary fw-bold btn-container"><span class="badge-upt">For Update</span></h6>
+                        @elseif($project->status == 'For deployment')
+                            <h6 class="text-primary fw-bold btn-container"><span class="badge-tbd">For Deployment</span></h6>
+                        @elseif($project->status == 'On-going development')
+                            <h6 class="text-primary fw-bold btn-container"><span class="badge-ong">On-going Development</span></h6>
+                        @elseif($project->status == 'Cancelled')
+                            <h6 class="text-primary fw-bold btn-container"><span class="badge-can">Cancelled</span></h6>
+                        @endif
+                </div>
+                <h5>{{$project->office->office_name}}</h5>
+            </div>
+            <div>
+                
+            </div>
         </div>
         <div>
-
             <a href="{{route('projects.edit', ['project' => $project])}}" class="btn btn-dark">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="white" d="M12 4c4.411 0 8 3.589 8 8s-3.589 8-8 8s-8-3.589-8-8s3.589-8 8-8m0-2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2m5 9h-4V7h-2v4H7v2h4v4h2v-4h4z"/></svg>
                 Edit project</a>
@@ -29,7 +46,7 @@
         <div class="col-md-3 date">
             <h5 class="fw-bold">Start Development</h5>
             <h4 class="input-data">
-                YYYY-MM-DD
+                {{$project->start_dev}}
             </h4>
         </div>
         <div class="col-md-3 date">
@@ -47,12 +64,11 @@
     </div>
 
     <div class="pad-shadow">
-        <div class="px-3">
+        <div class="px-3 py-1">
             <h4 class="info-container fw-bold p-2">REMARKS</h4>
         </div>
         <div class="details-pad">
                 <div class="col-md-6 mt-3">
-                
                     <div class="mb-4">
                         <h6 class="info-container fw-bold">Developer's Remarks</h6>
                         <h6 class="input-data">{{$project->dev_remarks}}</h6>
@@ -81,54 +97,39 @@
     </div>
 
     <div class="pad-shadow">
-        <div class="px-4">
-            <h4 class="info-container  fw-bold">OTHER DETAILS</h4>
+        <div class="px-3 py-1">
+            <h4 class="info-container p-2 fw-bold">OTHER DETAILS</h4>
         </div>
         <div class="details-pad ">
-            <div class="left-column">
-                <h5 class="info-container">
-                    Description: {{$project->description}}
-                </h5>
-                <h5 class="info-container">
-                    Developer Name: {{$project->user->last_name}}, {{$project->user->first_name}} {{$project->user->middle_name}}
-                </h5>
-                <h5 class="info-container">
-                    Version: {{$project->version}}
-                </h5>
-                <h5 class="info-container">
-                    Status: {{$project->status}}
-                </h5>
+            <div class="col-md-6 mt-3">
+                <div class="mb-4">
+                    <h6 class="info-container fw-bold">Description:</h6>
+                    <h6 class="input-data">{{$project->description}}</h6>
+                </div>
+                <div class="mb-4">
+                    <h6 class="info-container fw-bold">Developer Name:</h6>
+                    <h6 class="input-data">{{$project->user->last_name}}, {{$project->user->first_name}} {{$project->user->middle_name}}</h6>
+                </div>
+                <div class="mb-4">
+                    <h6 class="info-container fw-bold">Version:</h6>
+                    <h6 class="input-data">{{$project->version}}</h6>
+                </div>
             </div>
 
-            <div class="right-column">
-                <h5 class="info-container">
-                    Link: {{$project->link}}
-                </h5>
-                <h5 class="info-container">
-                    Attachments:
-                </h5>
+            <div class="col-md-6 mt-3">
+                <div class="mb-4">
+                    <h6 class="info-container fw-bold">Designation</h6>
+                    <h6 class="input-data">{{$project->designation}}</h6>
+                </div>
+                <div class="mb-4">
+                    <h6 class="info-container fw-bold">Link:</h6>
+                    <h6 class="input-data">{{$project->link}}</h6>
+                </div>
+                <div class="mb-4">
+                    <h6 class="info-container fw-bold">Attachments:</h6>
+                    <h6></h6>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="pad-shadow">
-        <div class="details-pad">
-            <h4 class="info-container px-4">Activity Log</h4>
-        </div>
-        <div class="details-pad">
-            <table class="table">
-                <tr>
-                    <td>Updated at</td>
-                    <td>Changes</td>
-                </tr>
-                @foreach ($activities as $activity)
-                <tr>
-                    <td class="log-list">{{ $activity->created_at }}</td>
-                    <td class="log-list fst-italic">{{ $activity->description }}</td>
-                </tr>
-
-                @endforeach
-
-            </table>
         </div>
     </div>
 </div>
@@ -163,6 +164,46 @@
 
     .input-data{
         color: #606060;
+    }
+
+    .project-name{
+        display: flex;
+    align-items: center; /* Aligns items vertically in the center */
+    gap: 10px; /* Space between project name and button */
+    }
+
+    .badge-dep {
+            padding: 5px 10px;
+            border: 1px solid #008000;
+            border-radius: 15px;
+            color: #008000;
+        }
+
+    .badge-upt {
+        padding: 5px 10px;
+        border: 1px solid #ff6d00;
+        border-radius: 15px;
+        color: #ff6d00;
+    }
+
+    .badge-tbd {
+        padding: 5px 10px;
+        border: 1px solid black;
+        border-radius: 15px;
+        color: black;
+    }
+
+    .badge-ong {
+        padding: 5px 10px;
+        border: 1px solid #182e6f;
+        border-radius: 15px;
+        color: #182e6f;
+    }
+    .badge-can {
+        padding: 5px 10px;
+        border: 1px solid #cd1c18;
+        border-radius: 15px;
+        color: #cd1c18;
     }
 
     .header{

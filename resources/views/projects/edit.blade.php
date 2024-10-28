@@ -49,7 +49,7 @@
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Designation</label>
-                <input type="text" class="form-control" name="designation" value={{$project->designation}}>
+                <input type="text" class="form-control" name="designation" value="{{$project->designation}}">
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Start SAD date</label>

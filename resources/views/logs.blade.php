@@ -1,22 +1,24 @@
 @extends('layouts.app')
 @section('content')
-    <div class="pad-shadow">
-        <div class="details-pad">
-            <h4 class="info-container px-4">Activity Log for Project: {{ $project->project_name }}</h4>
-        </div>
-        <div class="details-pad">
-            <table class="table">
-                <tr>
-                    <td>Updated at</td>
-                    <td>Changes</td>
-                </tr>
-                @foreach ($activities as $activity)
+    <div class="container mt-5">
+        <div class="pad-shadow">
+            <div class="details-pad">
+                <h4 class="info-container px-4">Activity Log for Project: {{ $project->project_name }}</h4>
+            </div>
+            <div class="details-pad">
+                <table class="table">
                     <tr>
-                        <td>{{ $activity->created_at }}</td>
-                        <td>{{ $activity->description }}</td>
+                        <td>Updated at</td>
+                        <td>Changes</td>
                     </tr>
-                @endforeach
-            </table>
+                    @foreach ($activities as $activity)
+                        <tr>
+                            <td class="log-list">{{ $activity->created_at }}</td>
+                            <td class="log-list fst-italic">{{ $activity->description }}</td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
         </div>
     </div>
 
@@ -38,6 +40,10 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0px 2px 10px 4px #dcdcdc;
+        }
+
+        .log-list{
+            font-weight: normal;
         }
     </style>
 @endsection
