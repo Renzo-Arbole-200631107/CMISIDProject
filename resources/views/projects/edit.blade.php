@@ -28,14 +28,20 @@
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Project owner (Office / Department)</label>
-                <input type="text" class="form-control" name="project_owner" value={{$project->project_owner}}>
+                <select name="office_id" class="form-control">
+                    @foreach ($offices as $office)
+                        <option value={{$office->id}} {{old('office_id', $office->id) == $office->id ? 'selected' : ''}}>
+                            {{$office->office_name}}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <div class="mb-4">
             <label class="form-label fw-bold">Developer name</label>
                 <select name="user_id" class="form-control">
                     <option>Select developer</option>
                     @foreach ($users as $user)
-                        <option value={{$user->id}} {{old('account_id', $user->id) == $user->id ? 'selected' : ''}}>
+                        <option value={{$user->id}} {{old('user_id', $user->id) == $user->id ? 'selected' : ''}}>
                             {{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}
                         </option>
                     @endforeach
@@ -43,7 +49,7 @@
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Designation</label>
-                <input type="text" class="form-control" name="designation" value={{$project->designation}}>
+                <input type="text" class="form-control" name="designation" value="{{$project->designation}}">
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Start SAD date</label>

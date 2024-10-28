@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\Office;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
@@ -14,7 +14,7 @@ class Project extends Model
         'project_id',
         'project_name',
         'description',
-        'project_owner',
+        'office_id',
         'user_id',
         'designation',
         'start_sad',
@@ -40,11 +40,15 @@ class Project extends Model
         return $this->hasMany(Attachment::class);
     }
 
+    public function office(){
+        return $this->belongsTo(Office::class);
+    }
+
     protected static $logFields = [
         'project_id',
         'project_name',
         'description',
-        'project_owner',
+        'office_id',
         'user_id',
         'designation',
         'start_sad',
