@@ -39,8 +39,12 @@
                         </td>
                     </tr>
                 @endforeach
-
             </table>
+
+            <div class="pagination">
+                {{ $offices->links() }}
+            </div>
+
         </div>
     </div>
 
@@ -126,6 +130,14 @@
 
         .btn-container {
             justify-content: center;
+        }
+
+        .pagination {
+            justify-content: center;
+        }
+
+        .pagination svg {
+            display: none;
         }
     </style>
 @endsection

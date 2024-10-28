@@ -18,6 +18,7 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
+
         $query = Project::query();
 
         // Filter by date range if both start and end dates are provided
@@ -53,7 +54,7 @@ class ProjectController extends Controller
         }
 
         // Get the results with eager loading for the account relationship
-        $projects = $query->with('user')->get();
+        $projects = $query->with('user')->paginate(1);
 
         return view('projects.index', compact('projects'));
     }

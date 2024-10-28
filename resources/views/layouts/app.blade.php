@@ -49,7 +49,7 @@
                         </li>
 
                         <li class="nav-item">
-                                <a class="nav-link" href="#">OFFICES</a>
+                                <a class="nav-link" href="{{ route('offices.index') }}">OFFICES</a>
                             </li>
 
                         <li class="nav-item">
