@@ -8,7 +8,7 @@ use App\Models\User;
 class UserController extends Controller
 {
     public function index(Request $request){
-        
+
         $query = $request->input('search');
 
         if ($query) {
@@ -18,7 +18,7 @@ class UserController extends Controller
                 ->orWhere('first_name', 'like', "%{$query}%")
                 ->get();
         } else {
-            $users = User::with('roles')->get();
+            $users = User::with('roles')->paginate(1);
         }
 
         return view('users.index', compact('users'));
