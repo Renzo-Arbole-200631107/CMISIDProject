@@ -13,7 +13,7 @@
                         Add account
                     </a>
                 @endif
-                
+
             </div>
         </div>
         <div class="bg-gray">
@@ -30,7 +30,7 @@
                     <tr>
                         <td class="fw-bold">{{ $user->last_name }}, {{ $user->first_name }} {{ $user->middle_name }}</td>
                         <td>{{ $user->username }}</td>
-                        
+
                         @if ($user->hasRole('developer'))
                             <td class="text-success fw-bold btn-container"><span class="badge-dev">Developer</span></td>
                         @elseif($user->hasRole('project manager'))
@@ -49,6 +49,11 @@
                     </tr>
                 @endforeach
             </table>
+
+            <div class="pagination">
+                {{ $users->links() }}
+            </div>
+
         </div>
     </div>
 
@@ -133,6 +138,13 @@
             justify-content: center;
         }
 
+        .pagination {
+            justify-content: center;
+        }
+
+        .pagination svg {
+            display: none;
+        }
     </style>
 
 @endsection

@@ -47,10 +47,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('projects.index') }}">PROJECTS</a>
                         </li>
+
                         
                         @if (auth()->user()->hasRole('project manager'))
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('offices.index')}}">OFFICES</a>
+
                             </li>
                         @endif
                         
