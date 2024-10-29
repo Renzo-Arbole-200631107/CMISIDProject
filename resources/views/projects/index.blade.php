@@ -51,6 +51,11 @@
             </div>
         </div>
         <div class="bg-gray">
+        @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
             <table class="table">
                 <tr class="fw-bold">
                     <th>Project name</th>
