@@ -43,13 +43,13 @@
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Project owner (Office / Department)</label>
                     <select name="office_id" class="form-control">
-                    <option value="">Select office/department</option>
-                    @foreach ($offices as $office)
-                        <option value="{{$office->id}}">
-                            {{$office->office_name}}
-                        </option>
-                    @endforeach
-                </select>
+                        <option value="">Select office/department</option>
+                        @foreach ($offices as $office)
+                            <option value="{{ $office->id }}">
+                                {{ $office->office_name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="mb-4">
                     <label class="form-label fw-bold">Developer name</label>

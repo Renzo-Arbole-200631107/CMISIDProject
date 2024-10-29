@@ -201,7 +201,7 @@ class ProjectController extends Controller
         $old = $project->getOriginal();
         $project->update($data);
         $new = collect($project->getChanges())->except('updated_at');
-        
+
         if(!empty($new)){
             $logs = auth()->user()->username . ' updated project: ';
             foreach ($new as $field => $newValue) {
@@ -214,7 +214,7 @@ class ProjectController extends Controller
                 }
             }
 
-           
+
 
             activity()
             ->performedOn($project)
