@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Spatie\Activitylog\Models\Activity;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -19,8 +20,12 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-
+        $user = Auth::user();
         $query = Project::query();
+
+        if($user->hasRole('developer')){
+            $query->where('user_id', $user->id);
+        }
 
         // Filter by date range if both start and end dates are provided
         if ($request->filled('start_date') && $request->filled('end_date')) {
