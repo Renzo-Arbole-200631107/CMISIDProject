@@ -46,15 +46,15 @@
                         <label class="form-label fw-bold">User role</label>
                         <select name="role" id="role_description" class="form-control">
                             <option value="">Select role</option>
-                            <option value="developer">Developer</option>
-                            <option value="project manager">Project Manager</option>
+                            <option value="developer" {{old('role') == "developer"}}>Developer</option>
+                            <option value="project manager" {{old('role' == "project manager")}}>Project Manager</option>
                         </select>
                     </div>
                     <div class="mb-4">
                         <label class="form-label fw-bold">Is Active?</label>
                         <select name="is_active" id="is_active" class="form-control">
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
+                            <option value="1" {{old('is_active') == "1"}}>Yes</option>
+                            <option value="0" {{old('is_active') == "0"}}>No</option>
                         </select>
                     </div>
 

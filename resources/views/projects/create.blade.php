@@ -20,12 +20,11 @@
             </div>
         </div>
         @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+            <div class="">
+                @foreach ($errors->all() as $error)
+                <h6 class="fw-bold text-danger">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 20a8 8 0 1 0 0-16a8 8 0 0 0 0 16m0 2C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m-1-6h2v2h-2zm0-10h2v8h-2z"/></svg>{{ $error }}</h6>
+                @endforeach
             </div>
         @endif
         <div>
@@ -38,14 +37,14 @@
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Description</label>
-                    <textarea class="form-control" name="description" placeholder="Description" rows="3"></textarea>
+                    <textarea class="form-control" name="description" placeholder="Description" rows="3">{{old('description')}}</textarea>
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Project owner (Office / Department)</label>
                     <select name="office_id" class="form-control">
                     <option value="">Select office/department</option>
                     @foreach ($offices as $office)
-                        <option value="{{$office->id}}">
+                        <option value="{{$office->id}}" {{old('office_id') == $office->id ? 'selected' : ''}}>
                             {{$office->office_name}}
                         </option>
                     @endforeach
@@ -56,7 +55,7 @@
                     <select name="user_id" class="form-control">
                         <option>Select developer</option>
                         @foreach ($users as $user)
-                            <option value={{ $user->id }}>
+                            <option value={{ $user->id }} {{old('user_id') == $user->id ? 'selected' : ''}}>
                                 {{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}
                             </option>
                         @endforeach
@@ -68,19 +67,19 @@
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Start SAD date</label>
-                    <input type="date" class="form-control" name="start_sad">
+                    <input type="date" class="form-control" value="{{old('start_sad')}}" name="start_sad">
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Start development date</label>
-                    <input type="date" class="form-control" name="start_dev">
+                    <input type="date" class="form-control" value="{{old('start_dev')}}" name="start_dev">
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Estimated deployment</label>
-                    <input type="date" class="form-control" name="estimate_deployment">
+                    <input type="date" class="form-control" value="{{old('estimate_deployment')}}" name="estimate_deployment">
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Deployment date</label>
-                    <input type="date" class="form-control" name="deployment_date">
+                    <input type="date" class="form-control" value="{{old('deployment_date')}}" name="deployment_date">
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Version</label>
@@ -90,11 +89,11 @@
                     <label class="form-label fw-bold">Status</label>
                     <select id="inputStatus" class="form-control" name="status">
                         <option selected>Select status</option>
-                        <option value="On-going development">On-going development</option>
-                        <option value="For deployment">For deployment</option>
-                        <option value="Deployed">Deployed</option>
-                        <option value="For update">For update</option>
-                        <option value="Cancelled">Cancelled</option>
+                        <option value="On-going development" {{old('status') == 'On-going development'}}>On-going development</option>
+                        <option value="For deployment" {{old('status') == 'For deployment'}}>For deployment</option>
+                        <option value="Deployed" {{old('status') == 'Deployed'}}>Deployed</option>
+                        <option value="For update" {{old('status') == 'For update'}}>For update</option>
+                        <option value="Cancelled" {{old('status') == 'Cancelled'}}>Cancelled</option>
                     </select>
                 </div>
                 <div class="mb-4">
@@ -108,23 +107,23 @@
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Developer remarks</label>
-                    <textarea class="form-control" name="dev_remarks" placeholder="Add remarks" rows="3"></textarea>
+                    <textarea class="form-control" name="dev_remarks" placeholder="Add remarks" rows="3">{{old('dev_remarks')}}</textarea>
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Google Analytics remarks</label>
-                    <textarea class="form-control" name="google_remarks" placeholder="Add remarks" rows="3"></textarea>
+                    <textarea class="form-control" name="google_remarks" placeholder="Add remarks" rows="3">{{old('google_remarks')}}</textarea>
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">SEO comments</label>
-                    <textarea class="form-control" name="seo_comments" placeholder="Add remarks" rows="3"></textarea>
+                    <textarea class="form-control" name="seo_comments" placeholder="Add remarks" rows="3">{{old('seo_comments')}}</textarea>
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">DPA Compliance remarks</label>
-                    <textarea class="form-control" name="dpa_remarks" placeholder="Add remarks" rows="3"></textarea>
+                    <textarea class="form-control" name="dpa_remarks" placeholder="Add remarks" rows="3">{{old('dpa_remarks')}}</textarea>
                 </div>
                 <div class="mb-5">
                     <label for="" class="form-label fw-bold">Remarks</label>
-                    <textarea class="form-control" name="remarks" placeholder="Add remarks" rows="3"></textarea>
+                    <textarea class="form-control" name="remarks" placeholder="Add remarks" rows="3">{{old('remarks')}}</textarea>
                 </div>
                 <div class="text-right">
                     <button type="submit" class="btn btn-dark">

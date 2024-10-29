@@ -16,7 +16,7 @@ class UserController extends Controller
                 ->orWhere('last_name', 'like', "%{$query}%")
                 ->orWhere('middle_name', 'like', "%{$query}%")
                 ->orWhere('first_name', 'like', "%{$query}%")
-                ->get();
+                ->paginate();
         } else {
             $users = User::with('roles')->paginate(1);
         }
@@ -34,7 +34,7 @@ class UserController extends Controller
             'last_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'first_name' => 'required|string|max:255',
-            'username' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,username',
             'role' => 'required|string',
             'is_active' => 'required|integer'
         ]);

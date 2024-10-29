@@ -81,7 +81,7 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'project_name' => 'required|string|max:255',
+            'project_name' => 'required|string|max:255|unique:projects,project_name',
             'description' => 'nullable|string|max:255',
             'office_id' => 'required|exists:offices,id',
             'user_id' => 'required|exists:users,id',
@@ -100,7 +100,7 @@ class ProjectController extends Controller
             'seo_comments' => 'required|string|max:255',
             'dpa_remarks' => 'required|string|max:255',
             'remarks' => 'required|string|max:255',
-        ]);
+        ],);
 
         //dd($data);
 
@@ -149,7 +149,9 @@ class ProjectController extends Controller
 
         activity()
             ->performedOn($project)
-            ->log('Created a new project:' . $project->project_name);
+            ->log(auth()->user()->username . '(' . auth()->user()->first_name . 
+            auth()->user()->middle_name . auth()->user()->last_name . ')' . 
+            ' created a new project: ' . $project->project_name);
         //->causedBy()
 
         return redirect(route('projects.index'))->with('status','Successfully added project!');
@@ -182,7 +184,7 @@ class ProjectController extends Controller
     {
         //dd(vars: $request);
         $data = $request->validate([
-            'project_name' => 'required|string|max:255',
+            'project_name' => 'required|string|max:255|unique:projects,project_name',
             'description' => 'nullable|string|max:255',
             'office_id' => 'required|exists:users,id',
             'user_id' => 'required|exists:users,id',
@@ -208,7 +210,8 @@ class ProjectController extends Controller
         $new = collect($project->getChanges())->except('updated_at');
         
         if(!empty($new)){
-            $logs = auth()->user()->username . ' updated project: ';
+            $logs = auth()->user()->username . ' (' . auth()->user()->first_name . ' ' . 
+            auth()->user()->middle_name . ' ' . auth()->user()->last_name . ')' . ' updated project: ';
             foreach ($new as $field => $newValue) {
                 // Check if the old value exists for this field
                 if (isset($old[$field])) {
