@@ -34,7 +34,7 @@
                 @csrf
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Project name</label>
-                    <input type="text" class="form-control" name="project_name" placeholder="Enter project name">
+                    <input type="text" class="form-control" value="{{old('project_name')}}" name="project_name" placeholder="Enter project name">
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Description</label>
@@ -64,7 +64,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Designation</label>
-                    <input type="text" class="form-control" name="designation" placeholder="Enter designation">
+                    <input type="text" class="form-control" value="{{old('designation')}}" name="designation" placeholder="Enter designation">
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Start SAD date</label>
@@ -84,7 +84,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Version</label>
-                    <input type="text" class="form-control" name="version" placeholder="Enter version">
+                    <input type="text" class="form-control" value="{{old('version')}}" name="version" placeholder="Enter version">
                 </div>
                 <div class="mb-4">
                     <label class="form-label fw-bold">Status</label>
@@ -99,7 +99,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Link</label>
-                    <input type="text" class="form-control" name="link" placeholder="Enter link">
+                    <input type="text" class="form-control" name="link" value="{{old('link')}}" placeholder="Enter link">
                 </div>
                 <div class="mb-4">
                     <label class="form-label fw-bold">Attachment/s</label>
