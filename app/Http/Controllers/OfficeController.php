@@ -34,7 +34,7 @@ class OfficeController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'office_name' => 'required|string|max:255',
+            'office_name' => 'required|string|max:255|unique:offices,office_name',
             'is_active' => 'required|integer'
         ]);
 
@@ -69,7 +69,7 @@ class OfficeController extends Controller
     public function update(Request $request, Office $office)
     {
         $data = $request->validate([
-            'office_name' => 'required|string|max:255',
+            'office_name' => 'required|string|max:255|unique:offices,office_name',
             'is_active' => 'required|integer'
         ]);
 

@@ -41,8 +41,8 @@
                 <div class="mb-4">
                     <label class="form-label fw-bold">Is Active?</label>
                     <select name="is_active" id="is_active" class="form-control">
-                        <option value="1" selected>Yes</option>
-                        <option value="0">No</option>
+                        <option value="1" {{old('is_active') == "1"}} selected>Yes</option>
+                        <option value="0" {{old('is_active') == "0"}}>No</option>
                     </select>
                 </div>
 

@@ -19,20 +19,30 @@
             @csrf
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Last name</label>
-                <input type="text" class="form-control" name="last_name" value={{$user->last_name}} placeholder="Enter last name">
+                <input type="text" class="form-control" name="last_name" value={{old('last_name', $user->last_name)}} placeholder="Enter last name">
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">First Name</label>
-                <input type="text" class="form-control" name="first_name" value={{$user->first_name}} placeholder="Enter first name">
+                <input type="text" class="form-control" name="first_name" value={{old('first_name', $user->first_name)}} placeholder="Enter first name">
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Middle Name</label>
-                <input type="text" class="form-control" name="middle_name" value={{$user->middle_name}} placeholder="Enter middle name">
+                <input type="text" class="form-control" name="middle_name" value={{old('middle_name', $user->middle_name)}} placeholder="Enter middle name">
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Username</label>
-                <input type="text" class="form-control" name="username" value={{$user->username}} placeholder="Enter username">
+                <input type="text" class="form-control" name="username" value={{old('username', $user->username)}} placeholder="Enter username">
             </div>
+            @if (auth()->user()->hasRole('developer'))
+            <div class="mb-4">
+                <label class="form-label fw-bold">User role</label>
+                <select name="role" class="form-control" disabled>
+                    <option value="developer" {{old('role', $user->getRoleNames()->first()) == 'developer' ? 'selected' : ''}}>Developer</option>
+                    <option value="project manager" {{old('role', $user->getRoleNames()->first()) == 'project manager' ? 'selected' : ''}}>Project Manager</option>
+                </select>
+            </div>
+            @endif
+            @if (auth()->user()->hasRole('project manager'))
             <div class="mb-4">
                 <label class="form-label fw-bold">User role</label>
                 <select name="role" class="form-control">
@@ -40,6 +50,7 @@
                     <option value="project manager" {{old('role', $user->getRoleNames()->first()) == 'project manager' ? 'selected' : ''}}>Project Manager</option>
                 </select>
             </div>
+            @endif
             <div class="mb-4">
                 <label class="form-label fw-bold">Is Active?</label>
                 <select name="is_active" id="is_active" class="form-control">
