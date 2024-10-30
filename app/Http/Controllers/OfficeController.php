@@ -46,6 +46,7 @@ class OfficeController extends Controller
         return redirect(route('offices.index'));
     }
 
+
     /**
      * Display the specified resource.
      */

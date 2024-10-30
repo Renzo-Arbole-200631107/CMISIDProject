@@ -51,11 +51,11 @@
             </div>
         </div>
         <div class="bg-gray">
-        @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+            @if (session('status'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+            @endif
             <table class="table">
                 <tr class="fw-bold">
                     <th>Project name</th>
@@ -221,6 +221,57 @@
 
         .pagination svg {
             display: none;
+        }
+
+        @media (max-width: 768px) {
+
+            .left-part,
+            .right-part {
+                display: flex;
+                flex-direction: column;
+                /* Stack elements vertically */
+                align-items: stretch;
+                /* Ensure elements take full width */
+                margin: 10px;
+                /* Adjust margin for mobile view */
+            }
+
+            .search-bar,
+            .date-filter select,
+            .date-filter input,
+            .date-filter button {
+                width: 100%;
+                /* Ensure elements take full width */
+                margin-bottom: 10px;
+                /* Add space between elements */
+            }
+
+            .date-filter {
+                display: flex;
+                flex-direction: column;
+                /* Stack elements vertically */
+                align-items: stretch;
+                /* Ensure elements take full width */
+            }
+
+            .table {
+                width: 100%;
+                /* Ensure table takes full width */
+                overflow-x: auto;
+                /* Enable horizontal scrolling if needed */
+                display: block;
+                /* Ensure table is block-level element */
+            }
+
+            .table th,
+            .table td {
+                white-space: nowrap;
+                /* Prevent text from wrapping */
+                overflow: hidden;
+                /* Hide overflow text */
+                text-overflow: ellipsis;
+                /* Add ellipsis for overflow text */
+            }
         }
     </style>
 @endsection

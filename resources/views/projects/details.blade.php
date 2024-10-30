@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="header">
-        <div>
+    <div class="container">
+        <div class="header">
             <div>
-                <div class="project-name">
-                    <h3>{{$project->project_name}}</h3>
+                <div>
+                    <div class="project-name">
+                        <h3>{{ $project->project_name }}</h3>
                         @if ($project->status == 'Deployed')
                             <h6 class="text-success fw-bold btn-container"><span class="badge-dep">Deployed</span></h6>
                         @elseif($project->status == 'For update')
@@ -14,12 +14,17 @@
                         @elseif($project->status == 'For deployment')
                             <h6 class="text-primary fw-bold btn-container"><span class="badge-tbd">For Deployment</span></h6>
                         @elseif($project->status == 'On-going development')
-                            <h6 class="text-primary fw-bold btn-container"><span class="badge-ong">On-going Development</span></h6>
+                            <h6 class="text-primary fw-bold btn-container"><span class="badge-ong">On-going
+                                    Development</span></h6>
                         @elseif($project->status == 'Cancelled')
                             <h6 class="text-primary fw-bold btn-container"><span class="badge-can">Cancelled</span></h6>
                         @endif
+                    </div>
+                    <h5>{{ $project->office->office_name }}</h5>
                 </div>
-                <h5>{{$project->office->office_name}}</h5>
+                <div>
+
+                </div>
             </div>
         </div>
         <div>
@@ -43,215 +48,227 @@
         </div>
     </div>
 
-    <div class="container dates">
-        <div class="col-md-3 date">
-            <h5 class="fw-bold">Start SAD</h5>
-            <h4 class="input-data">
-                {{$project->start_sad}}
-            </h4>
+        <div class="container dates">
+            <div class="col-md-3 date">
+                <h5 class="fw-bold">Start SAD</h5>
+                <h4 class="input-data">
+                    {{ $project->start_sad }}
+                </h4>
+            </div>
+            <div class="col-md-3 date">
+                <h5 class="fw-bold">Start Development</h5>
+                <h4 class="input-data">
+                    {{ $project->start_dev }}
+                </h4>
+            </div>
+            <div class="col-md-3 date">
+                <h5 class="fw-bold">Estimated Deployment</h5>
+                <h4 class="input-data">
+                    {{ $project->estimate_deployment }}
+                </h4>
+            </div>
+            <div class="col-md-3 date">
+                <h5 class="fw-bold">Deployment Date</h5>
+                <h4 class="input-data">
+                    {{ $project->deployment_date }}
+                </h4>
+            </div>
         </div>
-        <div class="col-md-3 date">
-            <h5 class="fw-bold">Start Development</h5>
-            <h4 class="input-data">
-                {{$project->start_dev}}
-            </h4>
-        </div>
-        <div class="col-md-3 date">
-            <h5 class="fw-bold">Estimated Deployment</h5>
-            <h4 class="input-data">
-                {{$project->estimate_deployment}}
-            </h4>
-        </div>
-        <div class="col-md-3 date">
-            <h5 class="fw-bold">Deployment Date</h5>
-            <h4 class="input-data">
-                {{$project->deployment_date}}
-            </h4>
-        </div>
-    </div>
 
-    <div class="pad-shadow">
-        <div class="px-3 py-1">
-            <h4 class="info-container fw-bold p-2">REMARKS</h4>
-        </div>
-        <div class="details-pad">
+        <div class="pad-shadow">
+            <div class="px-3 py-1">
+                <h4 class="info-container fw-bold p-2">REMARKS</h4>
+            </div>
+            <div class="details-pad">
                 <div class="col-md-6 mt-3">
                     <div class="mb-4">
                         <h6 class="info-container fw-bold">Developer's Remarks</h6>
-                        <h6 class="input-data">{{$project->dev_remarks}}</h6>
+                        <h6 class="input-data">{{ $project->dev_remarks }}</h6>
                     </div>
                     <div class="mb-4">
                         <h6 class="info-container fw-bold">Google Analytics Remarks</h6>
-                        <h6 class="input-data">{{$project->google_remarks}}</h6>
+                        <h6 class="input-data">{{ $project->google_remarks }}</h6>
                     </div>
                     <div class="mb-4">
                         <h6 class="info-container fw-bold">DPA Compliance Remarks</>
-                        <h6 class="input-data">{{$project->dpa_remarks}}</h6>
+                            <h6 class="input-data">{{ $project->dpa_remarks }}</h6>
                     </div>
-                    
+
                 </div>
                 <div class="col-md-6  mt-3">
                     <div class="mb-4">
                         <h6 class="info-container fw-bold">SEO Comments</h6>
-                        <h6 class="input-data"> {{$project->seo_comments}}</h6>
+                        <h6 class="input-data"> {{ $project->seo_comments }}</h6>
                     </div>
                     <div class="mb-4">
                         <h6 class="info-container fw-bold">Remarks</h6>
-                        <h6 class="input-data"> {{$project->remarks}}</h6>
+                        <h6 class="input-data"> {{ $project->remarks }}</h6>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="pad-shadow">
+            <div class="px-3 py-1">
+                <h4 class="info-container p-2 fw-bold">OTHER DETAILS</h4>
+            </div>
+            <div class="details-pad ">
+                <div class="col-md-6 mt-3">
+                    <div class="mb-4">
+                        <h6 class="info-container fw-bold">Description:</h6>
+                        <h6 class="input-data">{{ $project->description }}</h6>
+                    </div>
+                    <div class="mb-4">
+                        <h6 class="info-container fw-bold">Developer Name:</h6>
+                        <h6 class="input-data">{{ $project->user->last_name }}, {{ $project->user->first_name }}
+                            {{ $project->user->middle_name }}</h6>
+                    </div>
+                    <div class="mb-4">
+                        <h6 class="info-container fw-bold">Version:</h6>
+                        <h6 class="input-data">{{ $project->version }}</h6>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mt-3">
+                    <div class="mb-4">
+                        <h6 class="info-container fw-bold">Designation</h6>
+                        <h6 class="input-data">{{ $project->designation }}</h6>
+                    </div>
+                    <div class="mb-4">
+                        <h6 class="info-container fw-bold">Link:</h6>
+                        <h6 class="input-data">{{ $project->link }}</h6>
+                    </div>
+                    <div class="mb-4">
+                        <h6 class="info-container fw-bold">Attachments:</h6>
+                        <ul>
+                            @foreach ($project->attachments as $attachment)
+                                <li>
+                                    <a href="{{ asset($attachment->file_path) }}" target="_blank">
+                                        {{ preg_replace('/_\d+\./', '.', $attachment->file_name) }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="pad-shadow">
-        <div class="px-3 py-1">
-            <h4 class="info-container p-2 fw-bold">OTHER DETAILS</h4>
-        </div>
-        <div class="details-pad ">
-            <div class="col-md-6 mt-3">
-                <div class="mb-4">
-                    <h6 class="info-container fw-bold">Description:</h6>
-                    <h6 class="input-data">{{$project->description}}</h6>
-                </div>
-                <div class="mb-4">
-                    <h6 class="info-container fw-bold">Developer Name:</h6>
-                    <h6 class="input-data">{{$project->user->last_name}}, {{$project->user->first_name}} {{$project->user->middle_name}}</h6>
-                </div>
-                <div class="mb-4">
-                    <h6 class="info-container fw-bold">Version:</h6>
-                    <h6 class="input-data">{{$project->version}}</h6>
-                </div>
-            </div>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            margin-top: 60px;
+        }
 
-            <div class="col-md-6 mt-3">
-                <div class="mb-4">
-                    <h6 class="info-container fw-bold">Designation</h6>
-                    <h6 class="input-data">{{$project->designation}}</h6>
-                </div>
-                <div class="mb-4">
-                    <h6 class="info-container fw-bold">Link:</h6>
-                    <h6 class="input-data">{{$project->link}}</h6>
-                </div>
-                <div class="mb-4">
-                    <h6 class="info-container fw-bold">Attachments:</h6>
-                    <h6></h6>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        .dates {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin-bottom: 20px;
+            padding: 16px;
+            width: 100%;
+            gap: 10px;
+        }
 
-<style>
-    body{
-        background-color: #f2f2f2;
-        margin-top: 60px;
-    }
+        .date {
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100px;
+            text-align: center;
+            box-shadow: 0px 2px 10px 4px #dcdcdc;
+            border-radius: 6px;
 
-    .dates{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        margin-bottom: 20px;
-        padding: 16px;
-        width: 100%;
-        gap: 10px;
-    }
+        }
 
-    .date{
-        background-color: white;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        height: 100px;
-        text-align: center;
-        box-shadow: 0px 2px 10px 4px #dcdcdc;
-        border-radius: 6px;
+        .input-data {
+            color: #606060;
+        }
 
-    }
+        .project-name {
+            display: flex;
+            align-items: center;
+            /* Aligns items vertically in the center */
+            gap: 10px;
+            /* Space between project name and button */
+        }
 
-    .input-data{
-        color: #606060;
-    }
-
-    .project-name{
-        display: flex;
-    align-items: center; /* Aligns items vertically in the center */
-    gap: 10px; /* Space between project name and button */
-    }
-
-    .badge-dep {
+        .badge-dep {
             padding: 5px 10px;
             border: 1px solid #008000;
             border-radius: 15px;
             color: #008000;
         }
 
-    .badge-upt {
-        padding: 5px 10px;
-        border: 1px solid #ff6d00;
-        border-radius: 15px;
-        color: #ff6d00;
-    }
+        .badge-upt {
+            padding: 5px 10px;
+            border: 1px solid #ff6d00;
+            border-radius: 15px;
+            color: #ff6d00;
+        }
 
-    .badge-tbd {
-        padding: 5px 10px;
-        border: 1px solid black;
-        border-radius: 15px;
-        color: black;
-    }
+        .badge-tbd {
+            padding: 5px 10px;
+            border: 1px solid black;
+            border-radius: 15px;
+            color: black;
+        }
 
-    .badge-ong {
-        padding: 5px 10px;
-        border: 1px solid #182e6f;
-        border-radius: 15px;
-        color: #182e6f;
-    }
-    .badge-can {
-        padding: 5px 10px;
-        border: 1px solid #cd1c18;
-        border-radius: 15px;
-        color: #cd1c18;
-    }
+        .badge-ong {
+            padding: 5px 10px;
+            border: 1px solid #182e6f;
+            border-radius: 15px;
+            color: #182e6f;
+        }
 
-    .header{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        
-        margin-bottom: 30px;
-    }
+        .badge-can {
+            padding: 5px 10px;
+            border: 1px solid #cd1c18;
+            border-radius: 15px;
+            color: #cd1c18;
+        }
 
-    .header h3{
-        font-weight: 700;
+        .header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
 
-    }
+            margin-bottom: 30px;
+        }
 
-    .details-pad {
-        display: flex;
-        background: white;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        padding-left: 10px;
-        padding-right: 10px;
-        border-radius: 6px;
-        text-decoration: none;
-        font-weight: bold;
-        outline: none;
-    }
+        .header h3 {
+            font-weight: 700;
 
-    .pad-shadow {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-        border-radius: 8px;
-        box-shadow: 0px 2px 10px 4px #dcdcdc;
-    }
+        }
 
-    .info-container {
-        line-height: 1.5;
-    }
+        .details-pad {
+            display: flex;
+            background: white;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            outline: none;
+        }
 
-    .table {
+        .pad-shadow {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 10px 4px #dcdcdc;
+        }
+
+        .info-container {
+            line-height: 1.5;
+        }
+
+        .table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
@@ -260,13 +277,69 @@
             box-shadow: 0px 2px 10px 4px #dcdcdc;
         }
 
-        .log-list{
+        .log-list {
             font-weight: normal;
         }
 
-        h6{
+        h6 {
             font-size: 16px;
         }
-</style>
 
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                /* Stack elements vertically */
+                align-items: stretch;
+                /* Ensure elements take full width */
+            }
+
+            .dates {
+                flex-direction: column;
+                /* Stack elements vertically */
+                gap: 10px;
+                /* Add space between elements */
+            }
+
+            .date {
+                width: 100%;
+                /* Ensure elements take full width */
+            }
+
+            .details-pad {
+                flex-direction: column;
+                /* Stack elements vertically */
+                padding: 10px;
+                /* Adjust padding for mobile view */
+            }
+
+            .col-md-6 {
+                width: 100%;
+                /* Ensure elements take full width */
+                margin-bottom: 10px;
+                /* Add space between elements */
+            }
+
+            .btn-container {
+                width: 100%;
+                /* Ensure buttons take full width */
+                margin-bottom: 10px;
+                /* Add space between buttons */
+            }
+
+            .project-name h3 {
+                font-size: 24px;
+                /* Adjust font size for mobile view */
+            }
+
+            .project-name h6 {
+                font-size: 16px;
+                /* Adjust font size for mobile view */
+            }
+
+            .input-data {
+                font-size: 14px;
+                /* Adjust font size for mobile view */
+            }
+        }
+    </style>
 @endsection

@@ -4,6 +4,7 @@
         <div class="header">
             <div>
                 <h3 class="project-name">Activity Log for {{ $project->project_name }}</h3>
+
             </div>
             <div>
                 <a href="{{ url('/projects/' . $project->id) }}" class="btn btn-outline-dark">
@@ -34,8 +35,6 @@
             </div>
         </div>
     </div>
-
-
     <style>
         .header{
             display: flex;
@@ -56,18 +55,28 @@
             /* Change to black for visibility */
             border-radius: 6px;
             font-weight: bold;
+            margin-top: 20px;
+            justify-content: space-between;
+            /* Add this line */
         }
 
         .pad-shadow {
             width: 100%;
             margin-bottom: 20px;
+            margin-top: 20px;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0px 2px 10px 4px #dcdcdc;
         }
 
-        .log-list{
+        .log-list {
             font-weight: normal;
+        }
+
+        .right-part {
+            display: flex;
+            justify-content: end;
+            margin-bottom: 10px;
         }
     </style>
 @endsection

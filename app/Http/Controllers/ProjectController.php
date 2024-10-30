@@ -164,7 +164,8 @@ class ProjectController extends Controller
     {
         $project = Project::find($id);
         $activities = $project->activities()->latest()->get();
-        return view('projects.details', compact('project', 'activities'));
+        $attachments = $project->attachments;
+        return view('projects.details', compact('project', 'activities', 'attachments'));
     }
 
     /**
@@ -208,7 +209,7 @@ class ProjectController extends Controller
         $old = $project->getOriginal();
         $project->update($data);
         $new = collect($project->getChanges())->except('updated_at');
-        
+
         if(!empty($new)){
             $logs = auth()->user()->username . ' (' . auth()->user()->first_name . ' ' . 
             auth()->user()->middle_name . ' ' . auth()->user()->last_name . ')' . ' updated project: ';
@@ -222,7 +223,7 @@ class ProjectController extends Controller
                 }
             }
 
-           
+
 
             activity()
             ->performedOn($project)
