@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\Office;
 use App\Models\User;
 use App\Models\Project;
 use App\Models\Attachment;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Spatie\Activitylog\Models\Activity;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -18,7 +20,12 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
         $query = Project::query();
+
+        if($user->hasRole('developer')){
+            $query->where('user_id', $user->id);
+        }
 
         // Filter by date range if both start and end dates are provided
         if ($request->filled('start_date') && $request->filled('end_date')) {
@@ -41,10 +48,10 @@ class ProjectController extends Controller
             $search = strtolower($request->input('search'));
             $query->where(function ($q) use ($search) {
                 $q->whereRaw('LOWER(project_name) LIKE ?', ["%{$search}%"])
-                    ->orWhereRaw('LOWER(project_owner) LIKE ?', ["%{$search}%"])
-                    ->orWhereRaw('LOWER(account_id) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(office_id) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(user_id) LIKE ?', ["%{$search}%"])
                     ->orWhereRaw('LOWER(status) LIKE ?', ["%{$search}%"])
-                    ->orWhereHas('account', function ($q) use ($search) {
+                    ->orWhereHas('user', function ($q) use ($search) {
                         $q->whereRaw('LOWER(first_name) LIKE ?', ["%{$search}%"])
                             ->orWhereRaw('LOWER(middle_name) LIKE ?', ["%{$search}%"])
                             ->orWhereRaw('LOWER(last_name) LIKE ?', ["%{$search}%"]);
@@ -53,7 +60,8 @@ class ProjectController extends Controller
         }
 
         // Get the results with eager loading for the account relationship
-        $projects = $query->with('user')->get();
+        $projects = $query->with(['user', 'office'])->paginate(1);
+
 
         return view('projects.index', compact('projects'));
     }
@@ -62,8 +70,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $offices = Office::all();
         $users = User::all();
-        return view('projects.create', compact('users'));
+        return view('projects.create', compact('users', 'offices'));
     }
 
     /**
@@ -71,12 +80,10 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
-
         $data = $request->validate([
-            'project_name' => 'required|string|max:255',
+            'project_name' => 'required|string|max:255|unique:projects,project_name',
             'description' => 'nullable|string|max:255',
-            'project_owner' => 'required|string|max:255',
+            'office_id' => 'required|exists:offices,id',
             'user_id' => 'required|exists:users,id',
             'designation' => 'required|string|max:255',
             'start_sad' => 'required|date',
@@ -93,14 +100,14 @@ class ProjectController extends Controller
             'seo_comments' => 'required|string|max:255',
             'dpa_remarks' => 'required|string|max:255',
             'remarks' => 'required|string|max:255',
-        ]);
+        ],);
 
         //dd($data);
 
         $project = Project::create([
             'project_name' => $data['project_name'],
             'description' => $data['description'],
-            'project_owner' => $data['project_owner'],
+            'office_id' => $data['office_id'],
             'user_id' => $data['user_id'],
             'designation' => $data['designation'],
             'start_sad' => $data['start_sad'],
@@ -142,10 +149,12 @@ class ProjectController extends Controller
 
         activity()
             ->performedOn($project)
-            ->log('Created a new project:' . $project->project_name);
+            ->log(auth()->user()->username . '(' . auth()->user()->first_name . 
+            auth()->user()->middle_name . auth()->user()->last_name . ')' . 
+            ' created a new project: ' . $project->project_name);
         //->causedBy()
 
-        return redirect(route('projects.index'));
+        return redirect(route('projects.index'))->with('status','Successfully added project!');
     }
 
     /**
@@ -155,7 +164,8 @@ class ProjectController extends Controller
     {
         $project = Project::find($id);
         $activities = $project->activities()->latest()->get();
-        return view('projects.details', compact('project', 'activities'));
+        $attachments = $project->attachments;
+        return view('projects.details', compact('project', 'activities', 'attachments'));
     }
 
     /**
@@ -163,8 +173,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $offices = Office::all();
         $users = User::all();
-        return view('projects.edit', ['project' => $project, 'users' => $users]);
+        return view('projects.edit', ['project' => $project, 'users' => $users, 'offices' => $offices]);
     }
 
     /**
@@ -174,9 +185,9 @@ class ProjectController extends Controller
     {
         //dd(vars: $request);
         $data = $request->validate([
-            'project_name' => 'required|string|max:255',
+            'project_name' => 'required|string|max:255|unique:projects,project_name',
             'description' => 'nullable|string|max:255',
-            'project_owner' => 'required|string|max:255',
+            'office_id' => 'required|exists:users,id',
             'user_id' => 'required|exists:users,id',
             'designation' => 'required|string|max:255',
             'start_sad' => 'required|date',
@@ -200,22 +211,23 @@ class ProjectController extends Controller
         $new = collect($project->getChanges())->except('updated_at');
 
         if(!empty($new)){
-            $logs = 'Updated '.$project->project_name.': ';
-            foreach ($new as $changes => $newLogs) {
-                // Assuming $changes is an array
-                if (is_array($changes)) {
-                    $changesStr = implode(', ', $changes); // Convert array to a string
-                } else {
-                    $changesStr = $changes; // Keep it as is if it's already a string
-                }
+            $logs = auth()->user()->username . ' (' . auth()->user()->first_name . ' ' . 
+            auth()->user()->middle_name . ' ' . auth()->user()->last_name . ')' . ' updated project: ';
+            foreach ($new as $field => $newValue) {
+                // Check if the old value exists for this field
+                if (isset($old[$field])) {
+                    $oldValue = $old[$field];
 
-                if (isset($old[$changesStr]) && isset($newLogs[$changesStr])) {
-                    $logs .= $changesStr . ' changed from ' . $old[$changesStr] . ' to ' . $newLogs[$changesStr] . '; ';
+                    // Append changes to the logs
+                    $logs .= "$field changed from $oldValue to $newValue; ";
                 }
             }
 
+
+
             activity()
             ->performedOn($project)
+            ->causedBy(auth()->user())
             ->withProperties([
                 'new' => $new,
                 'old' => collect($old)->only($new->keys()->toArray()),
@@ -249,7 +261,7 @@ class ProjectController extends Controller
             }
         }
 
-        return redirect(route('projects.index'));
+        return redirect(route('projects.index'))->with('status','Successfully updated project!');
     }
 
     /**

@@ -51,6 +51,11 @@
             </div>
         </div>
         <div class="bg-gray">
+            @if (session('status'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+            @endif
             <table class="table">
                 <tr class="fw-bold">
                     <th>Project name</th>
@@ -64,7 +69,7 @@
                     <tr>
                         <td class="fw-bold"><a href="{{ url('/projects/' . $project->id) }}"
                                 class="title">{{ $project->project_name }}</a></td>
-                        <td>{{ $project->project_owner }}</td>
+                        <td>{{ $project->office->office_name }}</td>
                         <td>{{ $project->user->last_name }}, {{ $project->user->first_name }}
                             {{ $project->user->middle_name }}</td>
                         <td>{{ $project->status }}</td>
@@ -78,12 +83,23 @@
                                 </svg>
                             </a>
                             <a href="{{ url('logs/' . $project->id) }}" class="title">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="4em" height="2em" viewBox="0 0 24 24"><g fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0"/><path d="M12 7v5l3 3"/></g></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="4em" height="2em" viewBox="0 0 24 24">
+                                    <g fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2">
+                                        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0" />
+                                        <path d="M12 7v5l3 3" />
+                                    </g>
+                                </svg>
                             </a>
                         </td>
                     </tr>
                 @endforeach
             </table>
+
+            <div class="pagination">
+                {{ $projects->links() }}
+            </div>
+
         </div>
     </div>
 
@@ -143,8 +159,6 @@
             margin-top: 50px;
         }
 
-
-
         .add-btn {
             background: #2f2f2f;
             margin-top: 50px;
@@ -199,6 +213,65 @@
 
         .btn-container {
             justify-content: center;
+        }
+
+        .pagination {
+            justify-content: center;
+        }
+
+        .pagination svg {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+
+            .left-part,
+            .right-part {
+                display: flex;
+                flex-direction: column;
+                /* Stack elements vertically */
+                align-items: stretch;
+                /* Ensure elements take full width */
+                margin: 10px;
+                /* Adjust margin for mobile view */
+            }
+
+            .search-bar,
+            .date-filter select,
+            .date-filter input,
+            .date-filter button {
+                width: 100%;
+                /* Ensure elements take full width */
+                margin-bottom: 10px;
+                /* Add space between elements */
+            }
+
+            .date-filter {
+                display: flex;
+                flex-direction: column;
+                /* Stack elements vertically */
+                align-items: stretch;
+                /* Ensure elements take full width */
+            }
+
+            .table {
+                width: 100%;
+                /* Ensure table takes full width */
+                overflow-x: auto;
+                /* Enable horizontal scrolling if needed */
+                display: block;
+                /* Ensure table is block-level element */
+            }
+
+            .table th,
+            .table td {
+                white-space: nowrap;
+                /* Prevent text from wrapping */
+                overflow: hidden;
+                /* Hide overflow text */
+                text-overflow: ellipsis;
+                /* Add ellipsis for overflow text */
+            }
         }
     </style>
 @endsection

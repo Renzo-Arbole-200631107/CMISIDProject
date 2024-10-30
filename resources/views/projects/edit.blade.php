@@ -20,22 +20,28 @@
             @csrf
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Project name</label>
-                <input type="text" class="form-control" name="project_name" value="{{$project->project_name}}">
+                <input type="text" class="form-control" name="project_name" value="{{old('project_name', $project->project_name)}}">
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Description</label>
-                <textarea class="form-control" name="description" rows="3">{{$project->description}}</textarea>
+                <textarea class="form-control" name="description" rows="3">{{old('description', $project->description)}}</textarea>
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Project owner (Office / Department)</label>
-                <input type="text" class="form-control" name="project_owner" value={{$project->project_owner}}>
+                <select name="office_id" class="form-control">
+                    @foreach ($offices as $office)
+                        <option value={{$office->id}} {{old('office_id', $office->id) == $office->id ? 'selected' : ''}}>
+                            {{$office->office_name}}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <div class="mb-4">
             <label class="form-label fw-bold">Developer name</label>
                 <select name="user_id" class="form-control">
                     <option>Select developer</option>
                     @foreach ($users as $user)
-                        <option value={{$user->id}} {{old('account_id', $user->id) == $user->id ? 'selected' : ''}}>
+                        <option value={{$user->id}} {{old('user_id', $user->id) == $user->id ? 'selected' : ''}}>
                             {{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}
                         </option>
                     @endforeach
@@ -43,27 +49,27 @@
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Designation</label>
-                <input type="text" class="form-control" name="designation" value={{$project->designation}}>
+                <input type="text" class="form-control" name="designation" value="{{old('designation',$project->designation)}}">
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Start SAD date</label>
-                <input type="date" class="form-control" name="start_sad" value={{$project->start_sad}}>
+                <input type="date" class="form-control" name="start_sad" value={{old('start_sad',$project->start_sad)}}>
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Start development date</label>
-                <input type="date" class="form-control" name="start_dev" value={{$project->start_dev}}>
+                <input type="date" class="form-control" name="start_dev" value={{old('start_dev',$project->start_dev)}}>
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Estimated deployment</label>
-                <input type="date" class="form-control" name="estimate_deployment" value={{$project->estimate_deployment}}>
+                <input type="date" class="form-control" name="estimate_deployment" value={{old('estimate_deployment',$project->estimate_deployment)}}>
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Deployment date</label>
-                <input type="date" class="form-control" name="deployment_date" value={{$project->deployment_date}}>
+                <input type="date" class="form-control" name="deployment_date" value={{old('deployment_date',$project->deployment_date)}}>
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Version</label>
-                <input type="text" class="form-control" name="version" value="{{$project->version}}">
+                <input type="text" class="form-control" name="version" value="{{old('version',$project->version)}}">
             </div>
             <div class="mb-4">
                 <label class="form-label fw-bold">Status</label>
@@ -77,32 +83,32 @@
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Link</label>
-                <input type="text" class="form-control" name="link" value={{$project->link}}>
+                <input type="text" class="form-control" name="link" value={{old('link',$project->link)}}>
             </div>
 
             <div class="mb-4">
-                <label class="form-label fw-bold">Attachment/s</label>
+                <label class="form-label"><b>Attachment/s</b> (.docx/.doc) </label>
                 <input class="form-control" name="attachment[]" type="file" multiple>
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Developer remarks</label>
-                <textarea class="form-control" name="dev_remarks" value= rows="3">{{$project->dev_remarks}}</textarea>
+                <textarea class="form-control" name="dev_remarks" value= rows="3">{{old('dev_remarks',$project->dev_remarks)}}</textarea>
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Google Analytics remarks</label>
-                <textarea class="form-control" name="google_remarks" rows="3">{{$project->google_remarks}}</textarea>
+                <textarea class="form-control" name="google_remarks" rows="3">{{old('google_remarks',$project->google_remarks)}}</textarea>
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">SEO comments</label>
-                <textarea class="form-control" name="seo_comments" rows="3">{{$project->seo_comments}}</textarea>
+                <textarea class="form-control" name="seo_comments" rows="3">{{old('seo_comments',$project->seo_comments)}}</textarea>
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">DPA Compliance remarks</label>
-                <textarea class="form-control" name="dpa_remarks" value= rows="3">{{$project->dpa_remarks}}</textarea>
+                <textarea class="form-control" name="dpa_remarks" value= rows="3">{{old('dpa_remarks',$project->dpa_remarks)}}</textarea>
             </div>
             <div class="mb-5">
                 <label for="" class="form-label fw-bold">Remarks</label>
-                <textarea class="form-control" name="remarks" value= rows="3">{{$project->remarks}}</textarea>
+                <textarea class="form-control" name="remarks" value= rows="3">{{old('remarks',$project->remarks)}}</textarea>
             </div>
             <div class="text-right">
                 <button type="submit" class="btn btn-dark">

@@ -13,7 +13,7 @@ class OfficeController extends Controller
     public function index()
     {
         // Fetch all offices from the database
-        $offices = Office::all();
+        $offices = Office::paginate(1);
 
         // Pass the offices data to the view
         return view('offices.index', compact('offices'));
@@ -34,7 +34,7 @@ class OfficeController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'office_name' => 'required|string|max:255',
+            'office_name' => 'required|string|max:255|unique:offices,office_name',
             'is_active' => 'required|integer'
         ]);
 
@@ -45,6 +45,7 @@ class OfficeController extends Controller
 
         return redirect(route('offices.index'));
     }
+
 
     /**
      * Display the specified resource.
@@ -68,7 +69,7 @@ class OfficeController extends Controller
     public function update(Request $request, Office $office)
     {
         $data = $request->validate([
-            'office_name' => 'required|string|max:255',
+            'office_name' => 'required|string|max:255|unique:offices,office_name',
             'is_active' => 'required|integer'
         ]);
 

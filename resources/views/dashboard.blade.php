@@ -3,7 +3,7 @@
     <div class="banner">
         <div class="overlay">
             <div class="text">
-                <h1>WELCOME [USER]</h1>
+                <h1>WELCOME, {{ auth()->user()->username }}</h1>
                 <p>City Management Information Systems and Innovation Department</p>
             </div>
         </div>
@@ -41,8 +41,25 @@
                     </g>
                 </svg>
             </span>
-            VIEW ACCOUNTS
-            <p>Create, update, and manage employee accounts</p>
+            @if (auth()->user()->hasRole('developer'))
+                VIEW ACCOUNT
+                <p>View, edit, and manage your account</p>
+            @endif
+            @if (auth()->user()->hasRole('project manager'))
+                VIEW ACCOUNTS
+                <p>Create, update, and manage employee accounts</p>
+            @endif
+        </a>
+            @if (auth()->user()->hasRole('project manager'))
+            <a href="{{ route('offices.index') }}" class="status-box new-box">
+                <span class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
+                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14 22V8c0-2.828 0-4.243-.879-5.121C12.243 2 10.828 2 8 2s-4.243 0-5.121.879C2 3.757 2 5.172 2 8v8c0 2.828 0 4.243.879 5.121C3.757 22 5.172 22 8 22zM6.5 11h-1m5 0h-1m-3-4h-1m1 8h-1m5-8h-1m1 8h-1m9 0h-1m1-4h-1m.5-3h-4v14h4c1.886 0 2.828 0 3.414-.586S22 19.886 22 18v-6c0-1.886 0-2.828-.586-3.414S19.886 8 18 8" color="currentColor"/>
+                    </svg>
+                </span>
+                VIEW OFFICES
+                <p>Create, update, and manage offices</p>
+            @endif
         </a>
         <a href="{{ route('projects.index') }}" class="status-box new-box">
             <span class="icon">
@@ -51,8 +68,15 @@
                         d="M6 22q-.825 0-1.412-.587T4 20V4q0-.825.588-1.412T6 2h12q.825 0 1.413.588T20 4v16q0 .825-.587 1.413T18 22zm0-2h12V4h-2v7l-2.5-1.5L11 11V4H6zm0 0V4zm5-9l2.5-1.5L16 11l-2.5-1.5z" />
                 </svg>
             </span>
-            VIEW PROJECTS
-            <p>View different projects from different offices </p>
+
+            @if (auth()->user()->hasRole('developer'))
+                VIEW PROJECTS
+                <p>View or update your current projects</p>
+            @endif
+            @if (auth()->user()->hasRole('project manager'))
+                VIEW PROJECTS
+                <p>View different projects from different offices</p>
+            @endif
         </a>
     </div>
 
@@ -82,7 +106,7 @@
 
         .text h1 {
             font-weight: 700;
-            font-size: 75px;
+            font-size: 85px;
             margin-top: 50px;
             margin-left: 50px;
         }
@@ -126,6 +150,7 @@
             font-weight: 600;
             color: #545454;
         }
+
         .red-box {
             background: #FF8A8A;
         }
@@ -206,6 +231,58 @@
 
         .new-box:hover .icon svg {
             fill: white;
+        }
+
+        @media (max-width: 768px) {
+            .text h1 {
+                font-size: 40px;
+                /* Adjust the font size for mobile view */
+                margin-top: 20px;
+                margin-left: 20px;
+                margin-right: 20px;
+                /* Add margin to the right */
+            }
+
+            .text p {
+                font-size: 1em;
+                /* Adjust the font size for mobile view */
+                margin-left: 20px;
+                margin-right: 20px;
+                /* Add margin to the right */
+            }
+
+            .details-pad {
+                display: flex;
+                flex-direction: column;
+                /* Stack the boxes vertically on mobile view */
+                margin-left: 10px;
+                /* Adjust the margin for mobile view */
+                margin-right: 10px;
+                /* Adjust the margin for mobile view */
+            }
+
+            .details-pad div {
+                margin: 5px;
+                /* Adjust the margin for mobile view */
+                padding: 10px;
+                /* Adjust the padding for mobile view */
+                width: 100%;
+                /* Ensure the boxes take full width on mobile view */
+            }
+
+            .additional-boxes {
+                flex-direction: column;
+                /* Stack the boxes vertically on mobile view */
+                margin: 10px;
+                /* Adjust the margin for mobile view */
+            }
+
+            .new-box {
+                margin: 10px 0;
+                /* Adjust the margin for mobile view */
+                width: 100%;
+                /* Ensure the boxes take full width on mobile view */
+            }
         }
     </style>
 @endsection

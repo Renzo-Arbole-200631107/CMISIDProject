@@ -6,7 +6,7 @@
                 <h3 class="text-bold">ADD OFFICE</h3>
             </div>
             <div>
-                <a href="{{ route('accounts.index') }}" class="btn btn-outline-dark">
+                <a href="{{ route('offices.index') }}" class="btn btn-outline-dark">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1.3em" height="1.3em" viewBox="0 0 24 24">
                         <g fill="none" fill-rule="evenodd">
                             <path
@@ -20,27 +20,42 @@
         </div>
 
         <div>
+
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form action="{{ route('offices.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
                     <label for="office_name" class="form-label fw-bold">Office name</label>
-                    <input type="text" class="form-control" name="office_name" id="office_name"
+                    <input type="text" class="form-control" name="office_name" value="{{old('office_name')}}" id="office_name"
                         placeholder="Enter office name">
                 </div>
                 <div class="mb-4">
                     <label class="form-label fw-bold">Is Active?</label>
                     <select name="is_active" id="is_active" class="form-control">
-                        <option value="1" selected>Yes</option>
-                        <option value="0">No</option>
+                        <option value="1" {{old('is_active') == "1"}} selected>Yes</option>
+                        <option value="0" {{old('is_active') == "0"}}>No</option>
                     </select>
                 </div>
 
                 <div class="text-right">
                     <button type="submit" class="btn btn-dark">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                            <path fill="white"
+                                d="M12 4c4.411 0 8 3.589 8 8s-3.589 8-8 8s-8-3.589-8-8s3.589-8 8-8m0-2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2m5 9h-4V7h-2v4H7v2h4v4h2v-4h4z" />
+                        </svg>
                         Add office
                     </button>
                 </div>
-            </form>     
+            </form>
         </div>
     </div>
 

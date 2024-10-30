@@ -35,6 +35,7 @@
                     <div class="mb-4">
                         <h2 class="fw-bold">Log in to your account.</h2>
                     </div>
+                    
                     <form method="POST" action="{{route('login')}}">
                         @csrf
                         <div class="form-outline mb-4">
@@ -43,6 +44,15 @@
                         <div class="form-outline mb-4">
                             <input type="password" class="form-control" placeholder="Password" name="password" required />
                         </div>
+                        @if($errors->any())
+                        <div>
+                            <h6 class="text-danger text-center fw-bold mb-4">
+                                @foreach($errors->all() as $error)
+                                Invalid username or password.
+                                @endforeach
+                            </h6>
+                        </div>
+                        @endif
                         <div>
                             <button type="submit" class="btn btn-dark col fw-bold">Log In</button>
                         </div>

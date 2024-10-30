@@ -9,7 +9,12 @@ class Office extends Model
 {
     use HasFactory;
     protected $fillable=[
+        'office_id',
         'office_name',
         'is_active',
     ];
+
+    public function projects(){
+        return $this->hasMany(Project::class);
+    }
 }

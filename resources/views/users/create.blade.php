@@ -14,38 +14,47 @@
     </div>
 
     <div>
+    <div class="card">
+                    @if($errors->any())
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{$error}}</li>
+                            @endforeach
+                        </ul>
+                        @endif
+    </div>
     <form action="{{route('users.store')}}" method="POST">
                     @method('post')
                     @csrf
                     <div class="mb-4">
                         <label for="" class="form-label fw-bold">Last name</label>
-                        <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter last name">
+                        <input type="text" class="form-control" name="last_name" value="{{old('last_name')}}" id="last_name" placeholder="Enter last name">
                     </div>
                     <div class="mb-4">
                         <label for="" class="form-label fw-bold">First Name</label>
-                        <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter first name">
+                        <input type="text" class="form-control" name="first_name" value="{{old('first_name')}}" id="first_name" placeholder="Enter first name">
                     </div>
                     <div class="mb-4">
                         <label for="" class="form-label fw-bold">Middle Name</label>
-                        <input type="text" class="form-control" name="middle_name" id="middle_name" placeholder="Enter middle name">
+                        <input type="text" class="form-control" name="middle_name" value="{{old('middle_name')}}" id="middle_name" placeholder="Enter middle name">
                     </div>
                     <div class="mb-4">
                         <label for="" class="form-label fw-bold">Username</label>
-                        <input type="text" class="form-control" name="username" id="username" placeholder="Enter username">
+                        <input type="text" class="form-control" name="username" value="{{old('username')}}" id="username" placeholder="Enter username">
                     </div>
                     <div class="mb-4">
                         <label class="form-label fw-bold">User role</label>
                         <select name="role" id="role_description" class="form-control">
                             <option value="">Select role</option>
-                            <option value="developer">Developer</option>
-                            <option value="project manager">Project Manager</option>
+                            <option value="developer" {{old('role') == "developer"}}>Developer</option>
+                            <option value="project manager" {{old('role' == "project manager")}}>Project Manager</option>
                         </select>
                     </div>
                     <div class="mb-4">
                         <label class="form-label fw-bold">Is Active?</label>
                         <select name="is_active" id="is_active" class="form-control">
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
+                            <option value="1" {{old('is_active') == "1"}}>Yes</option>
+                            <option value="0" {{old('is_active') == "0"}}>No</option>
                         </select>
                     </div>
 
