@@ -162,7 +162,8 @@ class ProjectController extends Controller
     {
         $project = Project::find($id);
         $activities = $project->activities()->latest()->get();
-        return view('projects.details', compact('project', 'activities'));
+        $attachments = $project->attachments;
+        return view('projects.details', compact('project', 'activities', 'attachments'));
     }
 
     /**
