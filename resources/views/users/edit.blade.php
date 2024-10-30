@@ -33,6 +33,16 @@
                 <label for="" class="form-label fw-bold">Username</label>
                 <input type="text" class="form-control" name="username" value={{old('username', $user->username)}} placeholder="Enter username">
             </div>
+            @if (auth()->user()->hasRole('developer'))
+            <div class="mb-4">
+                <label class="form-label fw-bold">User role</label>
+                <select name="role" class="form-control" disabled>
+                    <option value="developer" {{old('role', $user->getRoleNames()->first()) == 'developer' ? 'selected' : ''}}>Developer</option>
+                    <option value="project manager" {{old('role', $user->getRoleNames()->first()) == 'project manager' ? 'selected' : ''}}>Project Manager</option>
+                </select>
+            </div>
+            @endif
+            @if (auth()->user()->hasRole('project manager'))
             <div class="mb-4">
                 <label class="form-label fw-bold">User role</label>
                 <select name="role" class="form-control">
@@ -40,6 +50,7 @@
                     <option value="project manager" {{old('role', $user->getRoleNames()->first()) == 'project manager' ? 'selected' : ''}}>Project Manager</option>
                 </select>
             </div>
+            @endif
             <div class="mb-4">
                 <label class="form-label fw-bold">Is Active?</label>
                 <select name="is_active" id="is_active" class="form-control">

@@ -101,7 +101,7 @@
                     <input type="text" class="form-control" name="link" value="{{old('link')}}" placeholder="Enter link">
                 </div>
                 <div class="mb-4">
-                    <label class="form-label fw-bold">Attachment/s</label>
+                    <label class="form-label"><b>Attachment/s</b> (.docx/.doc) </label>
                     <input class="form-control" id="file-input" name="attachment[]" type="file" multiple>
                     <div id="file-list"></div>
                 </div>

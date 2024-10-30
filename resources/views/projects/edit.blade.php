@@ -87,7 +87,7 @@
             </div>
 
             <div class="mb-4">
-                <label class="form-label fw-bold">Attachment/s</label>
+                <label class="form-label"><b>Attachment/s</b> (.docx/.doc) </label>
                 <input class="form-control" name="attachment[]" type="file" multiple>
             </div>
             <div class="mb-4">
