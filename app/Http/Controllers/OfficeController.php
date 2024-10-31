@@ -69,7 +69,7 @@ class OfficeController extends Controller
     public function update(Request $request, Office $office)
     {
         $data = $request->validate([
-            'office_name' => 'required|string|max:255|unique:offices,office_name',
+            'office_name' => 'required|string|max:255|unique:offices,office_name,' . $office->id,
             'is_active' => 'required|integer'
         ]);
 
