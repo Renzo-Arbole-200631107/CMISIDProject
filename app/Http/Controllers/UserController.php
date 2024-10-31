@@ -42,7 +42,7 @@ class UserController extends Controller
         $user = User::create([
             'last_name' => $data['last_name'],
             'first_name' => $data['first_name'],
-            'middle_name' => $data['middle_name'],
+            'middle_name' => $data['middle_name'] ?? '',
             'username' => $data['username'],
             'is_active' => $data['is_active'],
         ]);

@@ -43,7 +43,7 @@ class OfficeController extends Controller
             'is_active' => $data['is_active'],
         ]);
 
-        return redirect(route('offices.index'));
+        return redirect(route('offices.index'))->with('status', 'Successfully added ' . $office->office_name);
     }
 
 
