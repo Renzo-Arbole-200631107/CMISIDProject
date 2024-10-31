@@ -74,7 +74,7 @@ class OfficeController extends Controller
         ]);
 
         $office->update($data);
-        return redirect(route('offices.index'));
+        return redirect(route('offices.index'))->with('status', 'Successfully updated ' . $office->office_name);
     }
 
     /**

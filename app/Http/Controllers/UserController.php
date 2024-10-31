@@ -51,7 +51,7 @@ class UserController extends Controller
 
         //dd($user->roles);
 
-        return redirect(route('users.index'));
+        return redirect(route('users.index'))->with('status', 'Successfully added ' . $user->username);
     }
 
     public function edit(User $user)
@@ -68,13 +68,13 @@ class UserController extends Controller
             'last_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'first_name' => 'required|string|max:255',
-            'username' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,username,' . $user->id,
             'is_active' => 'required|integer'
         ]);
 
         $user->update($data);
         $user->syncRoles($request->role);
 
-        return redirect(route('users.index'));
+        return redirect(route('users.index'))->with('status', 'Successfully updated ' . $user->username);
     }
 }

@@ -14,24 +14,24 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('project_name');
-            $table->string('description', 500);
+            $table->string('description', 500)->nullable();
             $table->foreignId('office_id')->constrained('offices')->cascadeOnDelete(); //office_name
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete(); //developer name
-            $table->string('designation');
-            $table->date('start_sad');
-            $table->date('start_dev');
-            $table->date('estimate_deployment');
-            $table->date('deployment_date');
-            $table->string('version');
-            $table->string('status');
-            $table->string('link');
+            $table->string('designation')->nullable();
+            $table->date('start_sad')->nullable();
+            $table->date('start_dev')->nullable();
+            $table->date('estimate_deployment')->nullable();
+            $table->date('deployment_date')->nullable();
+            $table->string('version')->nullable();
+            $table->string('status')->nullable();
+            $table->string('link')->nullable();
             $table->string('attachment')->nullable();
 
-            $table->string('dev_remarks');
-            $table->string('google_remarks');
-            $table->string('seo_comments');
-            $table->string('dpa_remarks');
-            $table->string('remarks');
+            $table->string('dev_remarks')->nullable();
+            $table->string('google_remarks')->nullable();
+            $table->string('seo_comments')->nullable();
+            $table->string('dpa_remarks')->nullable();
+            $table->string('remarks')->nullable();
             $table->timestamps();
         });
     }
