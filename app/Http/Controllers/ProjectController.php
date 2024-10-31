@@ -185,7 +185,7 @@ class ProjectController extends Controller
     {
         //dd(vars: $request);
         $data = $request->validate([
-            'project_name' => 'required|string|max:255|unique:projects,project_name',
+            'project_name' => 'required|string|max:255|unique:projects,project_name,' . $project->id,
             'description' => 'nullable|string|max:255',
             'office_id' => 'required|exists:offices,id',
             'user_id' => 'required|exists:users,id',
@@ -261,7 +261,7 @@ class ProjectController extends Controller
             }
         }
 
-        return redirect(route('projects.index'))->with('status','Successfully updated project!');
+        return redirect(route('projects.index'))->with('status','Successfully updated ' . $project->project_name);
     }
 
     /**
