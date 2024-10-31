@@ -45,7 +45,7 @@
                 <h2>ACCOUNTS</h2>
                 <div class="right-part">
                     <form action="{{ route('users.index') }}" method="get">
-                        <input type="search" class="search-bar" placeholder="Search here.." name="search" id="search">
+                        <input type="search" class="form-control" placeholder="Search here.." name="search" id="search">
                     </form>
                     @if (auth()->user()->hasRole('project manager'))
                         <a href="{{ route('users.create') }}" class="add-btn btn btn-dark">
@@ -169,7 +169,7 @@
         .right-part {
             display: flex;
             justify-content: end;
-            margin-top: 50px;
+            gap: 10px;
         }
 
         .table {
@@ -224,10 +224,10 @@
 
         @media (max-width: 768px) {
 
-            .left-part,
+            
             .right-part {
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
                 /* Stack elements vertically */
                 align-items: stretch;
                 /* Ensure elements take full width */
