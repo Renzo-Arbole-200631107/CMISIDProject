@@ -34,11 +34,11 @@
                 @csrf
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Project name</label>
-                    <input type="text" class="form-control" value="{{old('project_name')}}" name="project_name" placeholder="Enter project name">
+                    <input type="text" class="form-control" value="{{old('project_name')}}" name="project_name">
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Description</label>
-                    <textarea class="form-control" name="description" placeholder="Description" rows="3">{{old('description')}}</textarea>
+                    <textarea class="form-control" name="description" rows="3">{{old('description')}}</textarea>
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Project owner (Office / Department)</label>
@@ -86,7 +86,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Version</label>
-                    <input type="text" class="form-control" value="{{old('version')}}" name="version" placeholder="Enter version">
+                    <input type="text" class="form-control" value="{{old('version')}}" name="version">
                 </div>
                 <div class="mb-4">
                     <label class="form-label fw-bold">Status</label>
@@ -101,7 +101,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Link</label>
-                    <input type="text" class="form-control" name="link" value="{{old('link')}}" placeholder="Enter link">
+                    <input type="text" class="form-control" name="link" value="{{old('link')}}">
                 </div>
                 <div class="mb-4">
                     <label class="form-label"><b>Attachment/s</b> (.docx/.doc) </label>
@@ -110,23 +110,23 @@
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Developer remarks</label>
-                    <textarea class="form-control" name="dev_remarks" placeholder="Add remarks" rows="3">{{old('dev_remarks')}}</textarea>
+                    <textarea class="form-control" name="dev_remarks" rows="3">{{old('dev_remarks')}}</textarea>
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Google Analytics remarks</label>
-                    <textarea class="form-control" name="google_remarks" placeholder="Add remarks" rows="3">{{old('google_remarks')}}</textarea>
+                    <textarea class="form-control" name="google_remarks" rows="3">{{old('google_remarks')}}</textarea>
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">SEO comments</label>
-                    <textarea class="form-control" name="seo_comments" placeholder="Add remarks" rows="3">{{old('seo_comments')}}</textarea>
+                    <textarea class="form-control" name="seo_comments" rows="3">{{old('seo_comments')}}</textarea>
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">DPA Compliance remarks</label>
-                    <textarea class="form-control" name="dpa_remarks" placeholder="Add remarks" rows="3">{{old('dpa_remarks')}}</textarea>
+                    <textarea class="form-control" name="dpa_remarks" rows="3">{{old('dpa_remarks')}}</textarea>
                 </div>
                 <div class="mb-5">
                     <label for="" class="form-label fw-bold">Remarks</label>
-                    <textarea class="form-control" name="remarks" placeholder="Add remarks" rows="3">{{old('remarks')}}</textarea>
+                    <textarea class="form-control" name="remarks" rows="3">{{old('remarks')}}</textarea>
                 </div>
                 <div class="text-right">
                     <button type="submit" class="btn btn-dark">

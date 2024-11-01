@@ -27,19 +27,19 @@
                     @csrf
                     <div class="mb-4">
                         <label for="" class="form-label fw-bold">Last name</label>
-                        <input type="text" class="form-control" name="last_name" value="{{old('last_name')}}" id="last_name" placeholder="Enter last name">
+                        <input type="text" class="form-control" name="last_name" value="{{old('last_name')}}" id="last_name">
                     </div>
                     <div class="mb-4">
                         <label for="" class="form-label fw-bold">First Name</label>
-                        <input type="text" class="form-control" name="first_name" value="{{old('first_name')}}" id="first_name" placeholder="Enter first name">
+                        <input type="text" class="form-control" name="first_name" value="{{old('first_name')}}" id="first_name">
                     </div>
                     <div class="mb-4">
                         <label for="" class="form-label fw-bold">Middle Name</label>
-                        <input type="text" class="form-control" name="middle_name" value="{{old('middle_name')}}" id="middle_name" placeholder="Enter middle name">
+                        <input type="text" class="form-control" name="middle_name" value="{{old('middle_name')}}" id="middle_name">
                     </div>
                     <div class="mb-4">
                         <label for="" class="form-label fw-bold">Username</label>
-                        <input type="text" class="form-control" name="username" value="{{old('username')}}" id="username" placeholder="Enter username">
+                        <input type="text" class="form-control" name="username" value="{{old('username')}}" id="username">
                     </div>
                     <div class="mb-4">
                         <label class="form-label fw-bold">User role</label>

@@ -17,6 +17,23 @@
                         {{ session('status') }}</h4>
                 </div>
             @endif
+                <div class="container">
+                    <div class="profile">
+                        <div class="col-md-6">
+                            <div>
+                                {{ auth()->user()->last_name }}, {{ auth()->user()->first_name }}
+                                {{ auth()->user()->middle_name }}
+                                "@"{{ auth()->user()->username }}
+                            </div>
+                            <div>
+                               <td class="text-success fw-bold btn-container"><span class="badge-dev">Developer</span></td>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                        </div>
+                    </div>
+                </div>
                 <table class="table">
                     <tr class="fw-bold">
                         <td>{{ auth()->user()->last_name }}, {{ auth()->user()->first_name }}
@@ -169,6 +186,16 @@
         .right-part {
             display: flex;
             justify-content: end;
+            gap: 10px;
+        }
+
+        .profile {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin-bottom: 20px;
+            padding: 16px;
+            width: 100%;
             gap: 10px;
         }
 
