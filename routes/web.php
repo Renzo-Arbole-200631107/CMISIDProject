@@ -11,6 +11,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('change-password', [App\Http\Controllers\UserController::class, 'getChangePasswordForm'])->name('change.password.form');
+    Route::post('change-password', [App\Http\Controllers\UserController::class, 'updatePassword'])->name('change.password');
+});
+
 Route::group(['middleware' => ['auth', 'checkRole:project manager']],function(){
     Route::resource('projects', App\Http\Controllers\ProjectController::class);
     Route::resource('users', App\Http\Controllers\UserController::class);

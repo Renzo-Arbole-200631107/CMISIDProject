@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('username');
             $table->string('password')->default(Hash::make('cmisid'));
+            $table->boolean('password_changed')->default(false);
             $table->string('last_name');
             $table->string('first_name');
             $table->string('middle_name')->nullable;

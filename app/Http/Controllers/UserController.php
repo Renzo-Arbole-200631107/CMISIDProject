@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Hash;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -69,12 +71,42 @@ class UserController extends Controller
             'middle_name' => 'nullable|string|max:255',
             'first_name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username,' . $user->id,
-            'is_active' => 'required|integer'
+            'is_active' => 'required|integer',
+            'current_password' => 'required',
+            'new_password' => 'nullable|min:8|confirmed'
         ]);
 
-        $user->update($data);
+        if(!Hash::check($request->current_password, $user->password)){
+            return back()->withErrors(['current_password' => 'Current password is incorrect.']);
+        }
+
+        if($request->filled('new_password')){
+            $data['password'] = Hash::make($request->new_password);
+        }
+
+        $user->update(Arr::except($data, ['current_password', 'new_password']));
         $user->syncRoles($request->role);
 
         return redirect(route('users.index'))->with('status', 'Successfully updated ' . $user->username);
+    }
+
+    public function getChangePasswordForm(){
+        return view('auth.change');
+    }
+
+    public function updatePassword(Request $request){
+        $user = auth()->user();
+        $data = $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+        ]);
+
+        $user->update([
+            'password' => Hash::make($data['new_password']),
+        ]);
+        $user->password_changed = true;
+        $user->save();
+
+        return redirect()->route('dashboard.index')->with('success', 'Password successfully updated!');
     }
 }
