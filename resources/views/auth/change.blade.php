@@ -33,7 +33,11 @@
                 </div>
                 <div class="group mb-5">
                     <div class="mb-4">
-                        <h2 class="fw-bold">Change password ni-</h2>
+                        <h2 class="fw-bold">Please update your password to continue.</h2>
+                    </div>
+                    <div class="mb-4">
+                        <h5>New password should be alphanumeric with special characters.</h5>
+                        <h5>Minimum length of password should be 8 characters.</h5>
                     </div>
                     
                     <form method="POST" action="{{route('change.password')}}">
@@ -111,7 +115,7 @@
         border-radius: 24px;
     }
 
-    @media only screen and  (max-width:1024px) {
+    @media only screen and  (max-width:1200px) {
         .image-column {
             display: none;
         }

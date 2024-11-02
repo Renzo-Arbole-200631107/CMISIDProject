@@ -107,7 +107,7 @@
         border-radius: 24px;
     }
 
-    @media only screen and  (max-width:1024px) {
+    @media only screen and  (max-width:1200px) {
         .image-column {
             display: none;
         }
