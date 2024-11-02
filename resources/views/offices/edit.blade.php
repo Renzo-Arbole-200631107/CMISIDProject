@@ -19,7 +19,7 @@
             @csrf
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Office name</label>
-                <input type="text" class="form-control" name="office_name" value={{old('office_name', $office->office_name)}} placeholder="Enter office name">
+                <input type="text" class="form-control" name="office_name" value={{old('office_name', $office->office_name)}}>
             </div>
             <div class="mb-4">
                 <label class="form-label fw-bold">Is Active?</label>
