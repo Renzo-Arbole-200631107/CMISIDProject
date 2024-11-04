@@ -106,22 +106,22 @@ class ProjectController extends Controller
 
         $project = Project::create([
             'project_name' => $data['project_name'],
-            'description' => $data['description'],
+            'description' => $data['description'] ?? '',
             'office_id' => $data['office_id'],
             'user_id' => $data['user_id'],
-            'designation' => $data['designation'],
-            'start_sad' => $data['start_sad'],
-            'start_dev' => $data['start_dev'],
-            'estimate_deployment' => $data['estimate_deployment'],
-            'deployment_date' => $data['deployment_date'],
-            'version' => $data['version'],
-            'status' => $data['status'],
-            'link' => $data['link'],
-            'dev_remarks' => $data['dev_remarks'],
-            'google_remarks' => $data['google_remarks'],
-            'seo_comments' => $data['seo_comments'],
-            'dpa_remarks' => $data['dpa_remarks'],
-            'remarks' => $data['remarks'],
+            'designation' => $data['designation'] ?? '',
+            'start_sad' => $data['start_sad'] ?: null,
+            'start_dev' => $data['start_dev'] ?: null,
+            'estimate_deployment' => $data['estimate_deployment'] ?: null,
+            'deployment_date' => $data['deployment_date'] ?: null,
+            'version' => $data['version'] ?? '',
+            'status' => $data['status'] ?? '',
+            'link' => $data['link'] ?? '',
+            'dev_remarks' => $data['dev_remarks'] ?? '',
+            'google_remarks' => $data['google_remarks'] ?? '',
+            'seo_comments' => $data['seo_comments'] ?? '',
+            'dpa_remarks' => $data['dpa_remarks'] ?? '',
+            'remarks' => $data['remarks'] ?? '',
         ]);
 
         if ($request->hasFile('attachment')) {
@@ -185,7 +185,7 @@ class ProjectController extends Controller
     {
         //dd(vars: $request);
         $data = $request->validate([
-            'project_name' => 'required|string|max:255|unique:projects,project_name',
+            'project_name' => 'required|string|max:255|unique:projects,project_name,' . $project->id,
             'description' => 'nullable|string|max:255',
             'office_id' => 'required|exists:offices,id',
             'user_id' => 'required|exists:users,id',
@@ -261,7 +261,7 @@ class ProjectController extends Controller
             }
         }
 
-        return redirect(route('projects.index'))->with('status','Successfully updated project!');
+        return redirect(route('projects.index'))->with('status','Successfully updated ' . $project->project_name);
     }
 
     /**

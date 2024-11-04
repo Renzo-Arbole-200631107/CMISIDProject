@@ -15,9 +15,9 @@ class LoginController extends Controller
         $user = Auth::user();
         
         if($user->hasRole('project manager')){
-            return 'projects/';
+            return 'dashboard/';
         } elseif($user->hasRole('developer')){
-            return 'users/';
+            return 'dashboard/';
         } else{
             return '/';
         }
@@ -36,11 +36,21 @@ class LoginController extends Controller
         ]);
     
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
-            return redirect($this->redirectTo());
+            $user = Auth::user();
+            return ($this->authenticated($request, $user));
         }
     
         return back()->withErrors([
             'username' => 'The provided credentials do not match our records.',
         ]);
+    }
+
+    protected function authenticated(Request $request, $user){
+        //dd(!$user->password_changed);
+        if(!$user->password_changed){
+            return redirect()->route('change.password.form');
+        }
+
+        return redirect()->intended($this->redirectTo());
     }
 }

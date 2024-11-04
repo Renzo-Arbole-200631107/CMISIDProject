@@ -6,6 +6,34 @@
                 <h2>MY ACCOUNT</h2>
             </div>
             <div class="bg-grey">
+            @if (session('status'))
+                <div class="py-3">
+                    <h4 class="text-success fw-bold">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" 
+                    viewBox="0 0 24 24"><g fill="currentColor">
+                        <path d="M10.243 16.314L6 12.07l1.414-1.414l2.829 2.828l5.656-5.657l1.415 1.415z"/>
+                        <path fill-rule="evenodd" d="M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11s-4.925 11-11 11S1 18.075 1 12m11 9a9 9 0 1 1 0-18a9 9 0 0 1 0 18" 
+                        clip-rule="evenodd"/></g></svg>
+                        {{ session('status') }}</h4>
+                </div>
+            @endif
+                <div class="container">
+                    <div class="profile">
+                        <div class="col-md-6">
+                            <div>
+                                {{ auth()->user()->last_name }}, {{ auth()->user()->first_name }}
+                                {{ auth()->user()->middle_name }}
+                                "@"{{ auth()->user()->username }}
+                            </div>
+                            <div>
+                               <td class="text-success fw-bold btn-container"><span class="badge-dev">Developer</span></td>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                        </div>
+                    </div>
+                </div>
                 <table class="table">
                     <tr class="fw-bold">
                         <td>{{ auth()->user()->last_name }}, {{ auth()->user()->first_name }}
@@ -34,7 +62,7 @@
                 <h2>ACCOUNTS</h2>
                 <div class="right-part">
                     <form action="{{ route('users.index') }}" method="get">
-                        <input type="search" class="search-bar" placeholder="Search here.." name="search" id="search">
+                        <input type="search" class="form-control" placeholder="Search here.." name="search" id="search">
                     </form>
                     @if (auth()->user()->hasRole('project manager'))
                         <a href="{{ route('users.create') }}" class="add-btn btn btn-dark">
@@ -48,6 +76,17 @@
                 </div>
             </div>
             <div class="bg-gray">
+                @if (session('status'))
+                    <div class="py-3">
+                        <h4 class="text-success fw-bold">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" 
+                        viewBox="0 0 24 24"><g fill="currentColor">
+                            <path d="M10.243 16.314L6 12.07l1.414-1.414l2.829 2.828l5.656-5.657l1.415 1.415z"/>
+                            <path fill-rule="evenodd" d="M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11s-4.925 11-11 11S1 18.075 1 12m11 9a9 9 0 1 1 0-18a9 9 0 0 1 0 18" 
+                            clip-rule="evenodd"/></g></svg>
+                            {{ session('status') }}</h4>
+                    </div>
+                @endif
                 <table class="table">
                     <tr class="fw-bold">
                         <th>Complete name</th>
@@ -147,7 +186,17 @@
         .right-part {
             display: flex;
             justify-content: end;
-            margin-top: 50px;
+            gap: 10px;
+        }
+
+        .profile {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin-bottom: 20px;
+            padding: 16px;
+            width: 100%;
+            gap: 10px;
         }
 
         .table {
@@ -202,10 +251,10 @@
 
         @media (max-width: 768px) {
 
-            .left-part,
+            
             .right-part {
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
                 /* Stack elements vertically */
                 align-items: stretch;
                 /* Ensure elements take full width */

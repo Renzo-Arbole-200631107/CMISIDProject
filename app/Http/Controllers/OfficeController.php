@@ -43,7 +43,7 @@ class OfficeController extends Controller
             'is_active' => $data['is_active'],
         ]);
 
-        return redirect(route('offices.index'));
+        return redirect(route('offices.index'))->with('status', 'Successfully added ' . $office->office_name);
     }
 
 
@@ -69,12 +69,12 @@ class OfficeController extends Controller
     public function update(Request $request, Office $office)
     {
         $data = $request->validate([
-            'office_name' => 'required|string|max:255|unique:offices,office_name',
+            'office_name' => 'required|string|max:255|unique:offices,office_name,' . $office->id,
             'is_active' => 'required|integer'
         ]);
 
         $office->update($data);
-        return redirect(route('offices.index'));
+        return redirect(route('offices.index'))->with('status', 'Successfully updated ' . $office->office_name);
     }
 
     /**
