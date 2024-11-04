@@ -18,42 +18,56 @@
         <div class="below-header">
             <div class="left-part">
                 <form action="{{ route('projects.index') }}" method="get">
-                    <input type="search" class="search-bar" placeholder="Search here.." name="search" id="search">
+                    <div class="date-filter">
+                        <input type="search" class="form-control" placeholder="Search here.." name="search" id="search">
+                    </div>
                 </form>
             </div>
             <div class="right-part">
-                <div class="date-filter">
-                    <form action="{{ route('projects.index') }}" method="GET">
-                        <select id="status-filter" name="status">
-                            <option value="">Select Status</option>
-                            <option value="Cancelled">Cancelled</option>
-                            <option value="On-going development">On-going Deployment</option>
-                            <option value="For deployment">For Development</option>
-                            <option value="For update">For Update</option>
-                            <option value="Deployed">Deployed</option>
-                        </select>
+                <form action="{{ route('projects.index') }}" method="GET">
+                        <div class="date-filter">
+                            <div class="me-2">
+                                <select id="status-filter" name="status" class="form-select">
+                                    <option value="">Select Status</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                    <option value="On-going development">On-going Deployment</option>
+                                    <option value="For deployment">For Development</option>
+                                    <option value="For update">For Update</option>
+                                    <option value="Deployed">Deployed</option>
+                                </select>
+                            </div>
 
-                        <label for="start_date">Start Date:</label>
-                        <input type="date" id="start_date" name="start_date" value="{{ request('start_date') }}">
+                            <div class="input-group width me-2">
+                                <label class="form-control fw-bold" for="start_date">Start Date: </label>
+                                <input type="date" class="form-control" id="start_date" name="start_date" value="{{ request('start_date') }}">
+                            </div>
 
-                        <label for="end_date">End Date:</label>
-                        <input type="date" id="end_date" name="end_date" value="{{ request('end_date') }}">
+                            <div class="input-group width  me-2">
+                                <label class="form-control fw-bold" for="end_date">End Date: </label>
+                                <input type="date" class="form-control" id="end_date" name="end_date" value="{{ request('end_date') }}">
+                            </div>
 
-                        <button type="submit" class="btn btn-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                                <path fill="white" fill-rule="evenodd"
-                                    d="M4.953 2.25h14.094c.667 0 1.237 0 1.693.057c.483.061.95.198 1.334.558c.39.367.545.824.613 1.299c.063.437.063.98.063 1.6v.776c0 .489 0 .91-.036 1.263c-.04.38-.125.735-.331 1.076c-.205.339-.48.585-.798.805c-.299.208-.68.423-1.13.676l-2.942 1.656c-.67.377-.903.513-1.059.648c-.357.31-.562.655-.658 1.086c-.041.185-.046.417-.046 1.123v2.732c0 .901 0 1.666-.093 2.255c-.098.625-.327 1.225-.927 1.6c-.587.367-1.232.333-1.86.184c-.605-.143-1.35-.435-2.244-.784l-.086-.034c-.42-.164-.786-.307-1.076-.457c-.312-.161-.602-.361-.823-.673c-.225-.316-.314-.654-.355-1c-.036-.315-.036-.693-.036-1.115v-2.708c0-.706-.004-.938-.046-1.123a1.93 1.93 0 0 0-.658-1.086c-.156-.135-.39-.271-1.059-.648L3.545 10.36c-.45-.253-.831-.468-1.13-.676c-.318-.22-.593-.466-.798-.805c-.206-.341-.291-.697-.33-1.076c-.037-.352-.037-.774-.037-1.263v-.776c0-.62 0-1.163.063-1.6c.068-.475.223-.932.613-1.299c.384-.36.85-.497 1.334-.558c.456-.057 1.026-.057 1.693-.057M3.448 3.796c-.334.042-.44.11-.495.163c-.05.046-.114.127-.156.418c-.045.318-.047.752-.047 1.438v.69c0 .534 0 .878.028 1.144c.026.247.07.366.124.455c.055.091.147.194.368.348c.234.162.553.343 1.04.617l2.913 1.64l.08.045c.56.315.94.529 1.226.777a3.43 3.43 0 0 1 1.14 1.893c.081.367.081.78.081 1.36v2.759c0 .472.001.762.027.98c.022.198.059.265.086.304c.03.042.09.107.289.21c.212.109.505.224.967.405c.961.376 1.608.627 2.097.743c.479.114.637.055.718.004c.068-.043.173-.13.242-.563c.072-.457.074-1.103.074-2.084v-2.758c0-.58 0-.993.082-1.36a3.43 3.43 0 0 1 1.139-1.893c.286-.248.667-.463 1.225-.777l.081-.045l2.913-1.64c.487-.274.806-.455 1.04-.617c.221-.154.313-.257.368-.348c.054-.089.098-.208.123-.455c.028-.266.029-.61.029-1.145v-.69c0-.685-.002-1.12-.047-1.437c-.042-.291-.107-.372-.155-.418c-.056-.052-.162-.121-.496-.163c-.35-.045-.825-.046-1.552-.046H5c-.727 0-1.201.001-1.552.046"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            Filter</button>
-                    </form>
-                </div>
+                            <button type="submit" class="btn btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                                    <path fill="white" fill-rule="evenodd"
+                                        d="M4.953 2.25h14.094c.667 0 1.237 0 1.693.057c.483.061.95.198 1.334.558c.39.367.545.824.613 1.299c.063.437.063.98.063 1.6v.776c0 .489 0 .91-.036 1.263c-.04.38-.125.735-.331 1.076c-.205.339-.48.585-.798.805c-.299.208-.68.423-1.13.676l-2.942 1.656c-.67.377-.903.513-1.059.648c-.357.31-.562.655-.658 1.086c-.041.185-.046.417-.046 1.123v2.732c0 .901 0 1.666-.093 2.255c-.098.625-.327 1.225-.927 1.6c-.587.367-1.232.333-1.86.184c-.605-.143-1.35-.435-2.244-.784l-.086-.034c-.42-.164-.786-.307-1.076-.457c-.312-.161-.602-.361-.823-.673c-.225-.316-.314-.654-.355-1c-.036-.315-.036-.693-.036-1.115v-2.708c0-.706-.004-.938-.046-1.123a1.93 1.93 0 0 0-.658-1.086c-.156-.135-.39-.271-1.059-.648L3.545 10.36c-.45-.253-.831-.468-1.13-.676c-.318-.22-.593-.466-.798-.805c-.206-.341-.291-.697-.33-1.076c-.037-.352-.037-.774-.037-1.263v-.776c0-.62 0-1.163.063-1.6c.068-.475.223-.932.613-1.299c.384-.36.85-.497 1.334-.558c.456-.057 1.026-.057 1.693-.057M3.448 3.796c-.334.042-.44.11-.495.163c-.05.046-.114.127-.156.418c-.045.318-.047.752-.047 1.438v.69c0 .534 0 .878.028 1.144c.026.247.07.366.124.455c.055.091.147.194.368.348c.234.162.553.343 1.04.617l2.913 1.64l.08.045c.56.315.94.529 1.226.777a3.43 3.43 0 0 1 1.14 1.893c.081.367.081.78.081 1.36v2.759c0 .472.001.762.027.98c.022.198.059.265.086.304c.03.042.09.107.289.21c.212.109.505.224.967.405c.961.376 1.608.627 2.097.743c.479.114.637.055.718.004c.068-.043.173-.13.242-.563c.072-.457.074-1.103.074-2.084v-2.758c0-.58 0-.993.082-1.36a3.43 3.43 0 0 1 1.139-1.893c.286-.248.667-.463 1.225-.777l.081-.045l2.913-1.64c.487-.274.806-.455 1.04-.617c.221-.154.313-.257.368-.348c.054-.089.098-.208.123-.455c.028-.266.029-.61.029-1.145v-.69c0-.685-.002-1.12-.047-1.437c-.042-.291-.107-.372-.155-.418c-.056-.052-.162-.121-.496-.163c-.35-.045-.825-.046-1.552-.046H5c-.727 0-1.201.001-1.552.046"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                Filter</button>
+                        </div>    
+                </form>
             </div>
         </div>
         <div class="bg-gray">
             @if (session('status'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('status') }}
+                <div class="py-3">
+                    <h4 class="text-success fw-bold">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" 
+                    viewBox="0 0 24 24"><g fill="currentColor">
+                        <path d="M10.243 16.314L6 12.07l1.414-1.414l2.829 2.828l5.656-5.657l1.415 1.415z"/>
+                        <path fill-rule="evenodd" d="M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11s-4.925 11-11 11S1 18.075 1 12m11 9a9 9 0 1 1 0-18a9 9 0 0 1 0 18" 
+                        clip-rule="evenodd"/></g></svg>
+                        {{ session('status') }}</h4>
                 </div>
             @endif
             <table class="table">
@@ -135,15 +149,19 @@
         .below-header {
             display: flex;
             justify-content: space-between;
+            margin-bottom: 20px;
         }
 
         .right-part {
             display: flex;
+            flex-direction: column;
             justify-content: end;
-            margin-bottom: 10px;
+            margin-bottom: 0px;
         }
 
         .date-filter {
+            display: flex;
+            flex-direction: row;
             margin-right: 5px;
             margin-top: 5px;
         }
@@ -221,6 +239,15 @@
 
         .pagination svg {
             display: none;
+        }
+
+        .input-group{
+            display: flex;
+            align-items: center;
+        }
+
+        .width{
+            width: 270px;
         }
 
         @media (max-width: 768px) {

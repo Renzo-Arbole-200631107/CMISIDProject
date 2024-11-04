@@ -19,25 +19,26 @@
                     Back</a>
             </div>
         </div>
-        @if ($errors->any())
-            <div class="">
-                @foreach ($errors->all() as $error)
-                <h6 class="fw-bold text-danger">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 20a8 8 0 1 0 0-16a8 8 0 0 0 0 16m0 2C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m-1-6h2v2h-2zm0-10h2v8h-2z"/></svg>{{ $error }}</h6>
-                @endforeach
-            </div>
-        @endif
+        
         <div>
+            @if ($errors->any())
+                <div class="mx-4">
+                    @foreach ($errors->all() as $error)
+                    <h5 class="fw-bold text-danger">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 20a8 8 0 1 0 0-16a8 8 0 0 0 0 16m0 2C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m-1-6h2v2h-2zm0-10h2v8h-2z"/></svg>{{ $error }}</h5>
+                    @endforeach
+                </div>
+            @endif
             <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data">
                 @method('post')
                 @csrf
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Project name</label>
-                    <input type="text" class="form-control" value="{{old('project_name')}}" name="project_name" placeholder="Enter project name">
+                    <input type="text" class="form-control" value="{{old('project_name')}}" name="project_name">
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Description</label>
-                    <textarea class="form-control" name="description" placeholder="Description" rows="3">{{old('description')}}</textarea>
+                    <textarea class="form-control" name="description" rows="3">{{old('description')}}</textarea>
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Project owner (Office / Department)</label>
@@ -55,7 +56,7 @@
                 <div class="mb-4">
                     <label class="form-label fw-bold">Developer name</label>
                     <select name="user_id" class="form-control">
-                        <option>Select developer</option>
+                        <option value="">Select developer</option>
                         @foreach ($users as $user)
                             <option value={{ $user->id }} {{old('user_id') == $user->id ? 'selected' : ''}}>
                                 {{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}
@@ -85,7 +86,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Version</label>
-                    <input type="text" class="form-control" value="{{old('version')}}" name="version" placeholder="Enter version">
+                    <input type="text" class="form-control" value="{{old('version')}}" name="version">
                 </div>
                 <div class="mb-4">
                     <label class="form-label fw-bold">Status</label>
@@ -100,7 +101,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Link</label>
-                    <input type="text" class="form-control" name="link" value="{{old('link')}}" placeholder="Enter link">
+                    <input type="text" class="form-control" name="link" value="{{old('link')}}">
                 </div>
                 <div class="mb-4">
                     <label class="form-label"><b>Attachment/s</b> (.docx/.doc) </label>
@@ -109,23 +110,23 @@
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Developer remarks</label>
-                    <textarea class="form-control" name="dev_remarks" placeholder="Add remarks" rows="3">{{old('dev_remarks')}}</textarea>
+                    <textarea class="form-control" name="dev_remarks" rows="3">{{old('dev_remarks')}}</textarea>
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Google Analytics remarks</label>
-                    <textarea class="form-control" name="google_remarks" placeholder="Add remarks" rows="3">{{old('google_remarks')}}</textarea>
+                    <textarea class="form-control" name="google_remarks" rows="3">{{old('google_remarks')}}</textarea>
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">SEO comments</label>
-                    <textarea class="form-control" name="seo_comments" placeholder="Add remarks" rows="3">{{old('seo_comments')}}</textarea>
+                    <textarea class="form-control" name="seo_comments" rows="3">{{old('seo_comments')}}</textarea>
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">DPA Compliance remarks</label>
-                    <textarea class="form-control" name="dpa_remarks" placeholder="Add remarks" rows="3">{{old('dpa_remarks')}}</textarea>
+                    <textarea class="form-control" name="dpa_remarks" rows="3">{{old('dpa_remarks')}}</textarea>
                 </div>
                 <div class="mb-5">
                     <label for="" class="form-label fw-bold">Remarks</label>
-                    <textarea class="form-control" name="remarks" placeholder="Add remarks" rows="3">{{old('remarks')}}</textarea>
+                    <textarea class="form-control" name="remarks" rows="3">{{old('remarks')}}</textarea>
                 </div>
                 <div class="text-right">
                     <button type="submit" class="btn btn-dark">

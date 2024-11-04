@@ -85,43 +85,43 @@ class ProjectController extends Controller
             'description' => 'nullable|string|max:255',
             'office_id' => 'required|exists:offices,id',
             'user_id' => 'required|exists:users,id',
-            'designation' => 'required|string|max:255',
-            'start_sad' => 'required|date',
-            'start_dev' => 'required|date',
-            'estimate_deployment' => 'required|date',
-            'deployment_date' => 'required|date',
-            'version' => 'required|string|max:255',
-            'status' => 'required|string|max:255',
-            'link' => 'required|string|max:255',
+            'designation' => 'nullable|string|max:255',
+            'start_sad' => 'nullable|date',
+            'start_dev' => 'nullable|date',
+            'estimate_deployment' => 'nullable|date|before:deployment_date',
+            'deployment_date' => 'nullable|date|after:estimate_deployment',
+            'version' => 'nullable|string|max:255',
+            'status' => 'nullable|string|max:255',
+            'link' => 'nullable|string|url|max:255',
             'attachment' => 'nullable|array',
             'attachment.*' => 'nullable|file|mimes:docx,doc',
-            'dev_remarks' => 'required|string|max:255',
-            'google_remarks' => 'required|string|max:255',
-            'seo_comments' => 'required|string|max:255',
-            'dpa_remarks' => 'required|string|max:255',
-            'remarks' => 'required|string|max:255',
+            'dev_remarks' => 'nullable|string|max:255',
+            'google_remarks' => 'nullable|string|max:255',
+            'seo_comments' => 'nullable|string|max:255',
+            'dpa_remarks' => 'nullable|string|max:255',
+            'remarks' => 'nullable|string|max:255',
         ],);
 
         //dd($data);
 
         $project = Project::create([
             'project_name' => $data['project_name'],
-            'description' => $data['description'],
+            'description' => $data['description'] ?? '',
             'office_id' => $data['office_id'],
             'user_id' => $data['user_id'],
-            'designation' => $data['designation'],
-            'start_sad' => $data['start_sad'],
-            'start_dev' => $data['start_dev'],
-            'estimate_deployment' => $data['estimate_deployment'],
-            'deployment_date' => $data['deployment_date'],
-            'version' => $data['version'],
-            'status' => $data['status'],
-            'link' => $data['link'],
-            'dev_remarks' => $data['dev_remarks'],
-            'google_remarks' => $data['google_remarks'],
-            'seo_comments' => $data['seo_comments'],
-            'dpa_remarks' => $data['dpa_remarks'],
-            'remarks' => $data['remarks'],
+            'designation' => $data['designation'] ?? '',
+            'start_sad' => $data['start_sad'] ?: null,
+            'start_dev' => $data['start_dev'] ?: null,
+            'estimate_deployment' => $data['estimate_deployment'] ?: null,
+            'deployment_date' => $data['deployment_date'] ?: null,
+            'version' => $data['version'] ?? '',
+            'status' => $data['status'] ?? '',
+            'link' => $data['link'] ?? '',
+            'dev_remarks' => $data['dev_remarks'] ?? '',
+            'google_remarks' => $data['google_remarks'] ?? '',
+            'seo_comments' => $data['seo_comments'] ?? '',
+            'dpa_remarks' => $data['dpa_remarks'] ?? '',
+            'remarks' => $data['remarks'] ?? '',
         ]);
 
         if ($request->hasFile('attachment')) {
@@ -185,25 +185,25 @@ class ProjectController extends Controller
     {
         //dd(vars: $request);
         $data = $request->validate([
-            'project_name' => 'required|string|max:255|unique:projects,project_name',
+            'project_name' => 'required|string|max:255|unique:projects,project_name,' . $project->id,
             'description' => 'nullable|string|max:255',
-            'office_id' => 'required|exists:users,id',
+            'office_id' => 'required|exists:offices,id',
             'user_id' => 'required|exists:users,id',
-            'designation' => 'required|string|max:255',
-            'start_sad' => 'required|date',
-            'start_dev' => 'required|date',
-            'estimate_deployment' => 'required|date',
-            'deployment_date' => 'required|date',
-            'version' => 'required|string|max:255',
-            'status' => 'required|string|max:255',
-            'link' => 'required|string|max:255',
+            'designation' => 'nullable|string|max:255',
+            'start_sad' => 'nullable|date',
+            'start_dev' => 'nullable|date',
+            'estimate_deployment' => 'nullable|date|before:deployment_date',
+            'deployment_date' => 'nullable|date|after:estimate_deployment',
+            'version' => 'nullable|string|max:255',
+            'status' => 'nullable|string|max:255',
+            'link' => 'nullable|string|url|max:255',
             'attachment' => 'nullable|array',
             'attachment.*' => 'nullable|file|mimes:docx,doc',
-            'dev_remarks' => 'required|string|max:255',
-            'google_remarks' => 'required|string|max:255',
-            'seo_comments' => 'required|string|max:255',
-            'dpa_remarks' => 'required|string|max:255',
-            'remarks' => 'required|string|max:255',
+            'dev_remarks' => 'nullable|string|max:255',
+            'google_remarks' => 'nullable|string|max:255',
+            'seo_comments' => 'nullable|string|max:255',
+            'dpa_remarks' => 'nullable|string|max:255',
+            'remarks' => 'nullable|string|max:255',
         ]);
 
         $old = $project->getOriginal();
@@ -261,7 +261,7 @@ class ProjectController extends Controller
             }
         }
 
-        return redirect(route('projects.index'))->with('status','Successfully updated project!');
+        return redirect(route('projects.index'))->with('status','Successfully updated ' . $project->project_name);
     }
 
     /**

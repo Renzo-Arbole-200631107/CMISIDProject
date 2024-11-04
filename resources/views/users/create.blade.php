@@ -14,33 +14,32 @@
     </div>
 
     <div>
-    <div class="card">
-                    @if($errors->any())
-                        <ul>
-                            @foreach($errors->all() as $error)
-                                <li>{{$error}}</li>
-                            @endforeach
-                        </ul>
-                        @endif
-    </div>
+    @if ($errors->any())
+                <div class="mx-4">
+                    @foreach ($errors->all() as $error)
+                    <h5 class="fw-bold text-danger">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 20a8 8 0 1 0 0-16a8 8 0 0 0 0 16m0 2C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m-1-6h2v2h-2zm0-10h2v8h-2z"/></svg>{{ $error }}</h5>
+                    @endforeach
+                </div>
+            @endif
     <form action="{{route('users.store')}}" method="POST">
                     @method('post')
                     @csrf
                     <div class="mb-4">
                         <label for="" class="form-label fw-bold">Last name</label>
-                        <input type="text" class="form-control" name="last_name" value="{{old('last_name')}}" id="last_name" placeholder="Enter last name">
+                        <input type="text" class="form-control" name="last_name" value="{{old('last_name')}}" id="last_name">
                     </div>
                     <div class="mb-4">
                         <label for="" class="form-label fw-bold">First Name</label>
-                        <input type="text" class="form-control" name="first_name" value="{{old('first_name')}}" id="first_name" placeholder="Enter first name">
+                        <input type="text" class="form-control" name="first_name" value="{{old('first_name')}}" id="first_name">
                     </div>
                     <div class="mb-4">
                         <label for="" class="form-label fw-bold">Middle Name</label>
-                        <input type="text" class="form-control" name="middle_name" value="{{old('middle_name')}}" id="middle_name" placeholder="Enter middle name">
+                        <input type="text" class="form-control" name="middle_name" value="{{old('middle_name')}}" id="middle_name">
                     </div>
                     <div class="mb-4">
                         <label for="" class="form-label fw-bold">Username</label>
-                        <input type="text" class="form-control" name="username" value="{{old('username')}}" id="username" placeholder="Enter username">
+                        <input type="text" class="form-control" name="username" value="{{old('username')}}" id="username">
                     </div>
                     <div class="mb-4">
                         <label class="form-label fw-bold">User role</label>
