@@ -72,12 +72,14 @@ class UserController extends Controller
             'first_name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username,' . $user->id,
             'is_active' => 'required|integer',
-            'current_password' => 'required',
+            'current_password' => 'nullable|required_with:password|string',
             'new_password' => 'nullable|min:8|confirmed'
         ]);
 
-        if(!Hash::check($request->current_password, $user->password)){
-            return back()->withErrors(['current_password' => 'Current password is incorrect.']);
+        if($request->filled('current_password')){
+            if(!Hash::check($request->current_password, $user->password)){
+                return back()->withErrors(['current_password' => 'Current password is incorrect.']);
+            }
         }
 
         if($request->filled('new_password')){

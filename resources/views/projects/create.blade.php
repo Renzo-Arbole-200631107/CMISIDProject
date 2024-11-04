@@ -92,11 +92,11 @@
                     <label class="form-label fw-bold">Status</label>
                     <select id="inputStatus" class="form-control" name="status">
                         <option selected>Select status</option>
-                        <option value="On-going development" {{old('status') == 'On-going development'}}>On-going development</option>
-                        <option value="For deployment" {{old('status') == 'For deployment'}}>For deployment</option>
-                        <option value="Deployed" {{old('status') == 'Deployed'}}>Deployed</option>
-                        <option value="For update" {{old('status') == 'For update'}}>For update</option>
-                        <option value="Cancelled" {{old('status') == 'Cancelled'}}>Cancelled</option>
+                        <option value="On-going development" {{old('status') == 'On-going development' ? 'selected' : ''}}>On-going development</option>
+                        <option value="For deployment" {{old('status') == 'For deployment' ? 'selected' : ''}}>For deployment</option>
+                        <option value="Deployed" {{old('status') == 'Deployed' ? 'selected' : ''}}>Deployed</option>
+                        <option value="For update" {{old('status') == 'For update' ? 'selected' : ''}}>For update</option>
+                        <option value="Cancelled" {{old('status') == 'Cancelled' ? 'selected' : ''}}>Cancelled</option>
                     </select>
                 </div>
                 <div class="mb-4">
