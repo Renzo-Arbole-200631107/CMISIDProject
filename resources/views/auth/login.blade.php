@@ -82,8 +82,8 @@
     
     .container{
         display: flex;
-        height: fit-content;
-
+        min-height: 100vh;
+        justify-content: space-between;
     }
 
     .login-form{
@@ -97,11 +97,13 @@
 
     .image-column{
         display: flex;
-        justify-content: right;
+        align-items: flex-end;
+        justify-content: space-between;
         width: 50%;
     }
 
     .image-column img{
+        object-fit: cover;
         height: 100vh;
         padding: 24px;
         border-radius: 24px;
@@ -117,7 +119,7 @@
 
         .login-form{
             width: 100%;
-            height: 100vh;
+            height: auto;
         }
     }
 </style>
