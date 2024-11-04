@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LogsController;
+use App\Http\Controllers\OfficeController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -22,6 +23,7 @@ Route::group(['middleware' => ['auth', 'checkRole:project manager']],function(){
     Route::resource('offices', App\Http\Controllers\OfficeController::class);
     Route::resource('logs', App\Http\Controllers\LogsController::class);
     Route::resource('dashboard', App\Http\Controllers\DashboardController::class);
+    Route::get('/offices/similar', [App\Http\Controllers\OfficeController::class, 'similar'])->name('offices.similar');
 });
 
 Route::group(['middleware' => ['auth', 'checkRole:developer']], function(){

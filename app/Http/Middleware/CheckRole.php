@@ -22,13 +22,36 @@ class CheckRole
         if (!Auth::check()) {
             return redirect()->route('login'); // Redirect to login
         }
-        
 
-        // Check if the user has the required role
+        //Check if the user has any role
         if (!Auth::user()->hasAnyRole(['project manager', 'developer'])) {
             return redirect()->route('projects.index')->with('error', 'You do not have access to this resource.');
         }
 
-        return $next($request);
+        // Check if the user has the required role
+        if($role=='project manager')
+        {
+            if (Auth::user()->hasRole('project manager')) {
+                return $next($request);
+            }
+            else{
+                return redirect()->route('projects.index')->with('error', 'You do not have access to this resource.');
+            }
+        }
+        else if($role=='developer')
+        {
+            if (Auth::user()->hasRole('developer')) {
+                return $next($request);
+            }
+            else{
+                return redirect()->route('projects.index')->with('error', 'You do not have access to this resource.');
+            }
+        }
+
+
+        
+
+
+ 
     }
 }

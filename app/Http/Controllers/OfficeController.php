@@ -77,11 +77,10 @@ class OfficeController extends Controller
         return redirect(route('offices.index'))->with('status', 'Successfully updated ' . $office->office_name);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Office $office)
-    {
-        //
+    public function similar(Request $request) {
+        $query = $request->input('query');
+        $offices = Office::where('office_name', 'LIKE', "%{$query}%")->pluck('office_name');
+        return response()->json($offices);
     }
+    
 }
