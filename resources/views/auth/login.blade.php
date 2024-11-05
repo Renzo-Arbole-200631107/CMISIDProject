@@ -125,7 +125,8 @@
 
     .container {
         display: flex;
-        height: fit-content;
+        min-height: 100vh;
+        justify-content: space-between;
     }
 
     .login-form {
@@ -134,34 +135,38 @@
         justify-content: space-between;
         gap: 48px;
         padding: 36px;
-        width: 50%;
+        width: 75%;
     }
 
     .image-column {
         display: flex;
-        justify-content: right;
+        align-items: flex-end;
+        justify-content: space-between;
         width: 50%;
     }
 
-    .image-column img {
+
+    .image-column img{
+        object-fit: cover;
         height: 100vh;
         padding: 24px;
         border-radius: 24px;
     }
 
-    @media only screen and  (max-width:1200px) {
-
+    @media only screen and (max-width:1024px) {
         .image-column {
             display: none;
         }
 
         .container {
-            width: fit-content;
+            max-width: 80%;
+            /* Adjust as needed */
+            margin: auto;
         }
 
         .login-form {
             width: 100%;
-            height: 100vh;
+            height: auto;
         }
     }
 </style>

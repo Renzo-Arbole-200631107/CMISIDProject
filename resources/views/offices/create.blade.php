@@ -33,13 +33,14 @@
                 @csrf
                 <div class="mb-4">
                     <label for="office_name" class="form-label fw-bold">Office name</label>
-                    <input type="text" class="form-control" name="office_name" value="{{old('office_name')}}" id="office_name">
-                </div>
+                    <input type="text" class="form-control" name="office_name" value="{{old('office_name')}}" id="office_name" autocomplete="on">
+                    <ul id="suggestions" class="suggestions" style="display: none;"></ul>
+                    </div>
                 <div class="mb-4">
                     <label class="form-label fw-bold">Is Active?</label>
                     <select name="is_active" id="is_active" class="form-control">
-                        <option value="1" {{old('is_active') == "1"}} selected>Yes</option>
-                        <option value="0" {{old('is_active') == "0"}}>No</option>
+                        <option value="1" {{old('is_active') == "1" ? 'selected' : ''}} selected>Yes</option>
+                        <option value="0" {{old('is_active') == "0" ? 'selected' : ''}}>No</option>
                     </select>
                 </div>
 
@@ -55,6 +56,40 @@
             </form>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" 
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" 
+        crossorigin="anonymous">
+    </script>
+<script>
+    $(document).ready(function(){
+        $('#office_name').on('keyup', function(){
+            var query = $(this).val();
+            $.ajax({
+                url: "{{ route('offices.similar') }}", // Make sure this route is defined correctly
+                type: "GET",
+                data: {similar: query}, // Ensure this matches your backend's expected parameter
+                success:function(data){
+                    $("#suggestions").empty(); // Clear previous suggestions
+                    if (data.length > 0) {
+                        data.forEach(function(office){
+                            $("#suggestions").append('<li>' + office.office_name + '</li>');
+                        });
+                        $("#suggestions").show(); // Show suggestions
+                    } else {
+                        $("#suggestions").hide(); // Hide if no results
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching suggestions:', error);
+                }
+            });
+        });
+    });
+</script>
+
+
+
 
     <style>
         body {
@@ -79,6 +114,25 @@
 
         form {
             padding: 24px;
+        }
+
+        #suggestions {
+            list-style-type: none; 
+            padding: 0; 
+            margin: 0; 
+            position: absolute; 
+            background: white; 
+            border: 1px solid #ccc; 
+            z-index: 1000; /* Ensures it appears above other content */
+        }
+
+        #suggestions li {
+            padding: 8px; 
+            cursor: pointer; 
+        }
+
+        #suggestions li:hover {
+            background-color: #f0f0f0; /* Highlight effect on hover */
         }
     </style>
 @endsection
