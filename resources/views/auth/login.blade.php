@@ -135,7 +135,7 @@
         justify-content: space-between;
         gap: 48px;
         padding: 36px;
-        width: 50%;
+        width: 75%;
     }
 
     .image-column {
@@ -145,6 +145,7 @@
         width: 50%;
     }
 
+
     .image-column img{
         object-fit: cover;
         height: 100vh;
@@ -152,14 +153,15 @@
         border-radius: 24px;
     }
 
-    @media only screen and  (max-width:1200px) {
-
+    @media only screen and (max-width:1024px) {
         .image-column {
             display: none;
         }
 
         .container {
-            width: fit-content;
+            max-width: 80%;
+            /* Adjust as needed */
+            margin: auto;
         }
 
         .login-form {
