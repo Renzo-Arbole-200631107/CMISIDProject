@@ -27,19 +27,23 @@
             @csrf
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Last name</label>
-                <input type="text" class="form-control" name="last_name" value={{old('last_name', $user->last_name)}}>
+                <input type="text" class="form-control" name="last_name" value="{{old('last_name', $user->last_name)}}" 
+                {{ Auth::id() === $user->id ? '' : 'disabled' }}>
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">First Name</label>
-                <input type="text" class="form-control" name="first_name" value={{old('first_name', $user->first_name)}}>
+                <input type="text" class="form-control" name="first_name" value="{{old('first_name', $user->first_name)}}"
+                {{ Auth::id() === $user->id ? '' : 'disabled' }}>
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Middle Name</label>
-                <input type="text" class="form-control" name="middle_name" value={{old('middle_name', $user->middle_name)}}>
+                <input type="text" class="form-control" name="middle_name" value="{{old('middle_name', $user->middle_name)}}"
+                {{ Auth::id() === $user->id ? '' : 'disabled' }}>
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Username</label>
-                <input type="text" class="form-control" name="username" value={{old('username', $user->username)}}>
+                <input type="text" class="form-control" name="username" value="{{old('username', $user->username)}}"
+                {{ Auth::id() === $user->id ? '' : 'disabled' }}>
             </div>
             @if (auth()->user()->hasRole('developer'))
             <div class="mb-4">
@@ -48,6 +52,7 @@
                     <option value="developer" {{old('role', $user->getRoleNames()->first()) == 'developer' ? 'selected' : ''}}>Developer</option>
                     <option value="project manager" {{old('role', $user->getRoleNames()->first()) == 'project manager' ? 'selected' : ''}}>Project Manager</option>
                 </select>
+                <input type="hidden" name="role" value="{{ $user->getRoleNames()->first() }}">
             </div>
             @endif
             @if (auth()->user()->hasRole('project manager'))
@@ -67,6 +72,7 @@
                 </select>
             </div>
 
+            @if (Auth::id() === $user->id)
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Current password</label>
                 <input type="password" class="form-control" name="current_password">
@@ -81,6 +87,7 @@
                 <label for="" class="form-label fw-bold">Confirm password</label>
                 <input type="password" class="form-control" name="new_password_confirmation">
             </div>
+            @endif
 
             <div class="text-right">
                 <button type="submit" class="btn btn-dark">

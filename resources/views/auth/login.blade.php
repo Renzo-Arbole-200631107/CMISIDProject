@@ -42,7 +42,7 @@
                     <div class="form-outline mb-4">
                         <input type="text" class="form-control" placeholder="Username" name="username" required />
                     </div>
-                    <div class="form-outline mb-4 position-relative">
+                    <div class="form-outline mb-4 ">
                         <input type="password" class="form-control" placeholder="Password" name="password"
                             id="password" required />
                         <button type="button" onclick="togglePasswordVisibility()" class="toggle-password-btn">

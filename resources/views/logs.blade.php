@@ -16,9 +16,6 @@
         <div class="container">
             <div class="pad-shadow">
                 <div class="details-pad">
-                    <h4 class="info-container px-4"></h4>
-                </div>
-                <div class="details-pad">
                     <table class="table">
                         <tr>
                             <td>Updated at</td>

@@ -215,6 +215,11 @@
             font-weight: bold;
         }
 
+        .title{
+            text-decoration: none;
+            color: black;
+        }
+
         .badge-dev {
             padding: 5px 10px;
             border: 1px solid #008000;

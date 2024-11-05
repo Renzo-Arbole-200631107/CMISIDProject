@@ -13,7 +13,7 @@ class OfficeController extends Controller
     public function index()
     {
         // Fetch all offices from the database
-        $offices = Office::paginate(1);
+        $offices = Office::paginate(5);
 
         // Pass the offices data to the view
         return view('offices.index', compact('offices'));
