@@ -88,13 +88,13 @@
 
     
     
-    .container{
+    .container {
         display: flex;
-        height: fit-content;
-
+        min-height: 100vh;
+        justify-content: space-between;
     }
 
-    .login-form{
+    .login-form {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -103,9 +103,10 @@
         width: 50%;
     }
 
-    .image-column{
+    .image-column {
         display: flex;
-        justify-content: right;
+        align-items: flex-end;
+        justify-content: space-between;
         width: 50%;
     }
 
