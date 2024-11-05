@@ -49,7 +49,14 @@
                             <i id="togglePasswordIcon" class="fa fa-eye"></i>
                         </button>
                     </div>
-                    @if ($errors->any())
+                    @if ($errors->has('is_active'))
+                        <div>
+                            <h6 class="text-danger text-center fw-bold mb-4">
+                                {{ $errors->first('is_active') }}
+                            </h6>
+                        </div>
+
+                    @elseif ($errors->any())
                         <div>
                             <h6 class="text-danger text-center fw-bold mb-4">
                                 @foreach ($errors->all() as $error)
@@ -58,6 +65,7 @@
                             </h6>
                         </div>
                     @endif
+                    
                     <div>
                         <button type="submit" class="btn btn-dark col fw-bold">Log In</button>
                     </div>

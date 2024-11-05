@@ -70,7 +70,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $offices = Office::all();
+        $offices = Office::where('is_active', 1)->get();
         $users = User::all();
         return view('projects.create', compact('users', 'offices'));
     }

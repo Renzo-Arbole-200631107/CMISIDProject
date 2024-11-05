@@ -47,6 +47,12 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user){
         //dd(!$user->password_changed);
+
+        if($user->is_active == "0"){
+            Auth::logout();
+            return redirect()->route('login')->withErrors(['is_active' => 'Your account is inactive. Please contact support.']);
+        }
+
         if(!$user->password_changed){
             return redirect()->route('change.password.form');
         }
