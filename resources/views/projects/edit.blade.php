@@ -38,7 +38,7 @@
                 <label for="" class="form-label fw-bold">Project owner (Office / Department)</label>
                 <select name="office_id" class="form-control">
                     @foreach ($offices as $office)
-                        <option value={{$office->id}} {{old('office_id', $office->id) == $office->id ? 'selected' : ''}}>
+                        <option value={{$office->id}} {{old('office_id', $project->office_id) == $office->id ? 'selected' : ''}}>
                             {{$office->office_name}}
                         </option>
                     @endforeach
@@ -49,7 +49,7 @@
                 <select name="user_id" class="form-control">
                     <option>Select developer</option>
                     @foreach ($users as $user)
-                        <option value={{$user->id}} {{old('user_id', $user->id) == $user->id ? 'selected' : ''}}>
+                        <option value={{$user->id}} {{old('user_id', $project->user_id) == $user->id ? 'selected' : ''}}>
                             {{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}
                         </option>
                     @endforeach
