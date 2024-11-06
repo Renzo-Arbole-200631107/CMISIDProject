@@ -20,7 +20,7 @@ class UserController extends Controller
                 ->orWhere('first_name', 'like', "%{$query}%")
                 ->paginate();
         } else {
-            $users = User::with('roles')->paginate(1);
+            $users = User::with('roles')->paginate(5);
         }
 
         return view('users.index', compact('users'));

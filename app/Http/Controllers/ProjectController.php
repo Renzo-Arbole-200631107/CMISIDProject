@@ -60,7 +60,7 @@ class ProjectController extends Controller
         }
 
         // Get the results with eager loading for the account relationship
-        $projects = $query->with(['user', 'office'])->paginate(1);
+        $projects = $query->with(['user', 'office'])->paginate(5);
 
 
         return view('projects.index', compact('projects'));
@@ -70,8 +70,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $offices = Office::all();
-        $users = User::all();
+        $offices = Office::where('is_active', 1)->get();
+        $users = User::where('is_active', 1)->get();
         return view('projects.create', compact('users', 'offices'));
     }
 
@@ -173,8 +173,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        $offices = Office::all();
-        $users = User::all();
+        $offices = Office::where('is_active', 1)->get();
+        $users = User::where('is_active', 1)->get();
         return view('projects.edit', ['project' => $project, 'users' => $users, 'offices' => $offices]);
     }
 
@@ -213,6 +213,8 @@ class ProjectController extends Controller
         if(!empty($new)){
             $logs = auth()->user()->username . ' (' . auth()->user()->first_name . ' ' . 
             auth()->user()->middle_name . ' ' . auth()->user()->last_name . ')' . ' updated project: ';
+
+            
             foreach ($new as $field => $newValue) {
                 // Check if the old value exists for this field
                 if (isset($old[$field])) {
