@@ -213,6 +213,8 @@ class ProjectController extends Controller
         if(!empty($new)){
             $logs = auth()->user()->username . ' (' . auth()->user()->first_name . ' ' . 
             auth()->user()->middle_name . ' ' . auth()->user()->last_name . ')' . ' updated project: ';
+
+            
             foreach ($new as $field => $newValue) {
                 // Check if the old value exists for this field
                 if (isset($old[$field])) {

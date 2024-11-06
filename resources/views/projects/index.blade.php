@@ -19,7 +19,7 @@
             <div class="left-part">
                 <form action="{{ route('projects.index') }}" method="get">
                     <div class="date-filter">
-                        <input type="search" class="form-control" placeholder="Search here.." name="search" id="search">
+                        <input type="search" class="form-control" placeholder="Search here.." name="search" id="search" value="{{ old('search', request('search')) }}">
                     </div>
                 </form>
             </div>

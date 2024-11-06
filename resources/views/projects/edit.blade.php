@@ -82,6 +82,7 @@
             <div class="mb-4">
                 <label class="form-label fw-bold">Status</label>
                 <select id="inputStatus" class="form-control" name="status">
+                    <option selected>Select status</option>
                     <option value="On-going development" {{old('status', $project->status) == 'On-going development' ? 'selected' : ''}}>On-going development</option>
                     <option value="For deployment" {{old('status', $project->status) == 'For deployment' ? 'selected' : ''}}>For deployment</option>
                     <option value="Deployed" {{old('status', $project->status) == 'Deployed' ? 'selected' : ''}}>Deployed</option>

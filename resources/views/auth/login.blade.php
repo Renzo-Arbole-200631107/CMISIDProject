@@ -42,21 +42,15 @@
                     <div class="form-outline mb-4">
                         <input type="text" class="form-control" placeholder="Username" name="username" required />
                     </div>
-                    <div class="form-outline mb-4 ">
+                    <div class="form-outline mb-4 position-relative">
                         <input type="password" class="form-control" placeholder="Password" name="password"
                             id="password" required />
-                        <button type="button" onclick="togglePasswordVisibility()" class="toggle-password-btn">
-                            <i id="togglePasswordIcon" class="fa fa-eye"></i>
-                        </button>
+                            <button type="button" onclick="togglePasswordVisibility()" class="toggle-password-btn position-absolute">
+                                <i id="togglePasswordIcon" class="fa fa-eye"></i>
+                            </button>
                     </div>
-                    @if ($errors->has('is_active'))
-                        <div>
-                            <h6 class="text-danger text-center fw-bold mb-4">
-                                {{ $errors->first('is_active') }}
-                            </h6>
-                        </div>
-
-                    @elseif ($errors->any())
+                    
+                    @if ($errors->any())
                         <div>
                             <h6 class="text-danger text-center fw-bold mb-4">
                                 @foreach ($errors->all() as $error)
@@ -65,7 +59,6 @@
                             </h6>
                         </div>
                     @endif
-                    
                     <div>
                         <button type="submit" class="btn btn-dark col fw-bold">Log In</button>
                     </div>
@@ -125,6 +118,8 @@
         padding: 0;
         color: #6c757d;
         z-index: 10;
+        width: 30px;
+        height: 30px
     }
 
     .toggle-password-btn:focus {
@@ -133,8 +128,7 @@
 
     .container {
         display: flex;
-        min-height: 100vh;
-        justify-content: space-between;
+        height: fit-content;
     }
 
     .login-form {
@@ -143,38 +137,34 @@
         justify-content: space-between;
         gap: 48px;
         padding: 36px;
-        width: 75%;
+        width: 50%;
     }
 
     .image-column {
         display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
+        justify-content: right;
         width: 50%;
     }
 
-
-    .image-column img{
-        object-fit: cover;
+    .image-column img {
         height: 100vh;
         padding: 24px;
         border-radius: 24px;
     }
 
-    @media only screen and (max-width:1024px) {
+    @media only screen and  (max-width:1200px) {
+
         .image-column {
             display: none;
         }
 
         .container {
-            max-width: 80%;
-            /* Adjust as needed */
-            margin: auto;
+            width: fit-content;
         }
 
         .login-form {
             width: 100%;
-            height: auto;
+            height: 100vh;
         }
     }
 </style>

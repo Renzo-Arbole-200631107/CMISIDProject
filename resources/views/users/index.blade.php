@@ -62,7 +62,7 @@
                 <h2>ACCOUNTS</h2>
                 <div class="right-part">
                     <form action="{{ route('users.index') }}" method="get">
-                        <input type="search" class="form-control" placeholder="Search here.." name="search" id="search">
+                        <input type="search" class="form-control" placeholder="Search here.." name="search" id="search" value="{{ old('search', request('search')) }}">
                     </form>
                     @if (auth()->user()->hasRole('project manager'))
                         <a href="{{ route('users.create') }}" class="add-btn btn btn-dark">
