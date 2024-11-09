@@ -10,7 +10,7 @@
                             <path fill="white"
                                 d="M12 4c4.411 0 8 3.589 8 8s-3.589 8-8 8s-8-3.589-8-8s3.589-8 8-8m0-2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2m5 9h-4V7h-2v4H7v2h4v4h2v-4h4z" />
                         </svg>
-                        Add project
+                        Add projects
                     </a>
                 @endif
             </div>
@@ -72,9 +72,9 @@
             @endif
             <table class="table">
                 <tr class="fw-bold">
-                    <th>Project name</th>
-                    <th>Product owner</th>
-                    <th>Developer</th>
+                    <th style="width: 300px;">Project name</th>
+                    <th style="width: 300px;">Product owner</th>
+                    <th style="width: 200px;">Developer</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
