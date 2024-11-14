@@ -10,10 +10,18 @@ class OfficeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = $request->input('search');
+
+        if ($query) {
+            $offices = Office::where('office_name', 'like', "%{$query}%")
+                ->paginate();
+        } else {
+            $offices = Office::paginate(5);
+        }
         // Fetch all offices from the database
-        $offices = Office::paginate(5);
+        
 
         // Pass the offices data to the view
         return view('offices.index', compact('offices'));

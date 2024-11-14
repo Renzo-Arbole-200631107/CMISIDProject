@@ -198,7 +198,7 @@
         .right-part {
             display: flex;
             justify-content: end;
-            gap: 10px;
+            margin-top:50px;
         }
 
         .profile {
