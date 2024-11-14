@@ -21,16 +21,19 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('change-password', [App\Http\Controllers\UserController::class, 'updatePassword'])->name('change.password');
 });
 
+Route::group(['middleware' => ['auth', 'requirePasswordChange', 'checkAdminOrProjectManager']],function(){
+    Route::resource('offices', App\Http\Controllers\OfficeController::class);
+});
+
 Route::group(['middleware' => ['auth', 'requirePasswordChange', 'checkAdmin']],function(){
     Route::resource('projects', App\Http\Controllers\ProjectController::class)->only('create', 'store');
     Route::resource('users', App\Http\Controllers\UserController::class)->only('create', 'store');
-    Route::resource('offices', App\Http\Controllers\OfficeController::class);
     Route::resource('dashboard', App\Http\Controllers\DashboardController::class);
 });
 
 Route::group(['middleware' => ['auth', 'requirePasswordChange', 'checkProjectManager']], function(){
     Route::resource('projects', App\Http\Controllers\ProjectController::class)->only('create', 'store', 'edit', 'update');
-    Route::resource('offices', App\Http\Controllers\OfficeController::class);
+    Route::resource('dashboard', App\Http\Controllers\DashboardController::class);
 });
 
 Route::group(['middleware' => ['auth', 'requirePasswordChange','checkProjectManagerOrDeveloper']], function(){
@@ -40,13 +43,7 @@ Route::group(['middleware' => ['auth', 'requirePasswordChange','checkProjectMana
     Route::resource('dashboard', App\Http\Controllers\DashboardController::class);
 });
 
-Route::group(['middleware' => ['auth', 'requirePasswordChange', 'checkAdmin']], function(){
-    Route::resource('users', App\Http\Controllers\UserController::class)->only(['index', 'show', 'edit', 'update']);
-    Route::resource('projects', App\Http\Controllers\ProjectController::class)->only('index', 'show');
-    Route::resource('offices', App\Http\Controllers\OfficeController::class)->only('index','show');
-    Route::resource('dashboard', App\Http\Controllers\DashboardController::class);
 
-});
 
 
 

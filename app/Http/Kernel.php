@@ -2,6 +2,7 @@
 
 namespace App\Http;
 use App\Http\Middleware\CheckAdmin;
+use App\Http\Middleware\CheckAdminOrProjectManager;
 use App\Http\Middleware\CheckProjectManager;
 use App\Http\Middleware\CheckProjectManagerOrDeveloper;
 use App\Http\Middleware\CheckRole;
@@ -79,6 +80,7 @@ class Kernel extends HttpKernel
         'checkProjectManager' => CheckProjectManager::class,
         'checkProjectManagerOrDeveloper' => CheckProjectManagerOrDeveloper::class,
         'checkAdmin' => CheckAdmin::class,
+        'checkAdminOrProjectManager' => CheckAdminOrProjectManager::class,
         'requirePasswordChange' => RequirePasswordChange::class,
     ];
 }
