@@ -17,8 +17,10 @@ class CheckProjectManagerOrDeveloper
     
     public function handle(Request $request, Closure $next):Response
     {
+        
         if(Auth::check() && (Auth::user()->hasRole('project manager') || 
-        Auth::user()->hasRole('developer'))){
+        Auth::user()->hasRole('developer') ||
+        Auth::user()->hasRole('admin'))){
             return $next($request);
         }
 

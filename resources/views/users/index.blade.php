@@ -57,14 +57,15 @@
             </div>
         @endif
 
-        @if (auth()->user()->hasRole('project manager'))
+        @if (auth()->user()->hasRole('project manager')||
+        auth()->user()->hasRole('admin'))
             <div class="acc-header">
                 <h2>ACCOUNTS</h2>
                 <div class="right-part">
                     <form action="{{ route('users.index') }}" method="get">
                         <input type="search" class="form-control" placeholder="Search here.." name="search" id="search" value="{{ old('search', request('search')) }}">
                     </form>
-                    @if (auth()->user()->hasRole('project manager'))
+                    @if (auth()->user()->hasRole('admin'))
                         <a href="{{ route('users.create') }}" class="add-btn btn btn-dark">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                 <path fill="white"
@@ -107,6 +108,8 @@
                             @elseif($user->hasRole('project manager'))
                                 <td class="text-primary fw-bold btn-container"><span class="badge-proj">Project
                                         Manager</span></td>
+                            @elseif($user->hasRole('admin'))
+                                <td class="text-primary fw-bold btn-container"><span class="badge-ad">Admin</span></td>
                             @endif
 
                             @if ($user->is_active === 1)
@@ -260,6 +263,13 @@
             border: 1px solid #00008A;
             border-radius: 15px;
             color: #00008A;
+        }
+
+        .badge-ad {
+            padding: 5px 10px;
+            border: 1px solid #6A4C9C;
+            border-radius: 15px;
+            color: #6A4C9C;
         }
 
         .btn-container {

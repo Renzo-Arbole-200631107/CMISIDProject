@@ -45,6 +45,7 @@
                         <label class="form-label fw-bold">User role</label>
                         <select name="role" id="role_description" class="form-control">
                             <option value="">Select role</option>
+                            <option value="admin" {{old('role') == "admin" ? 'selected' : ''}}>Admin</option>
                             <option value="developer" {{old('role') == "developer" ? 'selected' : ''}}>Developer</option>
                             <option value="project manager" {{old('role') == "project manager" ? 'selected' : ''}}>Project Manager</option>
                         </select>
