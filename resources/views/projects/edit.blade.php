@@ -56,10 +56,6 @@
                 </select>
             </div>
             <div class="mb-4">
-                <label for="" class="form-label fw-bold">Designation</label>
-                <input type="text" class="form-control" name="designation" value="{{old('designation',$project->designation)}}">
-            </div>
-            <div class="mb-4">
                 <label for="" class="form-label fw-bold">Start SAD date</label>
                 <input type="date" class="form-control" name="start_sad" value={{old('start_sad',$project->start_sad)}}>
             </div>
@@ -114,10 +110,6 @@
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">DPA Compliance remarks</label>
                 <textarea class="form-control" name="dpa_remarks" value= rows="3">{{old('dpa_remarks',$project->dpa_remarks)}}</textarea>
-            </div>
-            <div class="mb-5">
-                <label for="" class="form-label fw-bold">Remarks</label>
-                <textarea class="form-control" name="remarks" value= rows="3">{{old('remarks',$project->remarks)}}</textarea>
             </div>
             <div class="text-right">
                 <button type="submit" class="btn btn-dark">

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('description', 500)->nullable();
             $table->foreignId('office_id')->constrained('offices')->cascadeOnDelete(); //office_name
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete(); //developer name
-            $table->string('designation')->nullable();
             $table->date('start_sad')->nullable();
             $table->date('start_dev')->nullable();
             $table->date('estimate_deployment')->nullable();
@@ -31,7 +30,6 @@ return new class extends Migration
             $table->string('google_remarks')->nullable();
             $table->string('seo_comments')->nullable();
             $table->string('dpa_remarks')->nullable();
-            $table->string('remarks')->nullable();
             $table->timestamps();
         });
     }

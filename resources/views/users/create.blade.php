@@ -51,6 +51,10 @@
                         </select>
                     </div>
                     <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Designation</label>
+                        <input type="text" class="form-control" value="{{old('designation')}}" name="designation" placeholder="Enter designation">
+                    </div>
+                    <div class="mb-4">
                         <label class="form-label fw-bold">Is Active?</label>
                         <select name="is_active" id="is_active" class="form-control">
                             <option value="1" {{old('is_active') == "1" ? 'selected' : ''}}>Yes</option>

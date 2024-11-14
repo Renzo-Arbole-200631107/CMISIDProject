@@ -46,6 +46,10 @@
                     {{ Auth::id() === $user->id ? '' : 'disabled' }}>
                 </div>
                 <div class="mb-4">
+                    <label for="" class="form-label fw-bold">Designation</label>
+                    <input type="text" class="form-control" name="designation" value="{{old('designation',$project->designation)}}">
+                </div>
+                <div class="mb-4">
                     <label for="" class="form-label fw-bold">Current password</label>
                     <input type="password" class="form-control" name="current_password">
                 </div>

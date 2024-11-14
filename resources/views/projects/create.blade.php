@@ -64,10 +64,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="mb-4">
-                    <label for="" class="form-label fw-bold">Designation</label>
-                    <input type="text" class="form-control" value="{{old('designation')}}" name="designation" placeholder="Enter designation">
-                </div>
+                
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Start SAD date</label>
                     <input type="date" class="form-control" value="{{old('start_sad')}}" name="start_sad">
@@ -123,10 +120,6 @@
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">DPA Compliance remarks</label>
                     <textarea class="form-control" name="dpa_remarks" rows="3">{{old('dpa_remarks')}}</textarea>
-                </div>
-                <div class="mb-5">
-                    <label for="" class="form-label fw-bold">Remarks</label>
-                    <textarea class="form-control" name="remarks" rows="3">{{old('remarks')}}</textarea>
                 </div>
                 <div class="text-right">
                     <button type="submit" class="btn btn-dark">
