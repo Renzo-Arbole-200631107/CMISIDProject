@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\CheckProjectManager;
 use App\Http\Middleware\CheckProjectManagerOrDeveloper;
 use App\Http\Middleware\CheckRole;
+use App\Http\Middleware\RequirePasswordChange;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Spatie\Permission\Middleware\RoleMiddleware;
@@ -77,6 +78,7 @@ class Kernel extends HttpKernel
         'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
         'checkProjectManager' => CheckProjectManager::class,
         'checkProjectManagerOrDeveloper' => CheckProjectManagerOrDeveloper::class,
+        'requirePasswordChange' => RequirePasswordChange::class,
     ];
 }
 //dd("Kernel loaded");

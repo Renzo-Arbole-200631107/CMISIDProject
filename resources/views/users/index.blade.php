@@ -17,30 +17,32 @@
                         {{ session('status') }}</h4>
                 </div>
             @endif
-                <div class="container">
-                    <div class="profile">
-                        <div class="col-md-6">
-                            <div>
-                                {{ auth()->user()->last_name }}, {{ auth()->user()->first_name }}
-                                {{ auth()->user()->middle_name }}
-                                "@"{{ auth()->user()->username }}
-                            </div>
-                            <div>
-                               <td class="text-success fw-bold btn-container"><span class="badge-dev">Developer</span></td>
-                            </div>
+            <div class="pad-shadow">
+                <div class="details-pad">
+                    <div class="col-md-6 d-flex flex-column justify-content-start p-2">
+                        <div>
+                            <h5 class="fw-bold">{{ auth()->user()->last_name }}, {{ auth()->user()->first_name }}
+                            {{ auth()->user()->middle_name }}</h5>
                         </div>
-                        <div class="col-md-6">
-
+                        <div>
+                            <h6 class="fw-bold fst-italic">{{auth()->user()->username}}</h6>
                         </div>
                     </div>
-                </div>
-                <table class="table">
-                    <tr class="fw-bold">
-                        <td>{{ auth()->user()->last_name }}, {{ auth()->user()->first_name }}
-                            {{ auth()->user()->middle_name }}</td>
-                        <td>{{ auth()->user()->username }}</td>
-                        <td>
-                            <a href="{{ route('users.edit', auth()->user()->id) }}" class="">
+                    <div class="col-md-5 text-end p-2">
+                        <div>
+                            <h5 class="text-success fw-bold btn-container">Developer</h5>
+                        </div>
+                        <div>
+                            @if (auth()->user()->is_active === 1)
+                                <h6 class="fw-bold">Active</h6>
+                            @elseif(auth()->user()->is_active === 0)
+                                <h6 class="fw-bold">Inactive</h6>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-center p-2">
+                        <div>
+                        <a href="{{ route('users.edit', auth()->user()->id) }}" class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="4em" height="2em" viewBox="0 0 24 24">
                                     <path fill="black"
                                         d="m7 17.013l4.413-.015l9.632-9.54c.378-.378.586-.88.586-1.414s-.208-1.036-.586-1.414l-1.586-1.586c-.756-.756-2.075-.752-2.825-.003L7 12.583zM18.045 4.458l1.589 1.583l-1.597 1.582l-1.586-1.585zM9 13.417l6.03-5.973l1.586 1.586l-6.029 5.971L9 15.006z" />
@@ -48,12 +50,10 @@
                                         d="M5 21h14c1.103 0 2-.897 2-2v-8.668l-2 2V19H8.158c-.026 0-.053.01-.079.01c-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2" />
                                 </svg>
                             </a>
-                        </td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-
-                </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
             </div>
         @endif
 
@@ -62,7 +62,7 @@
                 <h2>ACCOUNTS</h2>
                 <div class="right-part">
                     <form action="{{ route('users.index') }}" method="get">
-                        <input type="search" class="form-control" placeholder="Search here.." name="search" id="search">
+                        <input type="search" class="form-control" placeholder="Search here.." name="search" id="search" value="{{ old('search', request('search')) }}">
                     </form>
                     @if (auth()->user()->hasRole('project manager'))
                         <a href="{{ route('users.create') }}" class="add-btn btn btn-dark">
@@ -98,7 +98,7 @@
 
                     @foreach ($users as $user)
                         <tr>
-                            <td class="fw-bold">{{ $user->last_name }}, {{ $user->first_name }} {{ $user->middle_name }}
+                            <td class="fw-bold text-start">{{ $user->last_name }}, {{ $user->first_name }} {{ $user->middle_name }}
                             </td>
                             <td>{{ $user->username }}</td>
 
@@ -115,7 +115,7 @@
                                 <td>Inactive</td>
                             @endif
 
-                            @if (auth()->user()->id === $user->id)
+                            
                                 <td>
                                     <a href="{{ route('users.edit', $user->id) }}" class="">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="4em" height="2em"
@@ -127,10 +127,6 @@
                                         </svg>
                                     </a>
                                 </td>
-                            @else
-                                <td class="fw-bold">---</td>
-                            @endif
-
                         </tr>
                     @endforeach
                 </table>
@@ -177,6 +173,14 @@
             outline: none;
         }
 
+        .left{
+            justify-content: start;
+        }
+
+        .right{
+            justify-content: end;
+        }
+
         .search-bar {
             border-radius: 10px;
             margin-right: 5px;
@@ -206,6 +210,27 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0px 2px 10px 4px #dcdcdc;
+        }
+
+        .pad-shadow {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 10px 4px #dcdcdc;
+        }
+
+        .details-pad {
+            display: flex; 
+            background: white;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            outline: none;
         }
 
         .table th,

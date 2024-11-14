@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('logs', function (Blueprint $table) {
-            $table->id('log_id');
-            $table->foreignId('project_id')->constrained('projects')->cascadeOnDelete();
-            $table->foreignId('account_id')->constrained('accounts')->cascadeOnDelete();
+        Schema::create('user_profiles', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id');
+            $table->string('tech_stack')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('logs');
+        Schema::dropIfExists('user_profiles');
     }
 };

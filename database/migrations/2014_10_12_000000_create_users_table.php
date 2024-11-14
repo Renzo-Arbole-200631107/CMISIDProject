@@ -18,7 +18,7 @@ return new class extends Migration
             $table->boolean('password_changed')->default(false);
             $table->string('last_name');
             $table->string('first_name');
-            $table->string('middle_name')->nullable;
+            $table->string('middle_name')->nullable();
             $table->integer('is_active')->default(1); //1 is active, 0 is not
             $table->timestamps();
         });
