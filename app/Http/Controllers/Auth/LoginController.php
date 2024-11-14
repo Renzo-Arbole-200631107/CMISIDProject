@@ -18,7 +18,9 @@ class LoginController extends Controller
             return 'dashboard/';
         } elseif($user->hasRole('developer')){
             return 'dashboard/';
-        } else{
+        } elseif($user->hasRole('admin')){
+            return 'dashboard/';
+        }else{
             abort(403, "Please redirect to /login");
         }
     }

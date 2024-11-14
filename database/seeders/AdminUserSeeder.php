@@ -25,7 +25,7 @@ class AdminUserSeeder extends Seeder
                 'is_active' => 1
             ]);
 
-            $adminRole = Role::where('name', 'project manager')->first();
+            $adminRole = Role::where('name', 'admin')->first();
             if($adminRole){
                 $adminUser->roles()->attach($adminRole->id);
             }
