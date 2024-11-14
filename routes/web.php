@@ -40,6 +40,14 @@ Route::group(['middleware' => ['auth', 'requirePasswordChange','checkProjectMana
     Route::resource('dashboard', App\Http\Controllers\DashboardController::class);
 });
 
+Route::group(['middleware' => ['auth', 'requirePasswordChange', 'checkAdmin']], function(){
+    Route::resource('users', App\Http\Controllers\UserController::class)->only(['index', 'show', 'edit', 'update']);
+    Route::resource('projects', App\Http\Controllers\ProjectController::class)->only('index', 'show');
+    Route::resource('offices', App\Http\Controllers\OfficeController::class)->only('index','show');
+    Route::resource('dashboard', App\Http\Controllers\DashboardController::class);
+
+});
+
 
 
 
