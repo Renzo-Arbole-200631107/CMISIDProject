@@ -19,8 +19,11 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'read']);
         Permission::create(['name' => 'update']);
 
-        $admin = Role::create(['name' => 'project manager']);
-        $admin->givePermissionTo(['create', 'read', 'update']);
+        $admin = Role::create(['name' => 'admin']);
+        $admin->givePermissionTo(['read', 'update']);
+
+        $manager = Role::create(['name' => 'project manager']);
+        $manager->givePermissionTo(['create', 'read', 'update']);
 
         $developer = Role::create(['name' => 'developer']);
         $developer->givePermissionTo(['read', 'update']);
