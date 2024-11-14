@@ -45,12 +45,14 @@
                 VIEW ACCOUNT
                 <p>View, edit, and manage your account</p>
             @endif
-            @if (auth()->user()->hasRole('project manager'))
+            @if (auth()->user()->hasRole('project manager')||
+            auth()->user()->hasRole('admin'))
                 VIEW ACCOUNTS
                 <p>Create, update, and manage employee accounts</p>
             @endif
         </a>
-            @if (auth()->user()->hasRole('project manager'))
+            @if (auth()->user()->hasRole('project manager')||
+            auth()->user()->hasRole('admin'))
             <a href="{{ route('offices.index') }}" class="status-box new-box">
                 <span class="icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
@@ -73,7 +75,8 @@
                 VIEW PROJECTS
                 <p>View or update your current projects</p>
             @endif
-            @if (auth()->user()->hasRole('project manager'))
+            @if (auth()->user()->hasRole('project manager')||
+            auth()->user()->hasRole('admin'))
                 VIEW PROJECTS
                 <p>View different projects from different offices</p>
             @endif
