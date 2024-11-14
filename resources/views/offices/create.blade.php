@@ -56,41 +56,7 @@
             </form>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.7.1.js" 
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" 
-        crossorigin="anonymous">
-    </script>
-<script>
-    $(document).ready(function(){
-        $('#office_name').on('keyup', function(){
-            var query = $(this).val();
-            $.ajax({
-                url: "{{ route('offices.similar') }}", // Make sure this route is defined correctly
-                type: "GET",
-                data: {similar: query}, // Ensure this matches your backend's expected parameter
-                success:function(data){
-                    $("#suggestions").empty(); // Clear previous suggestions
-                    if (data.length > 0) {
-                        data.forEach(function(office){
-                            $("#suggestions").append('<li>' + office.office_name + '</li>');
-                        });
-                        $("#suggestions").show(); // Show suggestions
-                    } else {
-                        $("#suggestions").hide(); // Hide if no results
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching suggestions:', error);
-                }
-            });
-        });
-    });
-</script>
-
-
-
-
+    
     <style>
         body {
             background-color: #f2f2f2;

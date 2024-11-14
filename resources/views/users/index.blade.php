@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @section('content')
     <div class="container mt-5">
-        @if (auth()->user()->hasRole('developer'))
+        @if (auth()->user()->hasRole('developer')||
+        auth()->user()->hasRole('project manager'))
             <div class="acc-header">
                 <h2>MY ACCOUNT</h2>
             </div>
@@ -30,7 +31,12 @@
                     </div>
                     <div class="col-md-5 text-end p-2">
                         <div>
-                            <h5 class="text-success fw-bold btn-container">Developer</h5>
+                            @if(auth()->user()->hasRole('project manager'))
+                                <h5 class="text-primary fw-bold btn-container">Project Manager</h5>
+                            @elseif(auth()->user()->hasRole('developer'))
+                                <h5 class="text-success fw-bold btn-container">Developer</h5>
+                            @endif
+
                         </div>
                         <div>
                             @if (auth()->user()->is_active === 1)
@@ -57,8 +63,7 @@
             </div>
         @endif
 
-        @if (auth()->user()->hasRole('project manager')||
-        auth()->user()->hasRole('admin'))
+        @if (auth()->user()->hasRole('admin'))
             <div class="acc-header">
                 <h2>ACCOUNTS</h2>
                 <div class="right-part">
