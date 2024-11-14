@@ -36,10 +36,9 @@
                         <h2 class="fw-bold">Please update your password to continue.</h2>
                     </div>
                     <div class="mb-4">
-                        <h5>New password should be alphanumeric with special characters.</h5>
                         <h5>Minimum length of password should be 8 characters.</h5>
                     </div>
-                    
+
                     <form method="POST" action="{{route('change.password')}}">
                         @csrf
                         <div class="mb-4">
@@ -70,13 +69,13 @@
                     <p class="text-center">© 2024 City Management Information Systems and Innovation Department. All rights reserved.</p>
                 </div>
             </div>
-            
+
             <div class="image-column">
                 <div class="">
                     <img src="{{asset('img/login-background.png')}}" alt="" class="image">
                 </div>
             </div>
-        
+
     </div>
 </body>
 
@@ -86,8 +85,8 @@
         background-color: #f2f2f2;
     }
 
-    
-    
+
+
     .container {
         display: flex;
         min-height: 100vh;
