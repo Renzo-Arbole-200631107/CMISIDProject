@@ -34,6 +34,10 @@ class User extends Authenticatable
         return $this->hasMany(Project::class);
     }
 
+    public function userProfile(){
+        return $this->hasMany(UserProfile::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

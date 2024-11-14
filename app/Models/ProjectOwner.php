@@ -5,20 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Office extends Model
+class ProjectOwner extends Model
 {
     use HasFactory;
     protected $fillable=[
+        'project_owner_id',
+        'project_id',
         'office_id',
-        'office_name',
-        'is_active',
+        'focal_person',
+        'contact_number',
     ];
 
-    public function projects(){
-        return $this->hasMany(Project::class);
-    }
-
     public function projectOwner(){
-        return $this->hasMany(ProjectOwner::class);
+        return $this->belongsTo(Office::class);
     }
 }
