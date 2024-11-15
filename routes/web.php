@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth', 'requirePasswordChange', 'checkAdmin']],f
     
     Route::resource('users', App\Http\Controllers\UserController::class)->only('create', 'store');
     Route::resource('dashboard', App\Http\Controllers\DashboardController::class);
+    Route::post('admin/reset-password/{user}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'resetPassword'])->name('admin.resetPassword');
 });
 
 Route::group(['middleware' => ['auth', 'requirePasswordChange', 'checkProjectManager']], function(){
