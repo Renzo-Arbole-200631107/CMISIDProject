@@ -56,6 +56,10 @@
                 </select>
             </div>
             <div class="mb-4">
+                <label for="" class="form-label fw-bold">Tech Stack</label>
+                <textarea class="form-control" name="tech_stack" rows="3">{{old('tech_stack')}}</textarea>
+            </div>
+            <div class="mb-4">
                 <label for="" class="form-label fw-bold">Start SAD date</label>
                 <input type="date" class="form-control" name="start_sad" value={{old('start_sad',$project->start_sad)}}>
             </div>
@@ -87,10 +91,13 @@
                 </select>
             </div>
             <div class="mb-4">
-                <label for="" class="form-label fw-bold">Link</label>
-                <input type="text" class="form-control" name="link" value={{old('link',$project->link)}}>
+                <label for="" class="form-label fw-bold">Public Link</label>
+                <input type="text" class="form-control" name="public_link" value={{old('public_link',$project->public_link)}}>
             </div>
-
+            <div class="mb-4">
+                <label for="" class="form-label fw-bold">Admin Link</label>
+                <input type="text" class="form-control" name="admin_link" value={{old('admin_link',$project->admin_link)}}>
+            </div>
             <div class="mb-4">
                 <label class="form-label"><b>Attachment/s</b> (.docx/.doc) </label>
                 <input class="form-control" name="attachment[]" type="file" multiple>

@@ -14,7 +14,7 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
-        
+
          if($user->hasRole('developer')){
             // Retrieve the count of projects by status for developers
             $statusCounts = [
@@ -35,7 +35,7 @@ class DashboardController extends Controller
                 'Deployed' => Project::where('status', 'Deployed')->count(),
             ];
          }
-        
+
 
         // Pass the status counts to the dashboard view
         return view('dashboard', compact('statusCounts'));

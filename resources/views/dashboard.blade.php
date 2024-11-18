@@ -9,25 +9,29 @@
         </div>
     </div>
     <div class="details-pad">
-        <div class="red-box">
-            <h5>Cancelled</h5>
-            <p>{{ $statusCounts['Cancelled'] }}</p>
+        <div class="purple-box">
+            <h5>For Development</h5>
+            <p>{{ $statusCounts['Ongoing'] }}</p>
         </div>
         <div class="orange-box">
-            <h5>On-going Deployment</h5>
+            <h5>On-going Development</h5>
             <p>{{ $statusCounts['Ongoing'] }}</p>
         </div>
         <div class="yellow-box">
             <h5>For Deployment</h5>
             <p>{{ $statusCounts['ForDeployment'] }}</p>
         </div>
+        <div class="green-box">
+            <h5>Deployed</h5>
+            <p>{{ $statusCounts['Deployed'] }}</p>
+        </div>
         <div class="blue-box">
             <h5>For Update</h5>
             <p>{{ $statusCounts['ForUpdate'] }}</p>
         </div>
-        <div class="green-box">
-            <h5>Deployed</h5>
-            <p>{{ $statusCounts['Deployed'] }}</p>
+        <div class="red-box">
+            <h5>Cancelled</h5>
+            <p>{{ $statusCounts['Cancelled'] }}</p>
         </div>
     </div>
     <div class="additional-boxes">
@@ -151,6 +155,15 @@
             font-size: 50px;
             text-align: center;
             font-weight: 600;
+            color: #545454;
+        }
+
+        .purple-box {
+            background: #e7bfff;
+        }
+
+        .purple-box h5 {
+            font-weight: 700;
             color: #545454;
         }
 

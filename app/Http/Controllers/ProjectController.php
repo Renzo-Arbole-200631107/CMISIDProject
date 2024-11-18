@@ -85,20 +85,21 @@ class ProjectController extends Controller
             'description' => 'nullable|string|max:255',
             'office_id' => 'required|exists:offices,id',
             'user_id' => 'required|exists:users,id',
+            'tech_stack' => 'nullable|string|max:255',
             'start_sad' => 'nullable|date',
             'start_dev' => 'nullable|date',
             'estimate_deployment' => 'nullable|date',
             'deployment_date' => 'nullable|date',
             'version' => 'nullable|string|max:255',
             'status' => 'nullable|string|max:255',
-            'link' => 'nullable|string|url|max:255',
+            'public_link' => 'nullable|string|url|max:255',
+            'admin_link' => 'nullable|string|url|max:255',
             'attachment' => 'nullable|array',
             'attachment.*' => 'nullable|file|mimes:docx,doc',
             'dev_remarks' => 'nullable|string|max:255',
             'google_remarks' => 'nullable|string|max:255',
             'seo_comments' => 'nullable|string|max:255',
             'dpa_remarks' => 'nullable|string|max:255',
-            'remarks' => 'nullable|string|max:255',
         ],);
 
         //dd($data);
@@ -108,18 +109,19 @@ class ProjectController extends Controller
             'description' => $data['description'] ?? '',
             'office_id' => $data['office_id'],
             'user_id' => $data['user_id'],
+            'tech_stack' => $data['tech_stack'] ?? '',
             'start_sad' => $data['start_sad'] ?: null,
             'start_dev' => $data['start_dev'] ?: null,
             'estimate_deployment' => $data['estimate_deployment'] ?: null,
             'deployment_date' => $data['deployment_date'] ?: null,
             'version' => $data['version'] ?? '',
             'status' => $data['status'] ?? '',
-            'link' => $data['link'] ?? '',
+            'public_link' => $data['public_link'] ?? '',
+            'admin_link' => $data['admin_link'] ?? '',
             'dev_remarks' => $data['dev_remarks'] ?? '',
             'google_remarks' => $data['google_remarks'] ?? '',
             'seo_comments' => $data['seo_comments'] ?? '',
             'dpa_remarks' => $data['dpa_remarks'] ?? '',
-            'remarks' => $data['remarks'] ?? '',
         ]);
 
         if ($request->hasFile('attachment')) {
@@ -147,8 +149,8 @@ class ProjectController extends Controller
 
         activity()
             ->performedOn($project)
-            ->log(auth()->user()->username . '(' . auth()->user()->first_name . 
-            auth()->user()->middle_name . auth()->user()->last_name . ')' . 
+            ->log(auth()->user()->username . '(' . auth()->user()->first_name .
+            auth()->user()->middle_name . auth()->user()->last_name . ')' .
             ' created a new project: ' . $project->project_name);
         //->causedBy()
 
@@ -187,20 +189,21 @@ class ProjectController extends Controller
             'description' => 'nullable|string|max:255',
             'office_id' => 'required|exists:offices,id',
             'user_id' => 'required|exists:users,id',
+            'tech_stack' => 'nullable|string|max:255',
             'start_sad' => 'nullable|date',
             'start_dev' => 'nullable|date',
             'estimate_deployment' => 'nullable|date',
             'deployment_date' => 'nullable|date',
             'version' => 'nullable|string|max:255',
             'status' => 'nullable|string|max:255',
-            'link' => 'nullable|string|url|max:255',
+            'public_link' => 'nullable|string|url|max:255',
+            'admin_link' => 'nullable|string|url|max:255',
             'attachment' => 'nullable|array',
             'attachment.*' => 'nullable|file|mimes:docx,doc',
             'dev_remarks' => 'nullable|string|max:255',
             'google_remarks' => 'nullable|string|max:255',
             'seo_comments' => 'nullable|string|max:255',
             'dpa_remarks' => 'nullable|string|max:255',
-            'remarks' => 'nullable|string|max:255',
         ]);
 
         $old = $project->getOriginal();
@@ -208,10 +211,10 @@ class ProjectController extends Controller
         $new = collect($project->getChanges())->except('updated_at');
 
         if(!empty($new)){
-            $logs = auth()->user()->username . ' (' . auth()->user()->first_name . ' ' . 
+            $logs = auth()->user()->username . ' (' . auth()->user()->first_name . ' ' .
             auth()->user()->middle_name . ' ' . auth()->user()->last_name . ')' . ' updated project: ';
 
-            
+
             foreach ($new as $field => $newValue) {
                 // Check if the old value exists for this field
                 if (isset($old[$field])) {

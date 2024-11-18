@@ -12,7 +12,7 @@
                 Back</a>
         </div>
     </div>
-    
+
     @if ($errors->any())
         <div class="mx-4">
             @foreach ($errors->all() as $error)
@@ -27,7 +27,7 @@
             @if (Auth::id() === $user->id)
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Last name</label>
-                    <input type="text" class="form-control" name="last_name" value="{{old('last_name', $user->last_name)}}" 
+                    <input type="text" class="form-control" name="last_name" value="{{old('last_name', $user->last_name)}}"
                     {{ Auth::id() === $user->id ? '' : 'disabled' }}>
                 </div>
                 <div class="mb-4">
@@ -44,6 +44,10 @@
                     <label for="" class="form-label fw-bold">Username</label>
                     <input type="text" class="form-control" name="username" value="{{old('username', $user->username)}}"
                     {{ Auth::id() === $user->id ? '' : 'disabled' }}>
+                </div>
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">Tech Stack</label>
+                    <textarea class="form-control" name="tech_stack" rows="3">{{old('tech_stack')}}</textarea>
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Designation</label>
@@ -64,7 +68,7 @@
                     <input type="password" class="form-control" name="new_password_confirmation">
                 </div>
             @endif
-            
+
             @if (auth()->user()->hasRole('admin'))
                 <div class="mb-4">
                     <label class="form-label fw-bold">User role</label>
@@ -82,8 +86,8 @@
                     </select>
                 </div>
             @endif
-            
-            
+
+
 
             <div class="text-right">
                 <button type="submit" class="btn btn-dark">
@@ -97,7 +101,7 @@
                 <button type="submit" class="btn btn-warning fw-bold">Reset password</button>
             </form>
         @endif
-        
+
     </div>
 </div>
 
