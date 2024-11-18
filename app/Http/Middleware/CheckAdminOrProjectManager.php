@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckAdmin
+class CheckAdminOrProjectManager
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,8 @@ class CheckAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        //dd('hello');
-        //dd(Auth::user()->hasRole('admin'));
-        if(Auth::check() && Auth::user()->hasRole('admin')){
+        if(Auth::check() && Auth::user()->hasRole('admin')||
+        Auth::user()->hasRole('project manager')){
             return $next($request);
         }
 

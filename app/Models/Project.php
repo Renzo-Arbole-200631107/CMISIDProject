@@ -16,7 +16,6 @@ class Project extends Model
         'description',
         'office_id',
         'user_id',
-        'designation',
         'start_sad',
         'start_dev',
         'estimate_deployment',

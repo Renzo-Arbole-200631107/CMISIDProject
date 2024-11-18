@@ -4,7 +4,8 @@
         <div class="acc-header">
             <h2>PROJECTS</h2>
             <div class="right-part">
-                @if (auth()->user()->hasRole('project manager'))
+                @if (auth()->user()->hasRole('project manager')||
+                auth()->user()->hasRole('admin'))
                     <a href="{{ route('projects.create') }}" class="add-btn btn btn-dark">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                             <path fill="white"

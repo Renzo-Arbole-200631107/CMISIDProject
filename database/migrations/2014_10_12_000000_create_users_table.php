@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->integer('is_active')->default(1); //1 is active, 0 is not
+            $table->string('designation')->nullable();
             $table->timestamps();
         });
     }

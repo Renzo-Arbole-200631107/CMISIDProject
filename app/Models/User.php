@@ -27,7 +27,8 @@ class User extends Authenticatable
         'username',
         'is_active',
         'password',
-        'password_changed'
+        'password_changed',
+        'designation'
     ];
 
     public function projects(){

@@ -4,6 +4,11 @@
         <div class="acc-header">
             <h2>OFFICES</h2>
             <div class="right-part">
+                <form action="{{ route('offices.index') }}" method="get">
+                    <div class="date-filter">
+                        <input type="search" class="form-control" placeholder="Search here.." name="search" id="search" value="{{ old('search', request('search')) }}">
+                    </div>
+                </form>
                 <a href="{{ route('offices.create') }}" class="add-btn btn btn-dark">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                         <path fill="white"

@@ -46,6 +46,10 @@
                     {{ Auth::id() === $user->id ? '' : 'disabled' }}>
                 </div>
                 <div class="mb-4">
+                    <label for="" class="form-label fw-bold">Designation</label>
+                    <input type="text" class="form-control" name="designation" value="{{old('designation',$user->designation)}}">
+                </div>
+                <div class="mb-4">
                     <label for="" class="form-label fw-bold">Current password</label>
                     <input type="password" class="form-control" name="current_password">
                 </div>
@@ -65,6 +69,7 @@
                 <div class="mb-4">
                     <label class="form-label fw-bold">User role</label>
                     <select name="role" class="form-control">
+                        <option value="admin" {{old('role', $user->getRoleNames()->first()) == 'admin' ? 'selected' : ''}}>Admin</option>
                         <option value="developer" {{old('role', $user->getRoleNames()->first()) == 'developer' ? 'selected' : ''}}>Developer</option>
                         <option value="project manager" {{old('role', $user->getRoleNames()->first()) == 'project manager' ? 'selected' : ''}}>Project Manager</option>
                     </select>
@@ -86,6 +91,13 @@
                 Save changes</button>
             </div>
         </form>
+        @if (auth()->user()->hasRole('admin'))
+            <form action="{{ route('admin.resetPassword', $user->id) }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-warning fw-bold">Reset password</button>
+            </form>
+        @endif
+        
     </div>
 </div>
 
