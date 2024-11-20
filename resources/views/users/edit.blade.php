@@ -13,81 +13,81 @@
         </div>
     </div>
 
-    <div>
     @if ($errors->any())
-                <div class="mx-4">
-                    @foreach ($errors->all() as $error)
-                    <h5 class="fw-bold text-danger">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 20a8 8 0 1 0 0-16a8 8 0 0 0 0 16m0 2C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m-1-6h2v2h-2zm0-10h2v8h-2z"/></svg>{{ $error }}</h5>
-                    @endforeach
-                </div>
-            @endif
+        <div class="mx-4">
+            @foreach ($errors->all() as $error)
+            <h5 class="fw-bold text-danger">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 20a8 8 0 1 0 0-16a8 8 0 0 0 0 16m0 2C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m-1-6h2v2h-2zm0-10h2v8h-2z"/></svg>{{ $error }}</h5>
+            @endforeach
+        </div>
+    @endif
     <form action="{{route('users.update', ['user' => $user])}}" method="POST">
             @method('put')
             @csrf
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">Last name</label>
-                <input type="text" class="form-control" name="last_name" value="{{old('last_name', $user->last_name)}}" 
-                {{ Auth::id() === $user->id ? '' : 'disabled' }}>
-            </div>
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">First Name</label>
-                <input type="text" class="form-control" name="first_name" value="{{old('first_name', $user->first_name)}}"
-                {{ Auth::id() === $user->id ? '' : 'disabled' }}>
-            </div>
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">Middle Name</label>
-                <input type="text" class="form-control" name="middle_name" value="{{old('middle_name', $user->middle_name)}}"
-                {{ Auth::id() === $user->id ? '' : 'disabled' }}>
-            </div>
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">Username</label>
-                <input type="text" class="form-control" name="username" value="{{old('username', $user->username)}}"
-                {{ Auth::id() === $user->id ? '' : 'disabled' }}>
-            </div>
-            @if (auth()->user()->hasRole('developer'))
-            <div class="mb-4">
-                <label class="form-label fw-bold">User role</label>
-                <select name="role" class="form-control" disabled>
-                    <option value="developer" {{old('role', $user->getRoleNames()->first()) == 'developer' ? 'selected' : ''}}>Developer</option>
-                    <option value="project manager" {{old('role', $user->getRoleNames()->first()) == 'project manager' ? 'selected' : ''}}>Project Manager</option>
-                </select>
-                <input type="hidden" name="role" value="{{ $user->getRoleNames()->first() }}">
-            </div>
-            @endif
-            @if (auth()->user()->hasRole('project manager'))
-            <div class="mb-4">
-                <label class="form-label fw-bold">User role</label>
-                <select name="role" class="form-control">
-                    <option value="developer" {{old('role', $user->getRoleNames()->first()) == 'developer' ? 'selected' : ''}}>Developer</option>
-                    <option value="project manager" {{old('role', $user->getRoleNames()->first()) == 'project manager' ? 'selected' : ''}}>Project Manager</option>
-                </select>
-            </div>
-            @endif
-            <div class="mb-4">
-                <label class="form-label fw-bold">Is Active?</label>
-                <select name="is_active" id="is_active" class="form-control">
-                    <option value="1" {{old('is_active', $user->is_active) == 1 ? 'selected' : ''}}>Yes</option>
-                    <option value="0" {{old('is_active', $user->is_active) == 0 ? 'selected' : ''}}>No</option>
-                </select>
-            </div>
-
             @if (Auth::id() === $user->id)
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">Current password</label>
-                <input type="password" class="form-control" name="current_password">
-            </div>
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">Last name</label>
+                    <input type="text" class="form-control" name="last_name" value="{{old('last_name', $user->last_name)}}"
+                    {{ Auth::id() === $user->id ? '' : 'disabled' }}>
+                </div>
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">First Name</label>
+                    <input type="text" class="form-control" name="first_name" value="{{old('first_name', $user->first_name)}}"
+                    {{ Auth::id() === $user->id ? '' : 'disabled' }}>
+                </div>
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">Middle Name</label>
+                    <input type="text" class="form-control" name="middle_name" value="{{old('middle_name', $user->middle_name)}}"
+                    {{ Auth::id() === $user->id ? '' : 'disabled' }}>
+                </div>
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">Username</label>
+                    <input type="text" class="form-control" name="username" value="{{old('username', $user->username)}}"
+                    {{ Auth::id() === $user->id ? '' : 'disabled' }}>
+                </div>
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">Tech Stack</label>
+                    <textarea class="form-control" name="tech_stack" rows="3">{{old('tech_stack')}}</textarea>
+                </div>
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">Designation</label>
+                    <input type="text" class="form-control" name="designation" value="{{old('designation',$user->designation)}}">
+                </div>
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">Current password</label>
+                    <input type="password" class="form-control" name="current_password">
+                </div>
 
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">New password</label>
-                <input type="password" class="form-control" name="new_password">
-            </div>
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">New password</label>
+                    <input type="password" class="form-control" name="new_password">
+                </div>
 
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">Confirm password</label>
-                <input type="password" class="form-control" name="new_password_confirmation">
-            </div>
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">Confirm password</label>
+                    <input type="password" class="form-control" name="new_password_confirmation">
+                </div>
             @endif
+
+            @if (auth()->user()->hasRole('admin'))
+                <div class="mb-4">
+                    <label class="form-label fw-bold">User role</label>
+                    <select name="role" class="form-control">
+                        <option value="admin" {{old('role', $user->getRoleNames()->first()) == 'admin' ? 'selected' : ''}}>Admin</option>
+                        <option value="developer" {{old('role', $user->getRoleNames()->first()) == 'developer' ? 'selected' : ''}}>Developer</option>
+                        <option value="project manager" {{old('role', $user->getRoleNames()->first()) == 'project manager' ? 'selected' : ''}}>Project Manager</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Is Active?</label>
+                    <select name="is_active" id="is_active" class="form-control">
+                        <option value="1" {{old('is_active', $user->is_active) == 1 ? 'selected' : ''}}>Yes</option>
+                        <option value="0" {{old('is_active', $user->is_active) == 0 ? 'selected' : ''}}>No</option>
+                    </select>
+                </div>
+            @endif
+
+
 
             <div class="text-right">
                 <button type="submit" class="btn btn-dark">
@@ -95,6 +95,13 @@
                 Save changes</button>
             </div>
         </form>
+        @if (auth()->user()->hasRole('admin'))
+            <form action="{{ route('admin.resetPassword', $user->id) }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-warning fw-bold">Reset password</button>
+            </form>
+        @endif
+
     </div>
 </div>
 

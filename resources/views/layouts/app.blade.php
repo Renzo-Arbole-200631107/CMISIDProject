@@ -49,7 +49,8 @@
                         </li>
 
 
-                        @if (auth()->user()->hasRole('project manager'))
+                        @if (auth()->user()->hasRole('project manager')||
+                        auth()->user()->hasRole('admin'))
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('offices.index')}}">OFFICES</a>
 

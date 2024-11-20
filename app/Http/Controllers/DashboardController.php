@@ -25,7 +25,7 @@ class DashboardController extends Controller
                 'Deployed' => Project::where('status', 'Deployed')->where('user_id', $user->id)->count(),
             ];
          }
-         elseif($user->hasRole('project manager')){
+         elseif($user->hasRole('project manager')||$user->hasRole('admin')){
             // Retrieve the count of projects by status for project managers
             $statusCounts = [
                 'Cancelled' => Project::where('status', 'Cancelled')->count(),
@@ -35,7 +35,7 @@ class DashboardController extends Controller
                 'Deployed' => Project::where('status', 'Deployed')->count(),
             ];
          }
-        
+
 
         // Pass the status counts to the dashboard view
         return view('dashboard', compact('statusCounts'));

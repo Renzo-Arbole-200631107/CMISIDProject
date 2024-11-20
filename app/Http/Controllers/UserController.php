@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Hash;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -38,7 +38,8 @@ class UserController extends Controller
             'first_name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username',
             'role' => 'required|string',
-            'is_active' => 'required|integer'
+            'is_active' => 'required|integer',
+            'designation' => 'nullable|string|max:255',
         ]);
 
         $user = User::create([
@@ -47,6 +48,7 @@ class UserController extends Controller
             'middle_name' => $data['middle_name'] ?? '',
             'username' => $data['username'],
             'is_active' => $data['is_active'],
+            'designation' => $data['designation'] ?? '',
         ]);
 
         $user->assignRole($data['role']);
@@ -67,13 +69,14 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $data = $request->validate([
-            'last_name' => 'required|string|max:255',
+            'last_name' => 'nullable|string|max:255',
             'middle_name' => 'nullable|string|max:255',
-            'first_name' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users,username,' . $user->id,
+            'first_name' => 'nullable|string|max:255',
+            'username' => 'nullable|string|max:255|unique:users,username,' . $user->id,
             'is_active' => 'required|integer',
             'current_password' => 'nullable|required_with:password|string',
-            'new_password' => 'nullable|min:8|confirmed'
+            'new_password' => 'nullable|min:8|confirmed',
+            'designation' => 'nullable|string|max:255',
         ]);
 
         if($request->filled('current_password')){

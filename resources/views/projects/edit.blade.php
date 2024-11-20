@@ -56,8 +56,8 @@
                 </select>
             </div>
             <div class="mb-4">
-                <label for="" class="form-label fw-bold">Designation</label>
-                <input type="text" class="form-control" name="designation" value="{{old('designation',$project->designation)}}">
+                <label for="" class="form-label fw-bold">Tech Stack</label>
+                <textarea class="form-control" name="tech_stack" rows="3">{{old('tech_stack')}}</textarea>
             </div>
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">Start SAD date</label>
@@ -91,10 +91,13 @@
                 </select>
             </div>
             <div class="mb-4">
-                <label for="" class="form-label fw-bold">Link</label>
-                <input type="text" class="form-control" name="link" value={{old('link',$project->link)}}>
+                <label for="" class="form-label fw-bold">Public Link</label>
+                <input type="text" class="form-control" name="public_link" value={{old('public_link',$project->public_link)}}>
             </div>
-
+            <div class="mb-4">
+                <label for="" class="form-label fw-bold">Admin Link</label>
+                <input type="text" class="form-control" name="admin_link" value={{old('admin_link',$project->admin_link)}}>
+            </div>
             <div class="mb-4">
                 <label class="form-label"><b>Attachment/s</b> (.docx/.doc) </label>
                 <input class="form-control" name="attachment[]" type="file" multiple>
@@ -114,10 +117,6 @@
             <div class="mb-4">
                 <label for="" class="form-label fw-bold">DPA Compliance remarks</label>
                 <textarea class="form-control" name="dpa_remarks" value= rows="3">{{old('dpa_remarks',$project->dpa_remarks)}}</textarea>
-            </div>
-            <div class="mb-5">
-                <label for="" class="form-label fw-bold">Remarks</label>
-                <textarea class="form-control" name="remarks" value= rows="3">{{old('remarks',$project->remarks)}}</textarea>
             </div>
             <div class="text-right">
                 <button type="submit" class="btn btn-dark">

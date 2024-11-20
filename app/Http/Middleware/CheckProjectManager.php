@@ -16,6 +16,7 @@ class CheckProjectManager
      */
     public function handle(Request $request, Closure $next): Response
     {
+        
         if(Auth::check() && Auth::user()->hasRole('project manager')){
             return $next($request);
         }

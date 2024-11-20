@@ -45,9 +45,14 @@
                         <label class="form-label fw-bold">User role</label>
                         <select name="role" id="role_description" class="form-control">
                             <option value="">Select role</option>
+                            <option value="admin" {{old('role') == "admin" ? 'selected' : ''}}>Admin</option>
                             <option value="developer" {{old('role') == "developer" ? 'selected' : ''}}>Developer</option>
                             <option value="project manager" {{old('role') == "project manager" ? 'selected' : ''}}>Project Manager</option>
                         </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Designation</label>
+                        <input type="text" class="form-control" value="{{old('designation')}}" name="designation" placeholder="Enter designation">
                     </div>
                     <div class="mb-4">
                         <label class="form-label fw-bold">Is Active?</label>

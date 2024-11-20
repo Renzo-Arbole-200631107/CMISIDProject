@@ -2,29 +2,26 @@
 
 namespace App\Http\Middleware;
 
-use Auth;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckProjectManagerOrDeveloper
+class CheckAdmin
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    
-    public function handle(Request $request, Closure $next):Response
+    public function handle(Request $request, Closure $next): Response
     {
-        
-        if(Auth::check() && (Auth::user()->hasRole('project manager') || 
-        Auth::user()->hasRole('developer') ||
-        Auth::user()->hasRole('admin'))){
+        //dd('hello');
+        //dd(Auth::user()->hasRole('admin'));
+        if(Auth::check() && Auth::user()->hasRole('admin')){
             return $next($request);
         }
 
         abort(403);
- 
     }
 }
