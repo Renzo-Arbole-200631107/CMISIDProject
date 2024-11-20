@@ -72,7 +72,8 @@ class ProjectController extends Controller
     {
         $offices = Office::where('is_active', 1)->get();
         $users = User::where('is_active', 1)->role('developer')->get();
-        return view('projects.create', compact('users', 'offices'));
+        $managers = User::where('is_active', 1)->role('project manager')->get();
+        return view('projects.create', compact('users', 'offices', 'managers'));
     }
 
     /**
@@ -85,6 +86,7 @@ class ProjectController extends Controller
             'description' => 'nullable|string|max:255',
             'office_id' => 'required|exists:offices,id',
             'user_id' => 'required|exists:users,id',
+            'project_manager' => 'required|exists:users,id',
             'tech_stack' => 'nullable|string|max:255',
             'start_sad' => 'nullable|date',
             'start_dev' => 'nullable|date',
@@ -109,6 +111,7 @@ class ProjectController extends Controller
             'description' => $data['description'] ?? '',
             'office_id' => $data['office_id'],
             'user_id' => $data['user_id'],
+            'project_manager' => $data['project_manager'],
             'tech_stack' => $data['tech_stack'] ?? '',
             'start_sad' => $data['start_sad'] ?: null,
             'start_dev' => $data['start_dev'] ?: null,
@@ -174,8 +177,10 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $offices = Office::where('is_active', 1)->get();
-        $users = User::where('is_active', 1)->get();
-        return view('projects.edit', ['project' => $project, 'users' => $users, 'offices' => $offices]);
+        $users = User::where('is_active', 1)->role('developer')->get();
+        $managers = User::where('is_active', 1)->role('project manager')->get();
+
+        return view('projects.edit', ['project' => $project, 'users' => $users, 'offices' => $offices, 'managers' => $managers]);
     }
 
     /**
@@ -189,6 +194,7 @@ class ProjectController extends Controller
             'description' => 'nullable|string|max:255',
             'office_id' => 'required|exists:offices,id',
             'user_id' => 'required|exists:users,id',
+            'project_manager' => 'required|exists:users,id',
             'tech_stack' => 'nullable|string|max:255',
             'start_sad' => 'nullable|date',
             'start_dev' => 'nullable|date',

@@ -45,6 +45,17 @@
                 </select>
             </div>
             <div class="mb-4">
+                    <label class="form-label fw-bold">Project manager name</label>
+                    <select name="project_manager" class="form-control">
+                        <option value="">Select project manager</option>
+                        @foreach ($managers as $manager)
+                            <option value={{ $manager->id }} {{old('project_manager', $project->project_manager) == $manager->id ? 'selected' : ''}}>
+                                {{ $manager->first_name }} {{ $manager->middle_name }} {{ $manager->last_name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            <div class="mb-4">
             <label class="form-label fw-bold">Developer name</label>
                 <select name="user_id" class="form-control">
                     <option>Select developer</option>
