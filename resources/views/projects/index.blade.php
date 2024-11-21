@@ -30,8 +30,9 @@
                             <div class="me-2">
                                 <select id="status-filter" name="status" class="form-select">
                                     <option value="">Select Status</option>
+                                    <option value="For development">For Development</option>
                                     <option value="Cancelled">Cancelled</option>
-                                    <option value="On-going development">On-going Deployment</option>
+                                    <option value="On-going development">On-going Development</option>
                                     <option value="For deployment">For Development</option>
                                     <option value="For update">For Update</option>
                                     <option value="Deployed">Deployed</option>
@@ -55,7 +56,7 @@
                                         clip-rule="evenodd" />
                                 </svg>
                                 Filter</button>
-                        </div>    
+                        </div>
                 </form>
             </div>
         </div>
@@ -63,10 +64,10 @@
             @if (session('status'))
                 <div class="py-3">
                     <h4 class="text-success fw-bold">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
                     viewBox="0 0 24 24"><g fill="currentColor">
                         <path d="M10.243 16.314L6 12.07l1.414-1.414l2.829 2.828l5.656-5.657l1.415 1.415z"/>
-                        <path fill-rule="evenodd" d="M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11s-4.925 11-11 11S1 18.075 1 12m11 9a9 9 0 1 1 0-18a9 9 0 0 1 0 18" 
+                        <path fill-rule="evenodd" d="M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11s-4.925 11-11 11S1 18.075 1 12m11 9a9 9 0 1 1 0-18a9 9 0 0 1 0 18"
                         clip-rule="evenodd"/></g></svg>
                         {{ session('status') }}</h4>
                 </div>

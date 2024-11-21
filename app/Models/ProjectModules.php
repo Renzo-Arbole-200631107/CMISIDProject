@@ -20,7 +20,7 @@ class ProjectModules extends Model
         'module_status',
     ];
 
-    public function projectModule(){
+    public function project(){
         return $this->belongsTo(Project::class);
     }
 
