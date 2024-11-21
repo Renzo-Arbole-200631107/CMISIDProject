@@ -69,15 +69,15 @@
                 </div>
             @endif
 
-            @if (auth()->user()->hasRole('admin'))
+            @if ((auth()->user()->hasRole('admin')) && ($user->id != auth()->user()->id))
                 <div class="mb-4">
-                    <label class="form-label fw-bold">User role</label>
-                    <select name="role" class="form-control">
-                        <option value="admin" {{old('role', $user->getRoleNames()->first()) == 'admin' ? 'selected' : ''}}>Admin</option>
-                        <option value="developer" {{old('role', $user->getRoleNames()->first()) == 'developer' ? 'selected' : ''}}>Developer</option>
-                        <option value="project manager" {{old('role', $user->getRoleNames()->first()) == 'project manager' ? 'selected' : ''}}>Project Manager</option>
-                    </select>
-                </div>
+                        <label class="form-label fw-bold">User role</label>
+                        <select name="role" class="form-control">
+                            <option value="admin" {{old('role', $user->getRoleNames()->first()) == 'admin' ? 'selected' : ''}}>Admin</option>
+                            <option value="developer" {{old('role', $user->getRoleNames()->first()) == 'developer' ? 'selected' : ''}}>Developer</option>
+                            <option value="project manager" {{old('role', $user->getRoleNames()->first()) == 'project manager' ? 'selected' : ''}}>Project Manager</option>
+                        </select>
+                    </div>
                 <div class="mb-4">
                     <label class="form-label fw-bold">Is Active?</label>
                     <select name="is_active" id="is_active" class="form-control">
