@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('project_modules', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('project_id');
-            $table->string('module_name')->nullable();
-            $table->string('version_level')->nullable();
+            $table->id('project_module_id');
+            $table->foreignId('project_id')->constrained('projects')->onDelete('cascade');
+            $table->string('module_name');
+            $table->string('version_level');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->string('module_status')->nullable();
+            $table->string('module_status');
             $table->timestamps();
         });
     }

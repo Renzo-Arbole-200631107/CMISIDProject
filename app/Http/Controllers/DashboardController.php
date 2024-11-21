@@ -23,6 +23,7 @@ class DashboardController extends Controller
                 'ForDeployment' => Project::where('status', 'For Deployment')->where('user_id', $user->id)->count(),
                 'ForUpdate' => Project::where('status', 'For Update')->where('user_id', $user->id)->count(),
                 'Deployed' => Project::where('status', 'Deployed')->where('user_id', $user->id)->count(),
+                'ForDevelopment' => Project::where('status', 'For development')->where('user_id', $user->id)->count(),
             ];
          }
          elseif($user->hasRole('project manager')||$user->hasRole('admin')){
@@ -33,6 +34,7 @@ class DashboardController extends Controller
                 'ForDeployment' => Project::where('status', 'For Deployment')->count(),
                 'ForUpdate' => Project::where('status', 'For Update')->count(),
                 'Deployed' => Project::where('status', 'Deployed')->count(),
+                'ForDevelopment' => Project::where('status', 'For development')->count(),
             ];
          }
 

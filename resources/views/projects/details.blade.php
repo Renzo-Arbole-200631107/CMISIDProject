@@ -42,7 +42,7 @@
                         Back</a>
                 </div>
         </div>
-    
+
         <div class="dates">
             <div class="col-md-3 date">
                 <h5 class="fw-bold">Start SAD</h5>
@@ -95,10 +95,6 @@
                         <h6 class="info-container fw-bold">SEO Comments</h6>
                         <h6 class="input-data"> {{ $project->seo_comments }}</h6>
                     </div>
-                    <div class="mb-4">
-                        <h6 class="info-container fw-bold">Remarks</h6>
-                        <h6 class="input-data"> {{ $project->remarks }}</h6>
-                    </div>
                 </div>
             </div>
         </div>
@@ -126,12 +122,12 @@
 
                 <div class="col-md-6 mt-3">
                     <div class="mb-4">
-                        <h6 class="info-container fw-bold">Designation</h6>
-                        <h6 class="input-data">{{ $project->designation }}</h6>
+                        <h6 class="info-container fw-bold">Public Link:</h6>
+                        <h6 class="input-data">{{ $project->public_link }}</h6>
                     </div>
                     <div class="mb-4">
-                        <h6 class="info-container fw-bold">Link:</h6>
-                        <h6 class="input-data">{{ $project->link }}</h6>
+                        <h6 class="info-container fw-bold">Admin Link:</h6>
+                        <h6 class="input-data">{{ $project->admin_link }}</h6>
                     </div>
                     <div class="mb-4">
                         <h6 class="info-container fw-bold">Attachments:</h6>

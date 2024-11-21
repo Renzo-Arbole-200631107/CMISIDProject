@@ -23,7 +23,8 @@ class Project extends Model
         'deployment_date',
         'version',
         'status',
-        'link',
+        'public_link',
+        'admin_link',
         'attachment',
         'dev_remarks',
         'google_remarks',
@@ -42,6 +43,10 @@ class Project extends Model
 
     public function office(){
         return $this->belongsTo(Office::class);
+    }
+
+    public function projectModules(){
+        return $this->hasMany(ProjectModules::class);
     }
 
     protected static $logFields = [

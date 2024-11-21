@@ -85,18 +85,18 @@
                     <input type="date" class="form-control" value="{{old('deployment_date')}}" name="deployment_date">
                 </div>
                 <div class="mb-4">
-                    <label for="" class="form-label fw-bold">Version</label>
-                    <input type="text" class="form-control" value="{{old('version')}}" name="version">
+                    <label class="form-label fw-bold">Version</label>
+                    <select id="inputStatus" class="form-control" name="version">
+                        <option selected>Select version</option>
+                        <option value="Minor" {{old('version') == 'minor' ? 'selected' : ''}}>Minor</option>
+                        <option value="Major" {{old('version') == 'major' ? 'selected' : ''}}>Major</option>
+                        <option value="Patch" {{old('version') == 'patch' ? 'selected' : ''}}>Patch</option>
+                    </select>
                 </div>
                 <div class="mb-4">
                     <label class="form-label fw-bold">Status</label>
                     <select id="inputStatus" class="form-control" name="status">
-                        <option selected>Select status</option>
-                        <option value="On-going development" {{old('status') == 'On-going development' ? 'selected' : ''}}>On-going development</option>
-                        <option value="For deployment" {{old('status') == 'For deployment' ? 'selected' : ''}}>For deployment</option>
-                        <option value="Deployed" {{old('status') == 'Deployed' ? 'selected' : ''}}>Deployed</option>
-                        <option value="For update" {{old('status') == 'For update' ? 'selected' : ''}}>For update</option>
-                        <option value="Cancelled" {{old('status') == 'Cancelled' ? 'selected' : ''}}>Cancelled</option>
+                        <option value="For development" selected>For development</option>
                     </select>
                 </div>
                 <div class="mb-4">
@@ -108,7 +108,7 @@
                     <input type="text" class="form-control" name="admin_link" value="{{old('admin_link')}}">
                 </div>
                 <div class="mb-4">
-                    <label class="form-label"><b>Attachment/s</b> (.docx/.doc) </label>
+                    <label class="form-label"><b>Attachment/s</b> (.pdf only)</label>
                     <input class="form-control" id="file-input" name="attachment[]" type="file" multiple>
                     <div id="file-list"></div>
                 </div>
