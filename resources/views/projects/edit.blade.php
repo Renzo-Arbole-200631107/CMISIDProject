@@ -87,13 +87,19 @@
                 <input type="date" class="form-control" name="deployment_date" value={{old('deployment_date',$project->deployment_date)}}>
             </div>
             <div class="mb-4">
-                <label for="" class="form-label fw-bold">Version</label>
-                <input type="text" class="form-control" name="version" value="{{old('version',$project->version)}}">
+                <label class="form-label fw-bold">Version</label>
+                <select id="inputStatus" class="form-control" name="version">
+                    <option selected>Select version</option>
+                    <option value="Minor" {{ old('version', $project->version) == 'Minor' ? 'selected' : '' }}>Minor</option>
+                    <option value="Major" {{ old('version', $project->version) == 'Major' ? 'selected' : '' }}>Major</option>
+                    <option value="Patch" {{ old('version', $project->version) == 'Patch' ? 'selected' : '' }}>Patch</option>
+                </select>
             </div>
             <div class="mb-4">
                 <label class="form-label fw-bold">Status</label>
                 <select id="inputStatus" class="form-control" name="status">
                     <option selected>Select status</option>
+                    <option value="For development" {{old('status', $project->status) == 'For development' ? 'selected' : ''}}>For development</option>
                     <option value="On-going development" {{old('status', $project->status) == 'On-going development' ? 'selected' : ''}}>On-going development</option>
                     <option value="For deployment" {{old('status', $project->status) == 'For deployment' ? 'selected' : ''}}>For deployment</option>
                     <option value="Deployed" {{old('status', $project->status) == 'Deployed' ? 'selected' : ''}}>Deployed</option>
@@ -110,7 +116,7 @@
                 <input type="text" class="form-control" name="admin_link" value={{old('admin_link',$project->admin_link)}}>
             </div>
             <div class="mb-4">
-                <label class="form-label"><b>Attachment/s</b> (.docx/.doc) </label>
+                <label class="form-label"><b>Attachment/s</b> (.pdf only) </label>
                 <input class="form-control" name="attachment[]" type="file" multiple>
             </div>
             <div class="mb-4">

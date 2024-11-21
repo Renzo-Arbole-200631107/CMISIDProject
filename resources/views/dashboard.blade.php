@@ -11,7 +11,7 @@
     <div class="details-pad">
         <div class="purple-box">
             <h5>For Development</h5>
-            <p>{{ $statusCounts['Ongoing'] }}</p>
+            <p>{{ $statusCounts['ForDevelopment'] }}</p>
         </div>
         <div class="orange-box">
             <h5>On-going Development</h5>

@@ -24,7 +24,8 @@ class Project extends Model
         'deployment_date',
         'version',
         'status',
-        'link',
+        'public_link',
+        'admin_link',
         'attachment',
         'dev_remarks',
         'google_remarks',
@@ -47,6 +48,10 @@ class Project extends Model
 
     public function projectManager(){
         return $this->belongsTo(User::class, 'project_manager');
+    }
+
+    public function projectModules(){
+        return $this->hasMany(ProjectModules::class);
     }
 
     protected static $logFields = [
