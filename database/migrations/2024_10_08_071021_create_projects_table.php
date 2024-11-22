@@ -27,8 +27,10 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->string('public_link')->nullable();
             $table->string('admin_link')->nullable();
-            $table->string('attachment')->nullable();
-
+            $table->string('sad_files')->nullable();
+            $table->string('deployment_files')->nullable();
+            $table->string('agreement_files')->nullable();
+            $table->string('form_files')->nullable();
             $table->string('dev_remarks')->nullable();
             $table->string('google_remarks')->nullable();
             $table->string('seo_comments')->nullable();

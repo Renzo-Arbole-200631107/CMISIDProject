@@ -119,8 +119,23 @@
                     <input type="text" class="form-control" name="admin_link" value="{{old('admin_link')}}">
                 </div>
                 <div class="mb-4">
-                    <label class="form-label"><b>Attachment/s</b> (.pdf only)</label>
-                    <input class="form-control" id="file-input" name="attachment[]" type="file" multiple>
+                    <label class="form-label"><b>SAD</b> (.pdf only)</label>
+                    <input class="form-control" id="file-input" name="sad_files[]" type="file" multiple>
+                    <div id="file-list"></div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label"><b>Deployment letter</b> (.pdf only)</label>
+                    <input class="form-control" id="file-input" name="deployment_files[]" type="file" multiple>
+                    <div id="file-list"></div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label"><b>Deployment agreement</b> (.pdf only)</label>
+                    <input class="form-control" id="file-input" name="agreement_files[]" type="file" multiple>
+                    <div id="file-list"></div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label"><b>Forms</b> (.pdf only)</label>
+                    <input class="form-control" id="file-input" name="form_files[]" type="file" multiple>
                     <div id="file-list"></div>
                 </div>
                 <div class="mb-4">

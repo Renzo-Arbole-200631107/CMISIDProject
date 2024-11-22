@@ -13,6 +13,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Spatie\Activitylog\Models\Activity;
 use Illuminate\Support\Facades\Auth;
+use Log;
 
 class ProjectController extends Controller
 {
@@ -97,8 +98,14 @@ class ProjectController extends Controller
             'status' => 'nullable|string|max:255',
             'public_link' => 'nullable|string|url|max:255',
             'admin_link' => 'nullable|string|url|max:255',
-            'attachment' => 'nullable|array',
-            'attachment.*' => 'nullable|file|mimes:docx,doc',
+            'sad_files' => 'nullable|array',
+            'sad_files.*' => 'nullable|file|mimes:pdf|max:2048',
+            'deployment_files' => 'nullable|array',
+            'deployment_files.*' => 'nullable|file|mimes:pdf|max:2048',
+            'agreement_files' => 'nullable|array',
+            'agreement_files.*' => 'nullable|file|mimes:pdf|max:2048',
+            'form_files' => 'nullable|array',
+            'form_files.*' => 'nullable|file|mimes:pdf|max:2048',
             'dev_remarks' => 'nullable|string|max:255',
             'google_remarks' => 'nullable|string|max:255',
             'seo_comments' => 'nullable|string|max:255',
@@ -127,6 +134,12 @@ class ProjectController extends Controller
             'seo_comments' => $data['seo_comments'] ?? '',
             'dpa_remarks' => $data['dpa_remarks'] ?? '',
         ]);
+
+        $this->handleAttachments($request, $project, 'sad_files');
+        $this->handleAttachments($request, $project, 'deployment_files');
+        $this->handleAttachments($request, $project, 'agreement_files');
+        $this->handleAttachments($request, $project, 'form_files');
+
     
 
     // Create the associated module
@@ -142,23 +155,7 @@ class ProjectController extends Controller
     // Handle attachments (if any)
     if ($request->hasFile('attachment')) {
         foreach ($request->file('attachment') as $file) {
-            if ($file instanceof UploadedFile) {
-                $origname = $file->getClientOriginalName();
-                $extension = $file->getClientOriginalExtension();
-                $filename = pathinfo($origname, PATHINFO_FILENAME) . '_' . time() . '.' . $extension;
-                $path = 'uploads/';
-
-                // Move the file to the specified directory
-                $file->move(public_path($path), $filename);
-
-                // Save the attachment record
-                Attachment::create([
-                    'project_id' => $project->id,
-                    'file_name' => $filename,
-                    'file_path' => $path . $filename,
-                    'uploaded_at' => now(),
-                ]);
-            }
+            
         }
     }
 
@@ -217,8 +214,14 @@ class ProjectController extends Controller
             'status' => 'nullable|string|max:255',
             'public_link' => 'nullable|string|url|max:255',
             'admin_link' => 'nullable|string|url|max:255',
-            'attachment' => 'nullable|array',
-            'attachment.*' => 'nullable|file|mimes:pdf',
+            'sad_files' => 'nullable|array',
+            'sad_files.*' => 'nullable|file|mimes:pdf|max:2048',
+            'deployment_files' => 'nullable|array',
+            'deployment_files.*' => 'nullable|file|mimes:pdf|max:2048',
+            'agreement_files' => 'nullable|array',
+            'agreement_files.*' => 'nullable|file|mimes:pdf|max:2048',
+            'form_files' => 'nullable|array',
+            'form_files.*' => 'nullable|file|mimes:pdf|max:2048',
             'dev_remarks' => 'nullable|string|max:255',
             'google_remarks' => 'nullable|string|max:255',
             'seo_comments' => 'nullable|string|max:255',
@@ -226,21 +229,51 @@ class ProjectController extends Controller
         ]);
 
         $old = $project->getOriginal();
+        //dd($data);
         $project->update($data);
+
+        // Remove file fields from $data to avoid updating them with the project update
+        $fileFields = ['sad_files', 'deployment_files', 'agreement_files', 'form_files'];
+        foreach ($fileFields as $fileField) {
+            unset($data[$fileField]);
+        }
+
+        $this->handleAttachments($request, $project, 'sad_files');
+        $this->handleAttachments($request, $project, 'deployment_files');
+        $this->handleAttachments($request, $project, 'agreement_files');
+        $this->handleAttachments($request, $project, 'form_files');
+
         $new = collect($project->getChanges())->except('updated_at');
 
-        if(!empty($new)){
-            $logs = auth()->user()->username . ' (' . auth()->user()->first_name . ' ' .
-            auth()->user()->middle_name . ' ' . auth()->user()->last_name . ')' . ' updated project: ';
+        // Check if the update actually contains any project-related fields (ignoring `updated_at`)
+        $fieldsChanged = $new->keys()->filter(function($key) {
+            return in_array($key, ['description', 'tech_stack', 'public_link', 'admin_link', 'dev_remarks', 'google_remarks', 'seo_comments', 'dpa_remarks']);
+        });
+
+        if(!empty($fieldsChanged)){
+            $logs = auth()->user()->username . ' updated project: ';
 
 
             foreach ($new as $field => $newValue) {
                 // Check if the old value exists for this field
                 if (isset($old[$field])) {
-                    $oldValue = $old[$field];
+                    $oldValue = $old[$field] ?? null;
 
-                    // Append changes to the logs
-                    $logs .= "$field changed from $oldValue to $newValue; ";
+                    // Check if the values are arrays
+                    if (is_array($newValue)) {
+                        $newValue = json_encode($newValue); // Convert array to JSON string
+                    }
+
+                    if (is_array($oldValue)) {
+                        $oldValue = json_encode($oldValue); // Convert array to JSON string
+                    }
+
+                    if($newValue !== $oldValue){
+                        $logs .= "$field changed from ". ($oldValue ?? 'N/A') ." to " . ($newValue ?? 'N/A') . "; ";
+
+                    }
+                    
+                    
                 }
             }
 
@@ -256,35 +289,57 @@ class ProjectController extends Controller
             ->log($logs);
         }
 
-        if ($request->hasFile('attachment')) {
-            /** */
-            foreach($request->file('attachment') as $file){
-                //dd($file);
-                if ($file instanceof UploadedFile) {
-                    $origname = $file->getClientOriginalName();
-                    $extension = $file->getClientOriginalExtension();
-                    $filename = pathinfo($origname, PATHINFO_FILENAME) . '_' . time() . '.' . $extension;
-                    $path = 'uploads/';
-
-                    // Move the file to the specified directory
-                    $file->move(public_path($path), $filename); // Use public_path to store files in the public directory
-
-                    // Log the activity for adding attachments
-                    activity()->on($project)->log('Added attachment: ' . $filename);
-                }
-
-                Attachment::create([
-                    'project_id' => $project->id,
-                    'file_name' => $filename,
-                    'file_path' => $path . $filename,
-                    'uploaded_at' => now(),
-                ]);
-            }
-        }
-
         return redirect(route('projects.index'))->with('status','Successfully updated ' . $project->project_name);
     }
 
+
+    private function handleAttachments($request, $project, $inputField){
+        $fileFields = [
+            'sad_files' => 'SAD',
+            'deployment_files' => 'Deployment Letter',
+            'agreement_files' => 'Deployment Agreement',
+            'form_files' => 'Forms'
+        ];
+    
+        foreach($fileFields as $inputField =>$label){
+            if($request->hasFile($inputField)){
+                foreach($request->file($inputField) as $file){
+                    if ($file instanceof UploadedFile) {
+                        $origname = $file->getClientOriginalName();
+                        $extension = $file->getClientOriginalExtension();
+                        $filename = pathinfo($origname, PATHINFO_FILENAME) . '_' . uniqid() . '.' . $extension;
+                        $path = 'uploads/';
+                        $directory = public_path($path);
+                        
+        
+                        // Ensure the directory exists
+                        if (!is_dir($directory)) {
+                            mkdir($directory, 0775, true); // Make the directory if it doesn't exist
+                        }
+
+                        try {
+                            $file->move($directory, $filename);
+    
+                            Attachment::create([
+                                'project_id' => $project->id,
+                                'file_name' => $filename,
+                                'file_path' => $path . $filename,
+                                'uploaded_at' => now(),
+                            ]);
+    
+                            activity()->on($project)->log(auth()->user()->username . ' added attachment (' . $label . '): ' . $filename);
+                        } catch (\Exception $e) {
+                            Log::error('File upload failed for: ' . $filename . '. Error: ' . $e->getMessage());
+                        }
+                            
+                            
+                        
+                        
+                    }
+                }
+            }
+        }
+    }
     /**
      * Remove the specified resource from storage.
      */

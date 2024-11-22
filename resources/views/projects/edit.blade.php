@@ -26,120 +26,199 @@
         <form action="{{route('projects.update', ['project' => $project])}}" method="POST" enctype="multipart/form-data">
             @method('put')
             @csrf
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">Project name</label>
-                <input type="text" class="form-control" name="project_name" value="{{old('project_name', $project->project_name)}}">
-            </div>
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">Description</label>
-                <textarea class="form-control" name="description" rows="3">{{old('description', $project->description)}}</textarea>
-            </div>
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">Project owner (Office / Department)</label>
-                <select name="office_id" class="form-control">
-                    @foreach ($offices as $office)
-                        <option value={{$office->id}} {{old('office_id', $project->office_id) == $office->id ? 'selected' : ''}}>
-                            {{$office->office_name}}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="mb-4">
-                    <label class="form-label fw-bold">Project manager name</label>
-                    <select name="project_manager" class="form-control">
-                        <option value="">Select project manager</option>
-                        @foreach ($managers as $manager)
-                            <option value={{ $manager->id }} {{old('project_manager', $project->project_manager) == $manager->id ? 'selected' : ''}}>
-                                {{ $manager->first_name }} {{ $manager->middle_name }} {{ $manager->last_name }}
+            @if ((auth()->user()->hasRole('admin')) || auth()->user()->hasRole('project manager'))
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">Project name</label>
+                    <input type="text" class="form-control" name="project_name" value="{{old('project_name', $project->project_name)}}">
+                </div>
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">Description</label>
+                    <textarea class="form-control" name="description" rows="3">{{old('description', $project->description)}}</textarea>
+                </div>
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">Project owner (Office / Department)</label>
+                    <select name="office_id" class="form-control">
+                        @foreach ($offices as $office)
+                            <option value={{$office->id}} {{old('office_id', $project->office_id) == $office->id ? 'selected' : ''}}>
+                                {{$office->office_name}}
                             </option>
                         @endforeach
                     </select>
                 </div>
-            <div class="mb-4">
-            <label class="form-label fw-bold">Developer name</label>
-                <select name="user_id" class="form-control">
-                    <option>Select developer</option>
-                    @foreach ($users as $user)
-                        <option value={{$user->id}} {{old('user_id', $project->user_id) == $user->id ? 'selected' : ''}}>
-                            {{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">Tech Stack</label>
-                <textarea class="form-control" name="tech_stack" rows="3">{{old('tech_stack')}}</textarea>
-            </div>
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">Start SAD date</label>
-                <input type="date" class="form-control" name="start_sad" value={{old('start_sad',$project->start_sad)}}>
-            </div>
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">Start development date</label>
-                <input type="date" class="form-control" name="start_dev" value={{old('start_dev',$project->start_dev)}}>
-            </div>
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">Estimated deployment</label>
-                <input type="date" class="form-control" name="estimate_deployment" value={{old('estimate_deployment',$project->estimate_deployment)}}>
-            </div>
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">Deployment date</label>
-                <input type="date" class="form-control" name="deployment_date" value={{old('deployment_date',$project->deployment_date)}}>
-            </div>
-            <div class="mb-4">
-                <label class="form-label fw-bold">Version</label>
-                <select id="inputStatus" class="form-control" name="version">
-                    <option selected>Select version</option>
-                    <option value="Minor" {{ old('version', $project->version) == 'Minor' ? 'selected' : '' }}>Minor</option>
-                    <option value="Major" {{ old('version', $project->version) == 'Major' ? 'selected' : '' }}>Major</option>
-                    <option value="Patch" {{ old('version', $project->version) == 'Patch' ? 'selected' : '' }}>Patch</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label class="form-label fw-bold">Status</label>
-                <select id="inputStatus" class="form-control" name="status">
-                    <option selected>Select status</option>
-                    <option value="For development" {{old('status', $project->status) == 'For development' ? 'selected' : ''}}>For development</option>
-                    <option value="On-going development" {{old('status', $project->status) == 'On-going development' ? 'selected' : ''}}>On-going development</option>
-                    <option value="For deployment" {{old('status', $project->status) == 'For deployment' ? 'selected' : ''}}>For deployment</option>
-                    <option value="Deployed" {{old('status', $project->status) == 'Deployed' ? 'selected' : ''}}>Deployed</option>
-                    <option value="For update" {{old('status', $project->status) == 'For update' ? 'selected' : ''}}>For update</option>
-                    <option value="Cancelled" {{old('status', $project->status) == 'Cancelled' ? 'selected' : ''}}>Cancelled</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">Public Link</label>
-                <input type="text" class="form-control" name="public_link" value={{old('public_link',$project->public_link)}}>
-            </div>
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">Admin Link</label>
-                <input type="text" class="form-control" name="admin_link" value={{old('admin_link',$project->admin_link)}}>
-            </div>
-            <div class="mb-4">
-                <label class="form-label"><b>Attachment/s</b> (.pdf only) </label>
-                <input class="form-control" name="attachment[]" type="file" multiple>
-            </div>
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">Developer remarks</label>
-                <textarea class="form-control" name="dev_remarks" value= rows="3">{{old('dev_remarks',$project->dev_remarks)}}</textarea>
-            </div>
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">Google Analytics remarks</label>
-                <textarea class="form-control" name="google_remarks" rows="3">{{old('google_remarks',$project->google_remarks)}}</textarea>
-            </div>
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">SEO comments</label>
-                <textarea class="form-control" name="seo_comments" rows="3">{{old('seo_comments',$project->seo_comments)}}</textarea>
-            </div>
-            <div class="mb-4">
-                <label for="" class="form-label fw-bold">DPA Compliance remarks</label>
-                <textarea class="form-control" name="dpa_remarks" value= rows="3">{{old('dpa_remarks',$project->dpa_remarks)}}</textarea>
-            </div>
-            <div class="text-right">
-                <button type="submit" class="btn btn-dark">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="white" d="M12 4c4.411 0 8 3.589 8 8s-3.589 8-8 8s-8-3.589-8-8s3.589-8 8-8m0-2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2m5 9h-4V7h-2v4H7v2h4v4h2v-4h4z"/></svg>
-                Save changes</button>
-            </div>
+                <div class="mb-4">
+                        <label class="form-label fw-bold">Project manager name</label>
+                        <select name="project_manager" class="form-control">
+                            <option value="">Select project manager</option>
+                            @foreach ($managers as $manager)
+                                <option value={{ $manager->id }} {{old('project_manager', $project->project_manager) == $manager->id ? 'selected' : ''}}>
+                                    {{ $manager->first_name }} {{ $manager->middle_name }} {{ $manager->last_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                <div class="mb-4">
+                <label class="form-label fw-bold">Developer name</label>
+                    <select name="user_id" class="form-control">
+                        <option>Select developer</option>
+                        @foreach ($users as $user)
+                            <option value={{$user->id}} {{old('user_id', $project->user_id) == $user->id ? 'selected' : ''}}>
+                                {{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Tech Stack</label>
+                        <textarea class="form-control" name="tech_stack" rows="3">{{old('tech_stack', $project->tech_stack)}}</textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Start SAD date</label>
+                        <input type="date" class="form-control" name="start_sad" value={{old('start_sad',$project->start_sad)}}>
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Start development date</label>
+                        <input type="date" class="form-control" name="start_dev" value={{old('start_dev',$project->start_dev)}}>
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Estimated deployment</label>
+                        <input type="date" class="form-control" name="estimate_deployment" value={{old('estimate_deployment',$project->estimate_deployment)}}>
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Deployment date</label>
+                        <input type="date" class="form-control" name="deployment_date" value={{old('deployment_date',$project->deployment_date)}}>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Version</label>
+                        <select id="inputStatus" class="form-control" name="version">
+                            <option selected>Select version</option>
+                            <option value="Minor" {{ old('version', $project->version) == 'Minor' ? 'selected' : '' }}>Minor</option>
+                            <option value="Major" {{ old('version', $project->version) == 'Major' ? 'selected' : '' }}>Major</option>
+                            <option value="Patch" {{ old('version', $project->version) == 'Patch' ? 'selected' : '' }}>Patch</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Status</label>
+                        <select id="inputStatus" class="form-control" name="status">
+                            <option selected>Select status</option>
+                            <option value="For development" {{old('status', $project->status) == 'For development' ? 'selected' : ''}}>For development</option>
+                            <option value="On-going development" {{old('status', $project->status) == 'On-going development' ? 'selected' : ''}}>On-going development</option>
+                            <option value="For deployment" {{old('status', $project->status) == 'For deployment' ? 'selected' : ''}}>For deployment</option>
+                            <option value="Deployed" {{old('status', $project->status) == 'Deployed' ? 'selected' : ''}}>Deployed</option>
+                            <option value="For update" {{old('status', $project->status) == 'For update' ? 'selected' : ''}}>For update</option>
+                            <option value="Cancelled" {{old('status', $project->status) == 'Cancelled' ? 'selected' : ''}}>Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Public Link</label>
+                        <input type="text" class="form-control" name="public_link" value={{old('public_link',$project->public_link)}}>
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Admin Link</label>
+                        <input type="text" class="form-control" name="admin_link" value={{old('admin_link',$project->admin_link)}}>
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Developer remarks</label>
+                        <textarea class="form-control" name="dev_remarks" value= rows="3">{{old('dev_remarks',$project->dev_remarks)}}</textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label"><b>SAD</b> (.pdf only)</label>
+                        <input class="form-control" id="file-input" name="sad_files[]" type="file" multiple>
+                        <div id="file-list"></div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label"><b>Deployment letter</b> (.pdf only)</label>
+                        <input class="form-control" id="file-input" name="deployment_files[]" type="file" multiple>
+                        <div id="file-list"></div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label"><b>Deployment agreement</b> (.pdf only)</label>
+                        <input class="form-control" id="file-input" name="agreement_files[]" type="file" multiple>
+                        <div id="file-list"></div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label"><b>Forms</b> (.pdf only)</label>
+                        <input class="form-control" id="file-input" name="form_files[]" type="file" multiple>
+                        <div id="file-list"></div>
+                    </div>
+                
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">Google Analytics remarks</label>
+                    <textarea class="form-control" name="google_remarks" rows="3">{{old('google_remarks',$project->google_remarks)}}</textarea>
+                </div>
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">SEO comments</label>
+                    <textarea class="form-control" name="seo_comments" rows="3">{{old('seo_comments',$project->seo_comments)}}</textarea>
+                </div>
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">DPA Compliance remarks</label>
+                    <textarea class="form-control" name="dpa_remarks" value= rows="3">{{old('dpa_remarks',$project->dpa_remarks)}}</textarea>
+                </div>
+                <div class="text-right">
+                    <button type="submit" class="btn btn-dark">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="white" d="M12 4c4.411 0 8 3.589 8 8s-3.589 8-8 8s-8-3.589-8-8s3.589-8 8-8m0-2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2m5 9h-4V7h-2v4H7v2h4v4h2v-4h4z"/></svg>
+                    Save changes</button>
+                </div>
+            @endif
+            @if (auth()->user()->hasRole('developer'))
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Tech Stack</label>
+                        <textarea class="form-control" name="tech_stack" rows="3">{{old('tech_stack')}}</textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Start SAD date</label>
+                        <input type="date" class="form-control" name="start_sad" value={{old('start_sad',$project->start_sad)}}>
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Start development date</label>
+                        <input type="date" class="form-control" name="start_dev" value={{old('start_dev',$project->start_dev)}}>
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Estimated deployment</label>
+                        <input type="date" class="form-control" name="estimate_deployment" value={{old('estimate_deployment',$project->estimate_deployment)}}>
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Deployment date</label>
+                        <input type="date" class="form-control" name="deployment_date" value={{old('deployment_date',$project->deployment_date)}}>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Version</label>
+                        <select id="inputStatus" class="form-control" name="version">
+                            <option selected>Select version</option>
+                            <option value="Minor" {{ old('version', $project->version) == 'Minor' ? 'selected' : '' }}>Minor</option>
+                            <option value="Major" {{ old('version', $project->version) == 'Major' ? 'selected' : '' }}>Major</option>
+                            <option value="Patch" {{ old('version', $project->version) == 'Patch' ? 'selected' : '' }}>Patch</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Status</label>
+                        <select id="inputStatus" class="form-control" name="status">
+                            <option selected>Select status</option>
+                            <option value="For development" {{old('status', $project->status) == 'For development' ? 'selected' : ''}}>For development</option>
+                            <option value="On-going development" {{old('status', $project->status) == 'On-going development' ? 'selected' : ''}}>On-going development</option>
+                            <option value="For deployment" {{old('status', $project->status) == 'For deployment' ? 'selected' : ''}}>For deployment</option>
+                            <option value="Deployed" {{old('status', $project->status) == 'Deployed' ? 'selected' : ''}}>Deployed</option>
+                            <option value="For update" {{old('status', $project->status) == 'For update' ? 'selected' : ''}}>For update</option>
+                            <option value="Cancelled" {{old('status', $project->status) == 'Cancelled' ? 'selected' : ''}}>Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Public Link</label>
+                        <input type="text" class="form-control" name="public_link" value={{old('public_link',$project->public_link)}}>
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Admin Link</label>
+                        <input type="text" class="form-control" name="admin_link" value={{old('admin_link',$project->admin_link)}}>
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Developer remarks</label>
+                        <textarea class="form-control" name="dev_remarks" value= rows="3">{{old('dev_remarks',$project->dev_remarks)}}</textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label"><b>Attachment/s</b> (.pdf only) </label>
+                        <input class="form-control" name="attachment[]" type="file" multiple>
+                    </div>
+                @endif
         </form>
     </div>
 </div>
