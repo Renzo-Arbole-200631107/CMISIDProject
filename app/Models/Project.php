@@ -16,6 +16,7 @@ class Project extends Model
         'description',
         'office_id',
         'user_id',
+        'project_owner_id',
         'project_manager',
         'tech_stack',
         'start_sad',
@@ -53,8 +54,12 @@ class Project extends Model
         return $this->belongsTo(User::class, 'project_manager');
     }
 
-    public function projectModules(){
+    public function modules(){
         return $this->hasMany(ProjectModules::class);
+    }
+
+    public function owner(){
+        return $this->belongsTo(ProjectOwner::class, 'project_owner_id');
     }
 
     protected static $logFields = [
@@ -63,6 +68,7 @@ class Project extends Model
         'description',
         'office_id',
         'user_id',
+        'project_owner_id',
         'project_manager',
         'designation',
         'tech_stack',

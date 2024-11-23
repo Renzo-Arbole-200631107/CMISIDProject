@@ -6,6 +6,7 @@ use App\Models\Account;
 use App\Models\Office;
 use App\Models\User;
 use App\Models\Project;
+use App\Models\ProjectOwner;
 use App\Models\Attachment;
 use App\Models\ProjectModules;
 use Illuminate\Http\Request;
@@ -88,6 +89,8 @@ class ProjectController extends Controller
             'description' => 'nullable|string|max:255',
             'office_id' => 'required|exists:offices,id',
             'user_id' => 'required|exists:users,id',
+            'focal_person' => 'required|string|max:255',
+            'contact_number' => 'required|string|max:255',
             'project_manager' => 'required|exists:users,id',
             'tech_stack' => 'nullable|string|max:255',
             'start_sad' => 'nullable|date',
@@ -114,11 +117,24 @@ class ProjectController extends Controller
 
         //dd($data);
 
+        // First, check if a project owner with the given focal person and contact exists
+        $projectOwner = ProjectOwner::firstOrCreate([
+            'focal_person' => $request->focal_person ?? '', 
+            'contact_number' => $request->contact_number ?? '',
+        ],
+
+        [
+            'office_id' => $request->office_id,
+        ]);
+
+        //dd($projectOwner);
+
         $project = Project::create([
             'project_name' => $data['project_name'],
             'description' => $data['description'] ?? '',
             'office_id' => $data['office_id'],
             'user_id' => $data['user_id'],
+            'project_owner_id' => $projectOwner->id,
             'project_manager' => $data['project_manager'],
             'tech_stack' => $data['tech_stack'] ?? '',
             'start_sad' => $data['start_sad'] ?: null,
@@ -135,6 +151,10 @@ class ProjectController extends Controller
             'dpa_remarks' => $data['dpa_remarks'] ?? '',
         ]);
 
+        //dd($project);
+
+        
+
         $this->handleAttachments($request, $project, 'sad_files');
         $this->handleAttachments($request, $project, 'deployment_files');
         $this->handleAttachments($request, $project, 'agreement_files');
@@ -143,7 +163,7 @@ class ProjectController extends Controller
     
 
     // Create the associated module
-    ProjectModules::create([
+    $modules = ProjectModules::create([
         'project_id' => $project->id,
         'module_name' => 'Initial Module',  // Default module name
         'version_level' => $data['version'],
@@ -190,13 +210,15 @@ class ProjectController extends Controller
         $users = User::where('is_active', 1)->role('developer')->get();
         $managers = User::where('is_active', 1)->role('project manager')->get();
 
+        $project->load('owner');
+
         return view('projects.edit', ['project' => $project, 'users' => $users, 'offices' => $offices, 'managers' => $managers]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $project)
+    public function update(Request $request, Project $project, ProjectOwner $owner, ProjectModules $modules)
     {
         //dd(vars: $request);
         $data = $request->validate([
@@ -204,6 +226,8 @@ class ProjectController extends Controller
             'description' => 'nullable|string|max:255',
             'office_id' => 'required|exists:offices,id',
             'user_id' => 'required|exists:users,id',
+            'focal_person' => 'required|string|max:255',
+            'contact_number' => 'required|string|max:255',
             'project_manager' => 'required|exists:users,id',
             'tech_stack' => 'nullable|string|max:255',
             'start_sad' => 'nullable|date',
@@ -231,6 +255,8 @@ class ProjectController extends Controller
         $old = $project->getOriginal();
         //dd($data);
         $project->update($data);
+        $modules->update($data);
+        $owner->update($data);
 
         // Remove file fields from $data to avoid updating them with the project update
         $fileFields = ['sad_files', 'deployment_files', 'agreement_files', 'form_files'];

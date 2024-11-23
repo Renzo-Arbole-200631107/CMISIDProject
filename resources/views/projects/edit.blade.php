@@ -69,6 +69,15 @@
                 </div>
 
                 <div class="mb-4">
+                    <label for="" class="form-label fw-bold">Point person</label>
+                    <input type="text" class="form-control" name="focal_person" value={{old('focal_person',$project->owner->focal_person)}}>
+                </div>
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">Contact number</label>
+                    <input type="text" class="form-control" name="contact_number" value={{old('contact_number',$project->owner->contact_number)}}>
+                </div>
+
+                <div class="mb-4">
                         <label for="" class="form-label fw-bold">Tech Stack</label>
                         <textarea class="form-control" name="tech_stack" rows="3">{{old('tech_stack', $project->tech_stack)}}</textarea>
                     </div>

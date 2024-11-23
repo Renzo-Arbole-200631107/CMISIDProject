@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('office_id')->constrained('offices')->cascadeOnDelete(); //office_name
             $table->foreignId('project_manager')->constrained('users')->cascadeOnDelete(); //project manager
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete(); //developer name
+            $table->foreignId('project_owner_id')->constrained('project_owners')->cascadeOnDelete();
             $table->string('tech_stack')->nullable();
             $table->date('start_sad')->nullable();
             $table->date('start_dev')->nullable();
