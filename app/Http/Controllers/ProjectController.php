@@ -220,7 +220,6 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project, ProjectOwner $owner, ProjectModules $modules)
     {
-        //dd(vars: $request);
         $data = $request->validate([
             'project_name' => 'required|string|max:255|unique:projects,project_name,' . $project->id,
             'description' => 'nullable|string|max:255',
@@ -253,10 +252,15 @@ class ProjectController extends Controller
         ]);
 
         $old = $project->getOriginal();
-        //dd($data);
+        $owner = $project->owner;
+
         $project->update($data);
-        $modules->update($data);
-        $owner->update($data);
+        $owner->update([
+            'focal_person' => $data['focal_person'],
+            'contact_number' => $data['contact_number'],
+        ]);
+        //dd($owner);
+
 
         // Remove file fields from $data to avoid updating them with the project update
         $fileFields = ['sad_files', 'deployment_files', 'agreement_files', 'form_files'];
@@ -268,6 +272,16 @@ class ProjectController extends Controller
         $this->handleAttachments($request, $project, 'deployment_files');
         $this->handleAttachments($request, $project, 'agreement_files');
         $this->handleAttachments($request, $project, 'form_files');
+
+        // Check and update the project
+        $projectChanges = collect($data)->only([
+            'description', 'tech_stack', 'public_link', 'admin_link', 'dev_remarks', 
+            'google_remarks', 'seo_comments', 'dpa_remarks',
+        ]);
+
+        if ($projectChanges->diffAssoc($old)) {
+            $project->update($projectChanges->toArray());
+        }
 
         $new = collect($project->getChanges())->except('updated_at');
 
@@ -298,12 +312,8 @@ class ProjectController extends Controller
                         $logs .= "$field changed from ". ($oldValue ?? 'N/A') ." to " . ($newValue ?? 'N/A') . "; ";
 
                     }
-                    
-                    
                 }
             }
-
-
 
             activity()
             ->performedOn($project)
