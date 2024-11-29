@@ -67,6 +67,7 @@
                     <label for="" class="form-label fw-bold">Confirm password</label>
                     <input type="password" class="form-control" name="new_password_confirmation">
                 </div>
+                
             @endif
 
             @if ((auth()->user()->hasRole('admin')) && ($user->id != auth()->user()->id))
@@ -87,7 +88,21 @@
                 </div>
             @endif
 
-
+            <div class="mb-4">
+                        <label class="form-label fw-bold">User role</label>
+                        <select name="role" class="form-control" {{ (Auth::user()->hasRole('project manager') || Auth::user()->hasRole('developer')) ? 'disabled' : '' }}>
+                            <option value="admin" {{old('role', $user->getRoleNames()->first()) == 'admin' ? 'selected' : ''}}>Admin</option>
+                            <option value="developer" {{old('role', $user->getRoleNames()->first()) == 'developer' ? 'selected' : ''}}>Developer</option>
+                            <option value="project manager" {{old('role', $user->getRoleNames()->first()) == 'project manager' ? 'selected' : ''}}>Project Manager</option>
+                        </select>
+                    </div>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Is Active?</label>
+                    <select name="is_active" id="is_active" class="form-control" {{ (Auth::user()->hasRole('project manager') || Auth::user()->hasRole('developer')) ? 'disabled' : '' }}>
+                        <option value="1" {{old('is_active', $user->is_active) == 1 ? 'selected' : ''}}>Yes</option>
+                        <option value="0" {{old('is_active', $user->is_active) == 0 ? 'selected' : ''}}>No</option>
+                    </select>
+                </div>
 
             <div class="text-right">
                 <button type="submit" class="btn btn-dark">

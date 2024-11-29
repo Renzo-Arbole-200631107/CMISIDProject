@@ -89,12 +89,12 @@ class ProjectController extends Controller
             'description' => 'nullable|string|max:255',
             'office_id' => 'required|exists:offices,id',
             'user_id' => 'required|exists:users,id',
+
             'focal_person' => 'required|string|max:255',
             'contact_number' => 'required|string|max:255',
+
             'project_manager' => 'required|exists:users,id',
             'tech_stack' => 'nullable|string|max:255',
-            'start_sad' => 'nullable|date',
-            'start_dev' => 'nullable|date',
             'estimate_deployment' => 'nullable|date',
             'deployment_date' => 'nullable|date',
             'version' => 'nullable|string|max:255',
@@ -109,10 +109,33 @@ class ProjectController extends Controller
             'agreement_files.*' => 'nullable|file|mimes:pdf|max:2048',
             'form_files' => 'nullable|array',
             'form_files.*' => 'nullable|file|mimes:pdf|max:2048',
-            'dev_remarks' => 'nullable|string|max:255',
             'google_remarks' => 'nullable|string|max:255',
             'seo_comments' => 'nullable|string|max:255',
             'dpa_remarks' => 'nullable|string|max:255',
+
+            'module_name_1' => 'nullable|string|max:255',
+            'start_date_1' => 'nullable|date',
+            'end_date_1' => 'nullable|date',
+            'module_status_1' => 'nullable|string|max:255',
+            'version_level_1' => 'nullable|string|max:255',
+            'user_id_1' => 'nullable|exists:users,id',
+            'dev_remarks_1' => 'nullable|string|max:255',
+
+            'module_name_2' => 'nullable|string|max:255',
+            'start_date_2' => 'nullable|date',
+            'end_date_2' => 'nullable|date',
+            'module_status_2' => 'nullable|string|max:255',
+            'version_level_2' => 'nullable|string|max:255',
+            'user_id_2' => 'nullable|exists:users,id',
+            'dev_remarks_2' => 'nullable|string|max:255',
+
+            'module_name_3' => 'nullable|string|max:255',
+            'start_date_3' => 'nullable|date',
+            'end_date_3' => 'nullable|date',
+            'module_status_3' => 'nullable|string|max:255',
+            'version_level_3' => 'nullable|string|max:255',
+            'user_id_3' => 'nullable|exists:users,id',
+            'dev_remarks_3' => 'nullable|string|max:255',
         ],);
 
         //dd($data);
@@ -137,15 +160,12 @@ class ProjectController extends Controller
             'project_owner_id' => $projectOwner->id,
             'project_manager' => $data['project_manager'],
             'tech_stack' => $data['tech_stack'] ?? '',
-            'start_sad' => $data['start_sad'] ?: null,
-            'start_dev' => $data['start_dev'] ?: null,
             'estimate_deployment' => $data['estimate_deployment'] ?: null,
             'deployment_date' => $data['deployment_date'] ?: null,
             'version' => $data['version'] ?? '',
             'status' => $data['status'] ?? '',
             'public_link' => $data['public_link'] ?? '',
             'admin_link' => $data['admin_link'] ?? '',
-            'dev_remarks' => $data['dev_remarks'] ?? '',
             'google_remarks' => $data['google_remarks'] ?? '',
             'seo_comments' => $data['seo_comments'] ?? '',
             'dpa_remarks' => $data['dpa_remarks'] ?? '',
@@ -160,17 +180,27 @@ class ProjectController extends Controller
         $this->handleAttachments($request, $project, 'agreement_files');
         $this->handleAttachments($request, $project, 'form_files');
 
-    
+    $modules = [];
 
-    // Create the associated module
-    $modules = ProjectModules::create([
-        'project_id' => $project->id,
-        'module_name' => 'Initial Module',  // Default module name
-        'version_level' => $data['version'],
-        'start_date' => $data['start_dev'] ?? null,
-        'end_date' => $data['deployment_date'] ?? null,
-        'module_status' => 'For development', // Default status
-    ]);
+    for ($i = 1; $i <= 3; $i++) {
+        if ($request->input("module_name_$i")) { // Check if the module name is provided
+            $modules[] = [
+                'project_id' => $project->id,
+                'module_name' => $request->input("module_name_$i"),
+                'start_date' => $request->input("start_date_$i"),
+                'end_date' => $request->input("end_date_$i"),
+                'module_status' => $request->input("module_status_$i"), // Default if null
+                'version_level' => $request->input("version_level_$i"),
+                'user_id' => $request->input("user_id_$i"),
+                'dev_remarks' => $request->input("dev_remarks_$i"),
+            ];
+        }
+    }
+
+    // Save each module to the database
+    foreach ($modules as $moduleData) {
+        ProjectModules::create($moduleData);
+    }
 
     // Handle attachments (if any)
     if ($request->hasFile('attachment')) {
@@ -283,7 +313,16 @@ class ProjectController extends Controller
             $project->update($projectChanges->toArray());
         }
 
-        $new = collect($project->getChanges())->except('updated_at');
+        // Check and update the owner if there are changes
+        $ownerChanges = collect($owner->getChanges())->except('updated_at');
+
+        if ($ownerChanges->diffAssoc($owner->getOriginal())) {
+            $owner->update($ownerChanges->toArray());
+        }
+
+        $projectChanges = collect($project->getChanges())->except('updated_at');
+        $ownerChanges = collect($owner->getChanges())->except('updated_at');
+        $new = $projectChanges->merge($ownerChanges);
 
         // Check if the update actually contains any project-related fields (ignoring `updated_at`)
         $fieldsChanged = $new->keys()->filter(function($key) {
@@ -310,7 +349,6 @@ class ProjectController extends Controller
 
                     if($newValue !== $oldValue){
                         $logs .= "$field changed from ". ($oldValue ?? 'N/A') ." to " . ($newValue ?? 'N/A') . "; ";
-
                     }
                 }
             }

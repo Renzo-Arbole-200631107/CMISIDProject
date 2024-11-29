@@ -19,23 +19,47 @@ class Project extends Model
         'project_owner_id',
         'project_manager',
         'tech_stack',
-        'start_sad',
-        'start_dev',
         'estimate_deployment',
         'deployment_date',
         'version',
         'status',
+
         'public_link',
         'admin_link',
+
         'sad_files',
         'deployment_files',
         'agreement_files',
         'form_files',
-        'dev_remarks',
+
         'google_remarks',
         'seo_comments',
         'dpa_remarks',
-        'remarks',
+
+        'module_name_1',
+        'start_date_1',
+        'end_date_1',
+        'module_status_1',
+        'version_level_1',
+        'user_id_1',
+        'dev_remarks_1',
+
+        'module_name_2',
+        'start_date_2',
+        'end_date_2',
+        'module_status_2',
+        'version_level_2',
+        'user_id_2',
+        'dev_remarks_2',
+
+        'module_name_3',
+        'start_date_3',
+        'end_date_3',
+        'module_status_3',
+        'version_level_3',
+        'user_id_3',
+        'dev_remarks_3',
+
     ];
 
     public function user(){
@@ -70,24 +94,47 @@ class Project extends Model
         'user_id',
         'project_owner_id',
         'project_manager',
-        'designation',
         'tech_stack',
-        'start_sad',
-        'start_dev',
         'estimate_deployment',
         'deployment_date',
         'version',
         'status',
+
         'public_link',
         'admin_link',
+
         'sad_files',
         'deployment_files',
         'agreement_files',
         'form_files',
-        'dev_remarks',
+
         'google_remarks',
         'seo_comments',
         'dpa_remarks',
+
+        'module_name_1',
+        'start_date_1',
+        'end_date_1',
+        'module_status_1',
+        'version_level_1',
+        'user_id_1',
+        'dev_remarks_1',
+
+        'module_name_2',
+        'start_date_2',
+        'end_date_2',
+        'module_status_2',
+        'version_level_2',
+        'user_id_2',
+        'dev_remarks_2',
+
+        'module_name_3',
+        'start_date_3',
+        'end_date_3',
+        'module_status_3',
+        'version_level_3',
+        'user_id_3',
+        'dev_remarks_3',
     ];
 
     public function getActivitylogOptions(): LogOptions{

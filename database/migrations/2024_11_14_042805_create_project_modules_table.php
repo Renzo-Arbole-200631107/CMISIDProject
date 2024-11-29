@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('project_modules', function (Blueprint $table) {
             $table->id('project_module_id');
             $table->foreignId('project_id')->constrained('projects')->onDelete('cascade');
-            $table->string('module_name');
-            $table->string('version_level');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->string('module_name')->nullable();
+            $table->string('version_level')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->string('module_status');
+            $table->string('module_status')->nullable();
+            $table->string('dev_remarks')->nullable();
             $table->timestamps();
         });
     }

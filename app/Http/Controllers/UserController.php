@@ -73,11 +73,17 @@ class UserController extends Controller
             'middle_name' => 'nullable|string|max:255',
             'first_name' => 'nullable|string|max:255',
             'username' => 'nullable|string|max:255|unique:users,username,' . $user->id,
-            'is_active' => 'required|integer',
+            'is_active' => 'nullable|integer',
+            'role' => 'nullable|string',
             'current_password' => 'nullable|required_with:password|string',
             'new_password' => 'nullable|min:8|confirmed',
             'designation' => 'nullable|string|max:255',
         ]);
+        //dd($request->all());
+        if ($request->has('role')) {
+            $user->syncRoles([$request->input('role')]);
+        }        
+        $data['is_active'] = $request->has('is_active') ? $request->input('is_active') : $user->is_active;
 
         if($request->filled('current_password')){
             if(!Hash::check($request->current_password, $user->password)){
