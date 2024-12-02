@@ -210,17 +210,9 @@
                 </div>
             @endif
             @if (auth()->user()->hasRole('developer'))
-                    <div class="mb-4">
+            <div class="mb-4">
                         <label for="" class="form-label fw-bold">Tech Stack</label>
-                        <textarea class="form-control" name="tech_stack" rows="3">{{old('tech_stack')}}</textarea>
-                    </div>
-                    <div class="mb-4">
-                        <label for="" class="form-label fw-bold">Start SAD date</label>
-                        <input type="date" class="form-control" name="start_sad" value={{old('start_sad',$project->start_sad)}}>
-                    </div>
-                    <div class="mb-4">
-                        <label for="" class="form-label fw-bold">Start development date</label>
-                        <input type="date" class="form-control" name="start_dev" value={{old('start_dev',$project->start_dev)}}>
+                        <textarea class="form-control" name="tech_stack" rows="3">{{old('tech_stack', $project->tech_stack)}}</textarea>
                     </div>
                     <div class="mb-4">
                         <label for="" class="form-label fw-bold">Estimated deployment</label>
@@ -252,6 +244,27 @@
                         </select>
                     </div>
                     <div class="mb-4">
+                        <label class="form-label"><b>SAD</b> (.pdf only)</label>
+                        <input class="form-control" id="file-input" name="sad_files[]" type="file" multiple>
+                        <div id="file-list"></div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label"><b>Deployment letter</b> (.pdf only)</label>
+                        <input class="form-control" id="file-input" name="deployment_files[]" type="file" multiple>
+                        <div id="file-list"></div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label"><b>Deployment agreement</b> (.pdf only)</label>
+                        <input class="form-control" id="file-input" name="agreement_files[]" type="file" multiple>
+                        <div id="file-list"></div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label"><b>Forms</b> (.pdf only)</label>
+                        <input class="form-control" id="file-input" name="form_files[]" type="file" multiple>
+                        <div id="file-list"></div>
+                    </div>
+
+                    <div class="mb-4">
                         <label for="" class="form-label fw-bold">Public Link</label>
                         <input type="text" class="form-control" name="public_link" value={{old('public_link',$project->public_link)}}>
                     </div>
@@ -259,14 +272,70 @@
                         <label for="" class="form-label fw-bold">Admin Link</label>
                         <input type="text" class="form-control" name="admin_link" value={{old('admin_link',$project->admin_link)}}>
                     </div>
-                    <div class="mb-4">
-                        <label for="" class="form-label fw-bold">Developer remarks</label>
-                        <textarea class="form-control" name="dev_remarks" value= rows="3">{{old('dev_remarks',$project->dev_remarks)}}</textarea>
+                
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">Google Analytics remarks</label>
+                    <textarea class="form-control" name="google_remarks" rows="3">{{old('google_remarks',$project->google_remarks)}}</textarea>
+                </div>
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">SEO comments</label>
+                    <textarea class="form-control" name="seo_comments" rows="3">{{old('seo_comments',$project->seo_comments)}}</textarea>
+                </div>
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">DPA Compliance remarks</label>
+                    <textarea class="form-control" name="dpa_remarks" value= rows="3">{{old('dpa_remarks',$project->dpa_remarks)}}</textarea>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="fw-bold">Project Modules</h3>
+                </div>
+
+                @for($i = 0; $i < 3; $i++)
+                    <div class="container">  
+                        <div class="mb-4">
+                            <label for="" class="form-label fw-bold">Project module {{ $i+1 }}</label>
+                            <input type="text" class="form-control" name="modules[{{ $i }}][module_name]" value="{{ old("modules.$i.module_name", $project->modules[$i]->module_name ?? '') }}">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="" class="form-label fw-bold">Start date</label>
+                            <input type="date" class="form-control" name="modules[{{ $i }}][start_date]" value="{{ old("modules.$i.start_date", $project->modules[$i]->start_date ?? '') }}">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="" class="form-label fw-bold">End date</label>
+                            <input type="date" class="form-control" name="modules[{{ $i }}][end_date]" value="{{ old("modules.$i.end_date", $project->modules[$i]->end_date ?? '') }}">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="" class="form-label fw-bold">Module status</label>
+                            <input type="text" class="form-control" name="modules[{{ $i }}][module_status]" value="{{ old("modules.$i.module_status", $project->modules[$i]->module_status ?? '') }}">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="" class="form-label fw-bold">Version level</label>
+                            <input type="text" class="form-control" name="modules[{{ $i }}][version_level]" value="{{ old("modules.$i.version_level", $project->modules[$i]->version_level ?? '') }}">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Module developer</label>
+                            <select name="modules[{{ $i }}][user_id]" class="form-control">
+                                <option value="">Select developer</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}" {{ old("modules.$i.user_id", $project->modules[$i]->user_id ?? '') == $user->id ? 'selected' : '' }}>
+                                        {{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="" class="form-label fw-bold">Developer remarks</label>
+                            <textarea class="form-control" name="modules[{{ $i }}][dev_remarks]" rows="3">{{old('modules.$i.dev_remarks', $project->modules[$i]->dev_remarks ?? '')}}</textarea>
+                        </div>
                     </div>
-                    <div class="mb-4">
-                        <label class="form-label"><b>Attachment/s</b> (.pdf only) </label>
-                        <input class="form-control" name="attachment[]" type="file" multiple>
-                    </div>
+                @endfor
+
                 @endif
         </form>
     </div>
