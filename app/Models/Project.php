@@ -137,6 +137,8 @@ class Project extends Model
         'dev_remarks_3',
     ];
 
+    protected static $logOnlyDirty = true;
+
     public function getActivitylogOptions(): LogOptions{
         return LogOptions::defaults()
             ->useLogName('project')

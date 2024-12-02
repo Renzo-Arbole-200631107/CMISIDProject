@@ -189,7 +189,8 @@
                             <select name="modules[{{ $i }}][user_id]" class="form-control">
                                 <option value="">Select developer</option>
                                 @foreach ($users as $user)
-                                    <option value="{{ $user->id }}" {{ old("modules.$i.user_id", $project->modules[$i]->user_id ?? '') == $user->id ? 'selected' : '' }}>
+                                    <option value="{{ $user->id }}" 
+                                    {{ old("modules.$i.user_id", $project->modules[$i]->user_id ?? '') == $user->id ? 'selected' : '' }}>
                                         {{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}
                                     </option>
                                 @endforeach

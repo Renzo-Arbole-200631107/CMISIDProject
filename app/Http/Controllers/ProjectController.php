@@ -250,7 +250,6 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project, ProjectOwner $owner, ProjectModules $modules)
     {
-        //dd($request->modules);
         $data = $request->validate([
             'project_name' => 'required|string|max:255|unique:projects,project_name,' . $project->id,
             'description' => 'nullable|string|max:255',
@@ -291,33 +290,29 @@ class ProjectController extends Controller
         ],);
         
         $old = $project->getOriginal();
+        $oldProjectModule = $project->modules()->first()->getOriginal();
         $owner = $project->owner;
-
+        
         $project->update($data);
         $owner->update([
             'focal_person' => $data['focal_person'],
             'contact_number' => $data['contact_number'],
         ]);
+
+        // Update existing module
         $modules = $request->input('modules', []);
         foreach ($project->modules as $index => $module) {
-        if (isset($modules[$index])) {
-            // Update existing module
-            $module->update($modules[$index]);
+            if (isset($modules[$index])) {
+                $module->update($modules[$index]);
+            }
+        }  
+
+        // Create new modules if needed
+        for ($i = count($project->modules); $i < count($modules); $i++) {
+            // Create new module linked to the project
+            $project->modules()->create($modules[$i]);
         }
-    }
-
-    // Create new modules if needed
-    for ($i = count($project->modules); $i < count($modules); $i++) {
-        // Create new module linked to the project
-        $project->modules()->create($modules[$i]);
-    }
-
         
-
-        //dd($project->modules);
-        //dd($owner);
-
-
         // Remove file fields from $data to avoid updating them with the project update
         $fileFields = ['sad_files', 'deployment_files', 'agreement_files', 'form_files'];
         foreach ($fileFields as $fileField) {
@@ -329,39 +324,49 @@ class ProjectController extends Controller
         $this->handleAttachments($request, $project, 'agreement_files');
         $this->handleAttachments($request, $project, 'form_files');
 
-        // Check and update the project
-        $projectChanges = collect($data)->only([
-            'description', 'tech_stack', 'public_link', 'admin_link', 'dev_remarks', 
-            'google_remarks', 'seo_comments', 'dpa_remarks',
-        ]);
-
-        if ($projectChanges->diffAssoc($old)) {
-            $project->update($projectChanges->toArray());
-        }
-
-        // Check and update the owner if there are changes
-        $ownerChanges = collect($owner->getChanges())->except('updated_at');
-
-        if ($ownerChanges->diffAssoc($owner->getOriginal())) {
-            $owner->update($ownerChanges->toArray());
-        }
 
         $projectChanges = collect($project->getChanges())->except('updated_at');
         $ownerChanges = collect($owner->getChanges())->except('updated_at');
-        $new = $projectChanges->merge($ownerChanges);
+        $projectModuleChanges = [];
+        
+        $comparableKeys = [
+            'module_name', 'start_date', 'end_date',
+            'module_status', 'version_level', 'user_id', 'dev_remarks'
+        ];
+        //dd($request->all());
 
+        foreach ($modules as $index => $module) {
+            // Ensure we are accessing the correct data in $oldProjectModule
+            $oldModule = $oldProjectModule[$index] ?? [];  // Ensure it's correctly structured as per $index
+
+            foreach ($comparableKeys as $key) {
+                $newValue = $module[$key] ?? null;
+                $oldValue = $oldModule[$key] ?? null;
+
+                if ($newValue !== $oldValue) {
+                    $projectModuleChanges[$key] = $newValue;
+        
+                    // Debugging log for key-value comparison
+                    //logger()->info("Key: $key | Old: " . json_encode($oldValue) . " | New: " . json_encode($newValue));
+                }
+            }
+        }
+        
+        $new = $projectChanges->merge($ownerChanges)->merge($projectModuleChanges);
+        
         // Check if the update actually contains any project-related fields (ignoring `updated_at`)
         $fieldsChanged = $new->keys()->filter(function($key) {
-            return in_array($key, ['description', 'tech_stack', 'public_link', 'admin_link', 'dev_remarks', 'google_remarks', 'seo_comments', 'dpa_remarks']);
+            return in_array($key, ['description', 'tech_stack', 'public_link', 'admin_link',
+            'google_remarks', 'seo_comments', 'dpa_remarks', 'module_name', 'version_level', 
+            'start_date', 'end_date', 'module_status', 'user_id', 'dev_remarks',]);
         });
 
         if(!empty($fieldsChanged)){
             $logs = auth()->user()->username . ' updated project: ';
 
-
             foreach ($new as $field => $newValue) {
                 // Check if the old value exists for this field
-                if (isset($old[$field])) {
+                if (array_key_exists($field, $old)) {
                     $oldValue = $old[$field] ?? null;
 
                     // Check if the values are arrays
@@ -387,6 +392,21 @@ class ProjectController extends Controller
                 'old' => collect($old)->only($new->keys()->toArray()),
             ])
             ->log($logs);
+
+            // Log module-level changes
+            foreach ($projectModuleChanges as $key => $newValue) {
+                $module = $project->modules->firstWhere('id', $module[$key]['id'] ?? null); // Ensure $module[$key]['id'] exists
+                if ($module) {
+                    activity()
+                        ->performedOn($module)
+                        ->causedBy(auth()->user())
+                        ->withProperties([
+                            'new' => [$key => $newValue], // You might need to adjust how the data is structured here
+                            'old' => collect($module->getOriginal())->only([$key])
+                        ])
+                        ->log("Module $key changed");
+                }
+            }
         }
 
         return redirect(route('projects.index'))->with('status','Successfully updated ' . $project->project_name);
