@@ -239,8 +239,8 @@ class ProjectController extends Controller
         $offices = Office::where('is_active', 1)->get();
         $users = User::where('is_active', 1)->role('developer')->get();
         $managers = User::where('is_active', 1)->role('project manager')->get();
-
-        $project->load('owner');
+        
+        $project->load('owner', 'modules');
 
         return view('projects.edit', ['project' => $project, 'users' => $users, 'offices' => $offices, 'managers' => $managers]);
     }
@@ -250,17 +250,18 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project, ProjectOwner $owner, ProjectModules $modules)
     {
+        //dd($request->modules);
         $data = $request->validate([
             'project_name' => 'required|string|max:255|unique:projects,project_name,' . $project->id,
             'description' => 'nullable|string|max:255',
             'office_id' => 'required|exists:offices,id',
             'user_id' => 'required|exists:users,id',
+
             'focal_person' => 'required|string|max:255',
             'contact_number' => 'required|string|max:255',
+
             'project_manager' => 'required|exists:users,id',
             'tech_stack' => 'nullable|string|max:255',
-            'start_sad' => 'nullable|date',
-            'start_dev' => 'nullable|date',
             'estimate_deployment' => 'nullable|date',
             'deployment_date' => 'nullable|date',
             'version' => 'nullable|string|max:255',
@@ -275,12 +276,20 @@ class ProjectController extends Controller
             'agreement_files.*' => 'nullable|file|mimes:pdf|max:2048',
             'form_files' => 'nullable|array',
             'form_files.*' => 'nullable|file|mimes:pdf|max:2048',
-            'dev_remarks' => 'nullable|string|max:255',
             'google_remarks' => 'nullable|string|max:255',
             'seo_comments' => 'nullable|string|max:255',
             'dpa_remarks' => 'nullable|string|max:255',
-        ]);
 
+            'modules' => 'array',
+            'modules.*.module_name' => 'nullable|string|max:255',
+            'modules.*.start_date' => 'nullable|date',
+            'modules.*.end_date' => 'nullable|date',
+            'modules.*.module_status' => 'nullable|string|max:255',
+            'modules.*.version_level' => 'nullable|string|max:255',
+            'modules.*.user_id' => 'nullable|exists:users,id',
+            'modules.*.dev_remarks' => 'nullable|string|max:255',
+        ],);
+        
         $old = $project->getOriginal();
         $owner = $project->owner;
 
@@ -289,6 +298,23 @@ class ProjectController extends Controller
             'focal_person' => $data['focal_person'],
             'contact_number' => $data['contact_number'],
         ]);
+        $modules = $request->input('modules', []);
+        foreach ($project->modules as $index => $module) {
+        if (isset($modules[$index])) {
+            // Update existing module
+            $module->update($modules[$index]);
+        }
+    }
+
+    // Create new modules if needed
+    for ($i = count($project->modules); $i < count($modules); $i++) {
+        // Create new module linked to the project
+        $project->modules()->create($modules[$i]);
+    }
+
+        
+
+        //dd($project->modules);
         //dd($owner);
 
 

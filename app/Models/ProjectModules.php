@@ -18,6 +18,8 @@ class ProjectModules extends Model
         'start_date',
         'end_date',
         'module_status',
+        'dev_remarks',
+        'user_id'
     ];
 
     public function project(){
