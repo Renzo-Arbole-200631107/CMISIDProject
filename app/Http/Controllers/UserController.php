@@ -96,7 +96,6 @@ class UserController extends Controller
         }
 
         $user->update(Arr::except($data, ['current_password', 'new_password']));
-        $user->syncRoles($request->role);
 
         return redirect(route('users.index'))->with('status', 'Successfully updated ' . $user->username);
     }

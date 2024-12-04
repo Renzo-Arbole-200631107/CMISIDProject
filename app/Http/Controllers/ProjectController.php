@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\File;
 use Spatie\Activitylog\Models\Activity;
 use Illuminate\Support\Facades\Auth;
 use Log;
+use Arr;
 
 class ProjectController extends Controller
 {
@@ -225,10 +226,9 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        $project = Project::find($id);
+        $project = Project::with('modules', 'attachments')->findOrFail($id);
         $activities = $project->activities()->latest()->get();
-        $attachments = $project->attachments;
-        return view('projects.details', compact('project', 'activities', 'attachments'));
+        return view('projects.details', compact('project', 'activities'));
     }
 
     /**
@@ -251,15 +251,6 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project, ProjectOwner $owner, ProjectModules $modules)
     {
         $data = $request->validate([
-            'project_name' => 'required|string|max:255|unique:projects,project_name,' . $project->id,
-            'description' => 'nullable|string|max:255',
-            'office_id' => 'required|exists:offices,id',
-            'user_id' => 'required|exists:users,id',
-
-            'focal_person' => 'required|string|max:255',
-            'contact_number' => 'required|string|max:255',
-
-            'project_manager' => 'required|exists:users,id',
             'tech_stack' => 'nullable|string|max:255',
             'estimate_deployment' => 'nullable|date',
             'deployment_date' => 'nullable|date',
@@ -288,15 +279,32 @@ class ProjectController extends Controller
             'modules.*.user_id' => 'nullable|exists:users,id',
             'modules.*.dev_remarks' => 'nullable|string|max:255',
         ],);
+
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('project manager')){
+            $data = array_merge($data, $request->validate([
+                'project_name' => 'required|string|max:255|unique:projects,project_name,' . $project->id,
+                'description' => 'nullable|string|max:255',
+                'office_id' => 'required|exists:offices,id',
+                'user_id' => 'required|exists:users,id',
+                'focal_person' => 'required|string|max:255',
+                'contact_number' => 'required|string|max:255',
+                'project_manager' => 'required|exists:users,id',
+            ]));
+        }
         
         $old = $project->getOriginal();
         $oldProjectModule = $project->modules()->first()->getOriginal();
         $owner = $project->owner;
         
         $project->update($data);
+
+        // Ensure focal_person and contact_number are set before using them
+        $focalPerson = Arr::get($data, 'focal_person');
+        $contactNumber = Arr::get($data, 'contact_number');
+
         $owner->update([
-            'focal_person' => $data['focal_person'],
-            'contact_number' => $data['contact_number'],
+            'focal_person'  => $focalPerson,
+            'contact_number' => $contactNumber,
         ]);
 
         // Update existing module

@@ -35,18 +35,6 @@
 
         <div class="dates">
             <div class="col-md-3 date">
-                <h5 class="fw-bold">Start SAD</h5>
-                <h4 class="input-data">
-                    {{ $project->start_sad }}
-                </h4>
-            </div>
-            <div class="col-md-3 date">
-                <h5 class="fw-bold">Start Development</h5>
-                <h4 class="input-data">
-                    {{ $project->start_dev }}
-                </h4>
-            </div>
-            <div class="col-md-3 date">
                 <h5 class="fw-bold">Estimated Deployment</h5>
                 <h4 class="input-data">
                     {{ $project->estimate_deployment }}
@@ -67,15 +55,11 @@
             <div class="details-pad">
                 <div class="col-md-6 mt-3">
                     <div class="mb-4">
-                        <h6 class="info-container fw-bold">Developer's Remarks</h6>
-                        <h6 class="input-data">{{ $project->dev_remarks }}</h6>
-                    </div>
-                    <div class="mb-4">
                         <h6 class="info-container fw-bold">Google Analytics Remarks</h6>
                         <h6 class="input-data">{{ $project->google_remarks }}</h6>
                     </div>
                     <div class="mb-4">
-                        <h6 class="info-container fw-bold">DPA Compliance Remarks</>
+                        <h6 class="info-container fw-bold">DPA Compliance Remarks</h6>
                             <h6 class="input-data">{{ $project->dpa_remarks }}</h6>
                     </div>
 
@@ -98,6 +82,11 @@
                     <div class="mb-4">
                         <h6 class="info-container fw-bold">Description:</h6>
                         <h6 class="input-data">{{ $project->description }}</h6>
+                    </div>
+                    <div class="mb-4">
+                        <h6 class="info-container fw-bold">Project Manager:</h6>
+                        <h6 class="input-data">{{ $project->user->last_name }}, {{ $project->user->first_name }}
+                            {{ $project->user->middle_name }}</h6>
                     </div>
                     <div class="mb-4">
                         <h6 class="info-container fw-bold">Developer Name:</h6>
@@ -132,6 +121,34 @@
                         </ul>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="pad-shadow">
+            <div class="px-3 py-1">
+                <h4 class="info-container p-2 fw-bold">PROJECT MODULES</h4>
+            </div>
+            <div class="details-pad ">
+            <table class="table">
+                <tr class="fw-bold">
+                    <th style="width: 300px;">Module</th>
+                    <th style="width: 300px;">Version level</th>
+                    <th style="width: 200px;">Status</th>
+                    <th>Start date</th>
+                    <th>End date</th>
+                </tr>
+
+                @foreach ($project->modules as $module)
+                    <tr>
+                        <td class="fw-semibold">{{ $module->module_name }}</td>
+                        <td class="fw-semibold">{{ $module->version_level }}</td>
+                        <td class="fw-semibold">{{ $module->module_status }}</td>
+                        <td class="fw-semibold">{{ $module->start_date }}</td>
+                        <td class="fw-semibold">{{ $module->end_date}}</td>
+                    </tr>
+                @endforeach
+            </table>
+            </div>
             </div>
         </div>
     </div>
