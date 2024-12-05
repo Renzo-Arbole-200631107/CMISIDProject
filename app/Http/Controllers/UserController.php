@@ -108,7 +108,7 @@ class UserController extends Controller
         $user = auth()->user();
         $data = $request->validate([
             'current_password' => 'required',
-            'new_password' => 'required|min:8|confirmed',
+            'new_password' => 'required|min:8|regex:/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]+$/|confirmed',
         ]);
 
         $user->update([
