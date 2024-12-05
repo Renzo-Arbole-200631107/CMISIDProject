@@ -41,16 +41,28 @@
 
                     <form method="POST" action="{{route('change.password')}}">
                         @csrf
-                        <div class="mb-4">
-                            <input type="password" class="form-control" name="current_password" placeholder="Current password">
+                        <div class="form-outline mb-4 position-relative">
+                            <input type="password" class="form-control" name="current_password" id="current_password" placeholder="Current password"/>
+                            <button type="button" onclick="togglePasswordVisibility('current_password', 'currentPasswordIcon')" class="toggle-password-btn position-absolute" style="color: black;">
+                                <i id="currentPasswordIcon" class="fa fa-eye "></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 8.25a3.75 3.75 0 1 0 0 7.5a3.75 3.75 0 0 0 0-7.5M9.75 12a2.25 2.25 0 1 1 4.5 0a2.25 2.25 0 0 1-4.5 0"/><path d="M12 3.25c-4.514 0-7.555 2.704-9.32 4.997l-.031.041c-.4.519-.767.996-1.016 1.56c-.267.605-.383 1.264-.383 2.152s.116 1.547.383 2.152c.25.564.617 1.042 1.016 1.56l.032.041C4.445 18.046 7.486 20.75 12 20.75s7.555-2.704 9.32-4.997l.031-.041c.4-.518.767-.996 1.016-1.56c.267-.605.383-1.264.383-2.152s-.116-1.547-.383-2.152c-.25-.564-.617-1.041-1.016-1.56l-.032-.041C19.555 5.954 16.514 3.25 12 3.25M3.87 9.162C5.498 7.045 8.15 4.75 12 4.75s6.501 2.295 8.13 4.412c.44.57.696.91.865 1.292c.158.358.255.795.255 1.546s-.097 1.188-.255 1.546c-.169.382-.426.722-.864 1.292C18.5 16.955 15.85 19.25 12 19.25s-6.501-2.295-8.13-4.412c-.44-.57-.696-.91-.865-1.292c-.158-.358-.255-.795-.255-1.546s.097-1.188.255-1.546c.169-.382.426-.722.864-1.292"/></g></svg>
+                            </button>
                         </div>
 
-                        <div class="mb-4">
-                            <input type="password" class="form-control" name="new_password" placeholder="New password">
+                        <div class="form-outline mb-4 position-relative">
+                            <input type="password" class="form-control" name="new_password" id="new_password" placeholder="New password"/>
+                            <button type="button" onclick="togglePasswordVisibility('new_password', 'newPasswordIcon')" class="toggle-password-btn position-absolute" class="toggle-password-btn position-absolute" style="color: black;">
+                                <i id="newPasswordIcon" class="fa fa-eye "></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 8.25a3.75 3.75 0 1 0 0 7.5a3.75 3.75 0 0 0 0-7.5M9.75 12a2.25 2.25 0 1 1 4.5 0a2.25 2.25 0 0 1-4.5 0"/><path d="M12 3.25c-4.514 0-7.555 2.704-9.32 4.997l-.031.041c-.4.519-.767.996-1.016 1.56c-.267.605-.383 1.264-.383 2.152s.116 1.547.383 2.152c.25.564.617 1.042 1.016 1.56l.032.041C4.445 18.046 7.486 20.75 12 20.75s7.555-2.704 9.32-4.997l.031-.041c.4-.518.767-.996 1.016-1.56c.267-.605.383-1.264.383-2.152s-.116-1.547-.383-2.152c-.25-.564-.617-1.041-1.016-1.56l-.032-.041C19.555 5.954 16.514 3.25 12 3.25M3.87 9.162C5.498 7.045 8.15 4.75 12 4.75s6.501 2.295 8.13 4.412c.44.57.696.91.865 1.292c.158.358.255.795.255 1.546s-.097 1.188-.255 1.546c-.169.382-.426.722-.864 1.292C18.5 16.955 15.85 19.25 12 19.25s-6.501-2.295-8.13-4.412c-.44-.57-.696-.91-.865-1.292c-.158-.358-.255-.795-.255-1.546s.097-1.188.255-1.546c.169-.382.426-.722.864-1.292"/></g></svg>
+                            </button>
                         </div>
 
-                        <div class="mb-4">
-                            <input type="password" class="form-control" name="new_password_confirmation" placeholder="Confirm password">
+                        <div class="form-outline mb-4 position-relative">
+                            <input type="password" class="form-control" id="confirm_password" name="new_password_confirmation" placeholder="Confirm password"/>
+                            <button type="button" onclick="togglePasswordVisibility('confirm_password', 'confirmPasswordIcon')" class="toggle-password-btn position-absolute" class="toggle-password-btn position-absolute" style="color: black;">
+                                <i id="confirmPasswordIcon" class="fa fa-eye "></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 8.25a3.75 3.75 0 1 0 0 7.5a3.75 3.75 0 0 0 0-7.5M9.75 12a2.25 2.25 0 1 1 4.5 0a2.25 2.25 0 0 1-4.5 0"/><path d="M12 3.25c-4.514 0-7.555 2.704-9.32 4.997l-.031.041c-.4.519-.767.996-1.016 1.56c-.267.605-.383 1.264-.383 2.152s.116 1.547.383 2.152c.25.564.617 1.042 1.016 1.56l.032.041C4.445 18.046 7.486 20.75 12 20.75s7.555-2.704 9.32-4.997l.031-.041c.4-.518.767-.996 1.016-1.56c.267-.605.383-1.264.383-2.152s-.116-1.547-.383-2.152c-.25-.564-.617-1.041-1.016-1.56l-.032-.041C19.555 5.954 16.514 3.25 12 3.25M3.87 9.162C5.498 7.045 8.15 4.75 12 4.75s6.501 2.295 8.13 4.412c.44.57.696.91.865 1.292c.158.358.255.795.255 1.546s-.097 1.188-.255 1.546c-.169.382-.426.722-.864 1.292C18.5 16.955 15.85 19.25 12 19.25s-6.501-2.295-8.13-4.412c-.44-.57-.696-.91-.865-1.292c-.158-.358-.255-.795-.255-1.546s.097-1.188.255-1.546c.169-.382.426-.722.864-1.292"/></g></svg>
+                            </button>
                         </div>
                         @if ($errors->any())
                             <div class="mx-4">
@@ -79,13 +91,47 @@
     </div>
 </body>
 
+<script>
+    function togglePasswordVisibility(passwordFieldId, iconId) {
+        const passwordField = document.getElementById(passwordFieldId);
+        const toggleIcon = document.getElementById(iconId);
+
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+        }
+    }
+</script>
+
 <style>
     body{
         font-family: "Poppins", sans-serif;
         background-color: #f2f2f2;
     }
 
+    .toggle-password-btn {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        color: #6c757d;
+        z-index: 10;
+        width: 30px;
+        height: 30px
+    }
 
+    .toggle-password-btn:focus {
+        outline: none;
+    }
 
     .container {
         display: flex;
