@@ -18,6 +18,8 @@ class ProjectModules extends Model
         'start_date',
         'end_date',
         'module_status',
+        'dev_remarks',
+        'user_id'
     ];
 
     public function project(){
@@ -40,11 +42,14 @@ class ProjectModules extends Model
         'start_date',
         'end_date',
         'module_status',
+        'dev_remarks',
+        'user_id'
     ];
 
+    protected static $logOnlyDirty = true;
     public function getActivitylogOptions(): LogOptions{
         return LogOptions::defaults()
-            ->useLogName('project')
+            ->useLogName('project_module')
             ->dontSubmitEmptyLogs();
     }
 }

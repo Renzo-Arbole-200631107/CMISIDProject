@@ -47,7 +47,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Tech Stack</label>
-                    <textarea class="form-control" name="tech_stack" rows="3">{{old('tech_stack')}}</textarea>
+                    <textarea class="form-control" name="tech_stack" rows="3">{{old('tech_stack', $user->tech_stack)}}</textarea>
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Designation</label>
@@ -67,17 +67,18 @@
                     <label for="" class="form-label fw-bold">Confirm password</label>
                     <input type="password" class="form-control" name="new_password_confirmation">
                 </div>
+                
             @endif
 
-            @if (auth()->user()->hasRole('admin'))
+            @if ((auth()->user()->hasRole('admin')) && ($user->id != auth()->user()->id))
                 <div class="mb-4">
-                    <label class="form-label fw-bold">User role</label>
-                    <select name="role" class="form-control">
-                        <option value="admin" {{old('role', $user->getRoleNames()->first()) == 'admin' ? 'selected' : ''}}>Admin</option>
-                        <option value="developer" {{old('role', $user->getRoleNames()->first()) == 'developer' ? 'selected' : ''}}>Developer</option>
-                        <option value="project manager" {{old('role', $user->getRoleNames()->first()) == 'project manager' ? 'selected' : ''}}>Project Manager</option>
-                    </select>
-                </div>
+                        <label class="form-label fw-bold">User role</label>
+                        <select name="role" class="form-control">
+                            <option value="admin" {{old('role', $user->getRoleNames()->first()) == 'admin' ? 'selected' : ''}}>Admin</option>
+                            <option value="developer" {{old('role', $user->getRoleNames()->first()) == 'developer' ? 'selected' : ''}}>Developer</option>
+                            <option value="project manager" {{old('role', $user->getRoleNames()->first()) == 'project manager' ? 'selected' : ''}}>Project Manager</option>
+                        </select>
+                    </div>
                 <div class="mb-4">
                     <label class="form-label fw-bold">Is Active?</label>
                     <select name="is_active" id="is_active" class="form-control">
@@ -85,9 +86,9 @@
                         <option value="0" {{old('is_active', $user->is_active) == 0 ? 'selected' : ''}}>No</option>
                     </select>
                 </div>
+            @else
+                <input type="hidden" name="role" value="{{ old('role', $user->getRoleNames()->first()) }}">
             @endif
-
-
 
             <div class="text-right">
                 <button type="submit" class="btn btn-dark">

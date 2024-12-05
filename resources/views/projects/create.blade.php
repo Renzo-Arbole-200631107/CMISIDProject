@@ -54,6 +54,18 @@
 
                 </div>
                 <div class="mb-4">
+                    <label class="form-label fw-bold">Project manager name</label>
+                    <select name="project_manager" class="form-control">
+                        <option value="">Select project manager</option>
+                        @foreach ($managers as $manager)
+                            <option value={{ $manager->id }} {{old('project_manager') == $manager->id ? 'selected' : ''}}>
+                                {{ $manager->first_name }} {{ $manager->middle_name }} {{ $manager->last_name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                
+                <div class="mb-4">
                     <label class="form-label fw-bold">Developer name</label>
                     <select name="user_id" class="form-control">
                         <option value="">Select developer</option>
@@ -64,17 +76,19 @@
                         @endforeach
                     </select>
                 </div>
+
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">Point person</label>
+                    <input type="text" class="form-control" name="focal_person" value='{{old('focal_person')}}'>
+                </div>
+                <div class="mb-4">
+                    <label for="" class="form-label fw-bold">Contact number</label>
+                    <input type="text" class="form-control" name="contact_number" value={{old('contact_number')}}>
+                </div>
+
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Tech Stack</label>
                     <textarea class="form-control" name="tech_stack" rows="3">{{old('tech_stack')}}</textarea>
-                </div>
-                <div class="mb-4">
-                    <label for="" class="form-label fw-bold">Start SAD date</label>
-                    <input type="date" class="form-control" value="{{old('start_sad')}}" name="start_sad">
-                </div>
-                <div class="mb-4">
-                    <label for="" class="form-label fw-bold">Start development date</label>
-                    <input type="date" class="form-control" value="{{old('start_dev')}}" name="start_dev">
                 </div>
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Estimated deployment</label>
@@ -100,22 +114,36 @@
                     </select>
                 </div>
                 <div class="mb-4">
+                    <label class="form-label"><b>SAD</b> (.pdf only)</label>
+                    <input class="form-control" id="file-input" name="sad_files[]" type="file" multiple>
+                    <div id="file-list"></div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label"><b>Deployment letter</b> (.pdf only)</label>
+                    <input class="form-control" id="file-input" name="deployment_files[]" type="file" multiple>
+                    <div id="file-list"></div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label"><b>Deployment agreement</b> (.pdf only)</label>
+                    <input class="form-control" id="file-input" name="agreement_files[]" type="file" multiple>
+                    <div id="file-list"></div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label"><b>Forms</b> (.pdf only)</label>
+                    <input class="form-control" id="file-input" name="form_files[]" type="file" multiple>
+                    <div id="file-list"></div>
+                </div>
+
+                <div class="mb-4">
                     <label for="" class="form-label fw-bold">Public Link</label>
                     <input type="text" class="form-control" name="public_link" value="{{old('public_link')}}">
                 </div>
+
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Admin Link</label>
                     <input type="text" class="form-control" name="admin_link" value="{{old('admin_link')}}">
                 </div>
-                <div class="mb-4">
-                    <label class="form-label"><b>Attachment/s</b> (.pdf only)</label>
-                    <input class="form-control" id="file-input" name="attachment[]" type="file" multiple>
-                    <div id="file-list"></div>
-                </div>
-                <div class="mb-4">
-                    <label for="" class="form-label fw-bold">Developer remarks</label>
-                    <textarea class="form-control" name="dev_remarks" rows="3">{{old('dev_remarks')}}</textarea>
-                </div>
+
                 <div class="mb-4">
                     <label for="" class="form-label fw-bold">Google Analytics remarks</label>
                     <textarea class="form-control" name="google_remarks" rows="3">{{old('google_remarks')}}</textarea>
@@ -128,6 +156,143 @@
                     <label for="" class="form-label fw-bold">DPA Compliance remarks</label>
                     <textarea class="form-control" name="dpa_remarks" rows="3">{{old('dpa_remarks')}}</textarea>
                 </div>
+
+                <div class="mb-4">
+                    <h3 class="fw-bold">Project Modules</h3>
+                </div>
+
+                <div class="container">  
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Project module 1</label>
+                        <input type="text" class="form-control" name="module_name_1" value="{{old('module_name_1')}}">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Start date</label>
+                        <input type="date" class="form-control" value="{{old('start_date_1')}}" name="start_date_1">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">End date</label>
+                        <input type="date" class="form-control" value="{{old('end_date_1')}}" name="end_date_1">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Module status</label>
+                        <input type="text" class="form-control" name="module_status_1" value="{{old('module_status_1')}}">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Version level</label>
+                        <input type="text" class="form-control" name="version_level_1" value="{{old('version_level_1')}}">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Module developer</label>
+                        <select name="user_id_1" class="form-control">
+                            <option value="">Select developer</option>
+                            @foreach ($users as $user)
+                                <option value={{ $user->id }} {{old('user_id_2') == $user->id ? 'selected' : ''}}>
+                                    {{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Developer remarks</label>
+                        <textarea class="form-control" name="dev_remarks_1" rows="3">{{old('dev_remarks_1')}}</textarea>
+                    </div>
+                </div>
+
+                <div class="container">  
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Project module 2</label>
+                        <input type="text" class="form-control" name="module_name_2" value="{{old('module_name_2')}}">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Start date</label>
+                        <input type="date" class="form-control" value="{{old('start_date_2')}}" name="start_date_2">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">End date</label>
+                        <input type="date" class="form-control" value="{{old('end_date_2')}}" name="end_date_2">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Module status</label>
+                        <input type="text" class="form-control" name="module_status_2" value="{{old('module_status_2')}}">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Version level</label>
+                        <input type="text" class="form-control" name="version_level_2" value="{{old('version_level_2')}}">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Module developer</label>
+                        <select name="user_id_2" class="form-control">
+                            <option value="">Select developer</option>
+                            @foreach ($users as $user)
+                                <option value={{ $user->id }} {{old('user_id_3') == $user->id ? 'selected' : ''}}>
+                                    {{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Developer remarks</label>
+                        <textarea class="form-control" name="dev_remarks_2" rows="3">{{old('dev_remarks_2')}}</textarea>
+                    </div>
+                </div>
+
+                <div class="container">  
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Project module 3</label>
+                        <input type="text" class="form-control" name="module_name_3" value="{{old('module_name_3')}}">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Start date</label>
+                        <input type="date" class="form-control" value="{{old('start_date_3')}}" name="start_date_3">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">End date</label>
+                        <input type="date" class="form-control" value="{{old('end_date_3')}}" name="end_date_3">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Module status</label>
+                        <input type="text" class="form-control" name="module_status_3" value="{{old('module_status_3')}}">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Version level</label>
+                        <input type="text" class="form-control" name="version_level_3" value="{{old('version_level_3')}}">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Module developer</label>
+                        <select name="user_id_3" class="form-control">
+                            <option value="">Select developer</option>
+                            @foreach ($users as $user)
+                                <option value={{ $user->id }} {{old('user_id_4') == $user->id ? 'selected' : ''}}>
+                                    {{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Developer remarks</label>
+                        <textarea class="form-control" name="dev_remarks_3" rows="3">{{old('dev_remarks_3')}}</textarea>
+                    </div>
+                </div>
+
                 <div class="text-right">
                     <button type="submit" class="btn btn-dark">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">

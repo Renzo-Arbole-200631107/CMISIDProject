@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('project_owners', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('project_id');
-            $table->foreignId('office_id');
-            $table->string('focal_person');
-            $table->string('contact_number');
+            $table->foreignId('office_id')->constrained('offices')->cascadeOnDelete();
+            $table->string('focal_person')->nullable();
+            $table->string('contact_number')->nullable();
             $table->timestamps();
         });
     }
